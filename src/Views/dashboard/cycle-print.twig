@@ -126,47 +126,6 @@
             margin: 4px 0 0;
             opacity: 0.65;
         }
-
-        /* Organiza os totais financeiros do ciclo */
-        .cycle-totals {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-top: 14px;
-        }
-
-        /* Define cada total como um bloco compacto */
-        .cycle-total {
-            border: 1px solid var(--yellow);
-            border-radius: 4px;
-            padding: 9px 11px;
-            background: var(--light);
-        }
-
-        /* Define a legenda dos totais */
-        .cycle-total span {
-            display: block;
-            color: var(--dark-yellow);
-            font-size: 11px;
-        }
-
-        /* Destaca os valores dos totais */
-        .cycle-total strong {
-            display: block;
-            margin-top: 3px;
-            font-size: 14px;
-        }
-
-        /* Aplica a cor de destaque às entradas */
-        .cycle-total.income strong {
-            color: var(--lilac);
-        }
-
-        /* Aplica a cor de destaque às despesas */
-        .cycle-total.expenses strong {
-            color: var(--purple);
-        }
-
         /* Organiza cada lançamento como um card compacto */
         .transaction {
             display: grid;
@@ -323,21 +282,6 @@
                             <div>
                                 <h1 class="cycle-title">{{ cycle.label }}</h1>
                                 <p class="cycle-subtitle">lançamentos do ciclo financeiro</p>
-                            </div>
-                        </div>
-
-                        <div class="cycle-totals">
-                            <div class="cycle-total income">
-                                <span>recebe</span>
-                                <strong>{{ cycle.incomeLabel }}</strong>
-                            </div>
-                            <div class="cycle-total expenses">
-                                <span>gastos</span>
-                                <strong>{{ cycle.expensesLabel }}</strong>
-                            </div>
-                            <div class="cycle-total">
-                                <span>sobra</span>
-                                <strong>{{ cycle.balanceLabel }}</strong>
                             </div>
                         </div>
                     </td>

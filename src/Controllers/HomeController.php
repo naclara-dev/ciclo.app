@@ -188,10 +188,94 @@ class HomeController extends Controller {
         $cycle = (new DashboardService)->getCycleAt($referenceDate);
         $cycleView = (new DashboardPresenter)->presentCycle($cycle);
 
+        // Define os filtros enviados pela dashboard
+        $filters = $this->getPrintCycleFilters();
+
+        // Define apenas as transacoes que devem aparecer na impressao
+        $cycleView['transactions'] = $this->filterPrintTransactions($cycleView['transactions'], $filters);
+
         // Exibe a página independente usada pelo navegador para gerar o PDF
         $this->view('dashboard/cycle-print.twig', [
             'cycle' => $cycleView
         ]);
+    }
+
+    private function getPrintCycleFilters(): array {
+        // Define os filtros recebidos pela URL de impressao
+        return [
+            'entity_id' => trim((string) ($_GET['entity_id'] ?? '')),
+            'types' => $this->getCsvFilter('types', ['I', 'E']),
+            'statuses' => $this->getCsvFilter('statuses', ['paid', 'pending']),
+        ];
+    }
+
+    private function getCsvFilter(string $key, array $default): array {
+        // Verifica se o filtro foi enviado na URL
+        if (!array_key_exists($key, $_GET)) {
+            // Retorna o valor padrao quando o filtro nao foi informado
+            return $default;
+        }
+
+        // Define o texto bruto recebido pelo filtro
+        $raw = (string) $_GET[$key];
+
+        // Verifica se o filtro foi enviado vazio
+        if ($raw === '') {
+            // Retorna lista vazia para nao exibir nenhum item daquele grupo
+            return [];
+        }
+
+        // Define os valores separados por virgula
+        $values = array_filter(array_map('trim', explode(',', $raw)), function ($value) {
+            // Verifica se o valor atual nao esta vazio
+            return $value !== '';
+        });
+
+        // Retorna os valores unicos do filtro
+        return array_values(array_unique($values));
+    }
+
+    private function filterPrintTransactions(array $transactions, array $filters): array {
+        // Define as transacoes compatíveis com os filtros da impressao
+        $filtered = array_filter($transactions, function ($transaction) use ($filters) {
+            // Retorna se a transacao corresponde a todos os filtros
+            return $this->matchesPrintEntityFilter($transaction, $filters)
+                && $this->matchesPrintTypeFilter($transaction, $filters)
+                && $this->matchesPrintStatusFilter($transaction, $filters);
+        });
+
+        // Retorna a lista reindexada para a view
+        return array_values($filtered);
+    }
+
+    private function matchesPrintEntityFilter(array $transaction, array $filters): bool {
+        // Verifica se nao existe entidade filtrada
+        if ($filters['entity_id'] === '') {
+            // Retorna verdadeiro quando todas as entidades devem ser exibidas
+            return true;
+        }
+
+        // Define a entidade da transacao atual
+        $entityId = (string) ($transaction['entity']['id'] ?? '');
+
+        // Retorna se a entidade corresponde ao filtro
+        return $entityId === $filters['entity_id'];
+    }
+
+    private function matchesPrintTypeFilter(array $transaction, array $filters): bool {
+        // Define o tipo da transacao atual
+        $type = (string) ($transaction['type'] ?? '');
+
+        // Retorna se o tipo esta selecionado
+        return in_array($type, $filters['types'], true);
+    }
+
+    private function matchesPrintStatusFilter(array $transaction, array $filters): bool {
+        // Define o status normalizado da transacao atual
+        $status = !empty($transaction['paid']) ? 'paid' : 'pending';
+
+        // Retorna se o status esta selecionado
+        return in_array($status, $filters['statuses'], true);
     }
 
     private function isValidDate(string $date): bool {
