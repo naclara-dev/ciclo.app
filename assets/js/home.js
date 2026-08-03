@@ -9,8 +9,11 @@
     const typeFilterOptions = Array.from(document.querySelectorAll('[data-cycle-filter-type-option]'));
     const statusFilter = document.querySelector('[data-cycle-filter-status]');
     const statusFilterOptions = Array.from(document.querySelectorAll('[data-cycle-filter-status-option]'));
-    const clearFiltersButton = document.querySelector('[data-cycle-filter-clear]');
+    const clearFiltersButtons = Array.from(document.querySelectorAll('[data-cycle-filter-clear]'));
     const initialTransactionsSource = document.querySelector('[data-cycle-initial-transactions]');
+    const filterToggle = document.querySelector('[data-cycle-filter-toggle]');
+    const filterContent = document.querySelector('[data-cycle-filter-content]');
+    const filterIcon = document.querySelector('[data-cycle-filter-icon]');
     // Carrega o botão responsável pela impressão do ciclo
     const printButton = document.querySelector('[data-print-cycle]');
     const cache = new Map();
@@ -28,6 +31,7 @@
     };
     // Inicializa as transações do ciclo apresentado no carregamento da tela
     let currentTransactions = readInitialTransactions();
+    let activeSwipe = null;
 
     if (refreshButton) {
         refreshButton.addEventListener('click', function () {
@@ -53,7 +57,9 @@
     let nextReference = card.dataset.cycleEnd;
 
     initializeCollapse();
+    initializeFilterCollapse();
     initializeFilters();
+    initializeSwipeActions();
 
     // Verifica se o botão de impressão está disponível
     if (printButton) {
@@ -152,6 +158,84 @@
     }
 
     // Inicializa os eventos e opções dos filtros de lançamentos
+    function initializeFilterCollapse() {
+        // Verifica se os elementos do collapse de filtros existem
+        if (!filterToggle || !filterContent || !filterIcon) {
+            // Interrompe quando o layout nao possui filtros colapsaveis
+            return;
+        }
+
+        // Inicializa o conteudo aberto no mobile e livre no desktop
+        setFilterContentExpanded(true);
+
+        // Alterna os filtros quando o botao mobile e acionado
+        filterToggle.addEventListener('click', function () {
+            // Verifica se os filtros estao abertos
+            const isExpanded = filterToggle.getAttribute('aria-expanded') === 'true';
+
+            // Define o proximo estado visual
+            setFilterContentExpanded(!isExpanded);
+        });
+
+        // Recalcula a altura quando o viewport muda
+        window.addEventListener('resize', function () {
+            // Verifica se os filtros estao abertos
+            if (filterToggle.getAttribute('aria-expanded') === 'true') {
+                // Atualiza a altura do conteudo aberto
+                setFilterContentExpanded(true);
+            }
+        });
+    }
+
+    function setFilterContentExpanded(isExpanded) {
+        // Atualiza o estado acessivel do botao
+        filterToggle.setAttribute('aria-expanded', String(isExpanded));
+
+        // Alterna a direcao do icone
+        filterIcon.classList.toggle('rotate-180', !isExpanded);
+
+        // Verifica se o desktop deve manter o fluxo natural
+        if (!isMobileLayout()) {
+            // Remove restricoes fora do mobile
+            filterContent.style.maxHeight = '';
+            filterContent.style.overflow = '';
+            filterContent.classList.add('p-3');
+            filterContent.classList.remove('p-0');
+            return;
+        }
+
+        // Define o overflow necessario para animar o conteudo mobile
+        filterContent.style.overflow = 'hidden';
+
+        // Verifica se os filtros devem abrir
+        if (isExpanded) {
+            // Restaura o espacamento interno do conteudo
+            filterContent.classList.add('p-3');
+            filterContent.classList.remove('p-0');
+
+            // Calcula a altura aberta para animar o painel
+            filterContent.style.maxHeight = filterContent.scrollHeight + 'px';
+
+            // Libera o overflow apos a animacao para nao cortar dropdowns
+            window.setTimeout(function () {
+                // Verifica se o painel continua aberto
+                if (filterToggle.getAttribute('aria-expanded') === 'true' && isMobileLayout()) {
+                    // Remove a restricao de altura do painel aberto
+                    filterContent.style.maxHeight = '';
+                    filterContent.style.overflow = '';
+                }
+            }, 320);
+            return;
+        }
+
+        // Remove o espacamento interno do conteudo recolhido
+        filterContent.classList.remove('p-3');
+        filterContent.classList.add('p-0');
+
+        // Define a altura recolhida do conteudo mobile
+        filterContent.style.maxHeight = '0px';
+    }
+
     function initializeFilters() {
         // Atualiza as opções iniciais do filtro por entidade
         updateEntityFilterOptions(currentTransactions);
@@ -177,12 +261,15 @@
             initializeStatusFilters();
         }
 
-        // Verifica se o botão de limpeza está disponível
-        if (clearFiltersButton) {
-            // Restaura todos os filtros para a opção padrão
-            clearFiltersButton.addEventListener('click', function () {
-                resetTransactionFilters();
-                applyTransactionFilters();
+        // Verifica se existem botoes de limpeza disponiveis
+        if (clearFiltersButtons.length > 0) {
+            // Percorre os botoes de limpeza do layout responsivo
+            clearFiltersButtons.forEach(function (clearFiltersButton) {
+                // Restaura todos os filtros para a opcao padrao
+                clearFiltersButton.addEventListener('click', function () {
+                    resetTransactionFilters();
+                    applyTransactionFilters();
+                });
             });
         }
     }
@@ -681,7 +768,16 @@
     function createTransactionButton(transaction) {
         // Inicializa a linha que separa acao lateral e edicao
         const wrapper = document.createElement('div');
-        wrapper.className = 'group relative flex items-center gap-2 md:block';
+        wrapper.className = 'group relative flex items-center gap-2 overflow-hidden rounded md:block md:overflow-visible';
+
+        // Verifica se o lancamento real deve aceitar gesto de arrastar
+        if (!transaction.is_virtual) {
+            // Define o wrapper como alvo do swipe de exclusao no mobile
+            wrapper.setAttribute('data-swipe-transaction', '');
+        }
+
+        // Inicializa o fundo revelado pelo gesto de arrastar
+        const swipeAction = createSwipeAction(transaction);
 
         // Inicializa a acao lateral do lancamento
         const sideAction = createTransactionSideAction(transaction);
@@ -689,8 +785,9 @@
         // Inicializa o card clicavel usado para edicao
         const button = document.createElement('button');
         button.type = 'button';
-        button.className = 'grid min-w-0 flex-1 gap-3 rounded border border-[var(--yellow)] bg-[var(--light)] p-3 text-left md:w-full sm:grid-cols-[1fr_auto] sm:items-center';
+        button.className = 'relative z-10 grid min-w-0 flex-1 touch-pan-y gap-3 rounded border border-[var(--yellow)] bg-[var(--light)] p-3 text-left transition-transform md:w-full sm:grid-cols-[1fr_auto] sm:items-center';
         button.setAttribute('data-edit-transaction', '');
+        button.setAttribute('data-swipe-card', '');
 
         // Verifica se a transacao deve receber destaque visual de pagamento
         if (isTransactionPaid(transaction)) {
@@ -746,9 +843,31 @@
         summary.append(date, amount, status);
 
         button.append(identity, summary);
-        wrapper.append(sideAction, button);
+        wrapper.append(swipeAction, sideAction, button);
 
         return wrapper;
+    }
+
+    function createSwipeAction(transaction) {
+        // Inicializa o fundo de exclusao revelado no mobile
+        const swipeAction = document.createElement('div');
+
+        // Verifica se lancamentos previstos nao podem ser excluidos por swipe
+        if (transaction.is_virtual) {
+            // Retorna um fragmento vazio para manter a montagem uniforme
+            return document.createDocumentFragment();
+        }
+
+        // Define a aparencia do fundo de exclusao
+        swipeAction.className = 'absolute inset-y-0 right-0 flex w-24 items-center justify-end rounded border border-[var(--yellow)] bg-[var(--dark-yellow)] pr-5 text-[var(--lilac)] md:hidden';
+        swipeAction.setAttribute('aria-hidden', 'true');
+
+        // Define o icone exibido durante o arraste
+        const icon = document.createElement('i');
+        icon.className = 'fa-regular fa-trash-can';
+        swipeAction.appendChild(icon);
+
+        return swipeAction;
     }
 
     function createTransactionSideAction(transaction) {
@@ -765,7 +884,7 @@
         const deleteForm = document.createElement('form');
         deleteForm.method = 'post';
         deleteForm.action = card.dataset.transactionDeleteUrl || '';
-        deleteForm.className = 'shrink-0 md:absolute md:-left-12 md:top-1/2 md:-translate-y-1/2';
+        deleteForm.className = 'hidden shrink-0 md:absolute md:-left-12 md:top-1/2 md:flex md:-translate-y-1/2';
 
         // Define o identificador enviado para exclusao
         const deleteInput = document.createElement('input');
@@ -799,6 +918,217 @@
             // Define os dados usados para abrir o modal sem buscar uma transacao real
             button.dataset.transactionPayload = JSON.stringify(transaction);
         }
+    }
+    function initializeSwipeActions() {
+        // Verifica se o conteudo do ciclo esta disponivel
+        if (!content) {
+            // Interrompe a inicializacao sem lista de lancamentos
+            return;
+        }
+
+        // Inicializa o gesto de arraste no inicio do toque
+        content.addEventListener('pointerdown', startSwipeAction);
+
+        // Atualiza o deslocamento enquanto o usuario arrasta
+        content.addEventListener('pointermove', moveSwipeAction);
+
+        // Finaliza o gesto ao soltar o toque
+        content.addEventListener('pointerup', finishSwipeAction);
+
+        // Cancela o gesto quando o navegador interrompe o ponteiro
+        content.addEventListener('pointercancel', cancelSwipeAction);
+
+        // Evita abrir o modal de edicao logo apos um swipe
+        content.addEventListener('click', suppressClickAfterSwipe, true);
+    }
+
+    function startSwipeAction(event) {
+        // Verifica se o layout atual permite swipe
+        if (!isMobileLayout()) {
+            // Interrompe o swipe fora do mobile
+            return;
+        }
+
+        // Verifica se o gesto principal foi iniciado
+        if (event.button !== 0) {
+            // Interrompe botoes secundarios do ponteiro
+            return;
+        }
+
+        // Carrega o card que pode ser arrastado
+        const cardButton = event.target.closest('[data-swipe-card]');
+
+        // Carrega o wrapper que representa uma transacao real
+        const wrapper = event.target.closest('[data-swipe-transaction]');
+
+        // Verifica se existe um card arrastavel
+        if (!cardButton || !wrapper || !content.contains(wrapper)) {
+            // Interrompe toques fora das transacoes reais
+            return;
+        }
+
+        // Define o estado inicial do gesto
+        activeSwipe = {
+            wrapper: wrapper,
+            card: cardButton,
+            startX: event.clientX,
+            startY: event.clientY,
+            currentX: 0,
+            dragging: false
+        };
+
+        // Remove transicoes durante o arraste manual
+        cardButton.style.transition = 'none';
+
+        // Verifica se o navegador permite capturar o ponteiro durante o gesto
+        if (cardButton.setPointerCapture) {
+            // Define que o card continua recebendo os eventos ate o fim do toque
+            cardButton.setPointerCapture(event.pointerId);
+        }
+    }
+
+    function moveSwipeAction(event) {
+        // Verifica se existe um gesto em andamento
+        if (!activeSwipe) {
+            // Interrompe movimentos sem swipe ativo
+            return;
+        }
+
+        // Calcula o deslocamento horizontal e vertical
+        const deltaX = event.clientX - activeSwipe.startX;
+        const deltaY = event.clientY - activeSwipe.startY;
+
+        // Verifica se o movimento vertical deve continuar como rolagem normal
+        if (!activeSwipe.dragging && Math.abs(deltaY) > 10 && Math.abs(deltaY) > Math.abs(deltaX)) {
+            // Cancela o swipe para preservar a rolagem da pagina
+            cancelSwipeAction();
+            return;
+        }
+
+        // Verifica se ainda nao houve deslocamento suficiente para iniciar o swipe
+        if (!activeSwipe.dragging && Math.abs(deltaX) < 6) {
+            // Aguarda um movimento horizontal mais claro
+            return;
+        }
+
+        // Verifica se o usuario arrastou para a esquerda
+        if (deltaX >= 0) {
+            // Mantem o card no lugar ao arrastar para a direita
+            setSwipeOffset(0);
+            return;
+        }
+
+        // Define que o gesto virou um arraste horizontal
+        activeSwipe.dragging = true;
+
+        // Evita selecao/click enquanto o card esta sendo arrastado
+        event.preventDefault();
+
+        // Calcula o deslocamento limitado do card
+        const offset = Math.max(deltaX, -96);
+        activeSwipe.currentX = offset;
+        setSwipeOffset(offset);
+    }
+
+    function finishSwipeAction() {
+        // Verifica se existe um gesto em andamento
+        if (!activeSwipe) {
+            // Interrompe finalizacao sem swipe ativo
+            return;
+        }
+
+        // Define se o arraste passou do limite de exclusao
+        const shouldConfirmDelete = activeSwipe.currentX <= -72;
+        const state = activeSwipe;
+
+        // Marca o clique seguinte para nao abrir a edicao
+        if (state.dragging) {
+            // Define a supressao do clique gerado apos o pointerup
+            state.card.dataset.swipeSuppressClick = '1';
+        }
+
+        // Restaura a transicao visual do card
+        state.card.style.transition = '';
+
+        // Verifica se deve abrir o modal de confirmacao
+        if (shouldConfirmDelete) {
+            // Mantem o card deslocado enquanto a confirmacao abre
+            state.card.style.transform = 'translateX(-96px)';
+            triggerSwipeDelete(state.wrapper);
+
+            // Retorna o card para a posicao inicial se a exclusao for cancelada
+            window.setTimeout(function () {
+                // Define a posicao original do card apos abrir a confirmacao
+                state.card.style.transform = '';
+            }, 180);
+        } else {
+            // Retorna o card para a posicao inicial
+            state.card.style.transform = '';
+        }
+
+        // Limpa o gesto ativo
+        activeSwipe = null;
+    }
+
+    function cancelSwipeAction() {
+        // Verifica se existe swipe para cancelar
+        if (!activeSwipe) {
+            // Interrompe cancelamentos sem gesto ativo
+            return;
+        }
+
+        // Restaura o card para a posicao inicial
+        activeSwipe.card.style.transition = '';
+        activeSwipe.card.style.transform = '';
+        activeSwipe = null;
+    }
+
+    function suppressClickAfterSwipe(event) {
+        // Carrega o card que recebeu o clique apos o gesto
+        const cardButton = event.target.closest('[data-swipe-card]');
+
+        // Verifica se o clique deve ser ignorado
+        if (!cardButton || cardButton.dataset.swipeSuppressClick !== '1') {
+            // Permite cliques normais
+            return;
+        }
+
+        // Remove a marcacao para permitir cliques futuros
+        delete cardButton.dataset.swipeSuppressClick;
+
+        // Interrompe o clique gerado pelo fim do arraste
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
+    function setSwipeOffset(offset) {
+        // Verifica se existe um card ativo para deslocar
+        if (!activeSwipe) {
+            // Interrompe sem gesto ativo
+            return;
+        }
+
+        // Aplica o deslocamento horizontal do card
+        activeSwipe.card.style.transform = offset === 0 ? '' : 'translateX(' + offset + 'px)';
+    }
+
+    function triggerSwipeDelete(wrapper) {
+        // Carrega o botao de exclusao usado pelo modal compartilhado
+        const deleteButton = wrapper.querySelector('[data-delete-button]');
+
+        // Verifica se existe um botao confirmavel
+        if (!deleteButton) {
+            // Interrompe quando nao existe acao de exclusao
+            return;
+        }
+
+        // Aciona o fluxo de confirmacao existente
+        deleteButton.click();
+    }
+
+    function isMobileLayout() {
+        // Retorna se o viewport esta abaixo do breakpoint md
+        return window.matchMedia('(max-width: 767px)').matches;
     }
     function initializeCollapse() {
         if (!toggle || !content || !icon) {

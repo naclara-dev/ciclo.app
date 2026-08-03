@@ -27,7 +27,7 @@
         {% endif %}
     {% endblock %}
 
-    <main class="page-content {% if show_menu is not defined or show_menu %}has-sidebar{% endif %} grow-1 {% if not no_padding %} p-8 {% endif %}">
+    <main class="page-content {% if show_menu is not defined or show_menu %}has-sidebar{% endif %} grow-1 {% if not no_padding %} p-5 lg:p-8 {% endif %}">
         {% block content %}
         {% endblock %}
     </main>
@@ -35,7 +35,6 @@
     {% include 'components/confirm-modal.twig' %}
     {% include 'components/transaction-modal.twig' %}
 
-    {# Carrega os utilitários compartilhados da aplicação #}
     <script src="{{ base_url }}/assets/js/utils/validation.js"></script>
     <script src="{{ base_url }}/assets/js/utils/modal.js"></script>
     <script src="{{ base_url }}/assets/js/utils/select.js"></script>
