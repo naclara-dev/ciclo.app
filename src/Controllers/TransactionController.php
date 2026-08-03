@@ -32,6 +32,23 @@ class TransactionController extends Controller {
 
         $data = $this->normalizeData($_POST);
         $repository = new TransactionRepository;
+
+        // Verifica se um template previsto ja foi convertido nesta data
+        if (empty($data['id']) && !empty($data['template_id']) && !empty($data['occurrence_date'])) {
+            // Carrega a transacao existente para evitar duplicidade de previsoes salvas
+            $existing = $repository->find([
+                'user_id' => Session::get('user_id'),
+                'template_id' => $data['template_id'],
+                'occurrence_date' => $data['occurrence_date']
+            ]);
+
+            // Verifica se a previsao ja possui uma transacao real
+            if ($existing) {
+                // Define a transacao existente como alvo da gravacao
+                $data['id'] = (int) $existing['id'];
+            }
+        }
+
         $repository->save($data);
 
         redirect();

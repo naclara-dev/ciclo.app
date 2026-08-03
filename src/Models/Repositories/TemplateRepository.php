@@ -73,6 +73,52 @@ class TemplateRepository extends Repository {
         return $stmt->fetchAll();
     }
 
+    public function allActiveExpensesFromUser(int $userId): array {
+        // Carrega templates ativos de despesa para compor previsoes futuras
+        $query = "
+            SELECT *
+            FROM $this->table
+            WHERE user_id = :user_id
+                AND active = 1
+                AND type = 'E'
+            ORDER BY month_day ASC, id ASC
+        ";
+
+        // Inicializa a consulta dos templates de despesa
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':user_id', $userId, \PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
+
+    public function allActiveScheduledFromUser(int $userId): array {
+        // Carrega templates ativos com os relacionamentos usados na dashboard
+        $query = "
+            SELECT
+                templates.*,
+                w.name AS wallet_name,
+                c.name AS category_name,
+                c.color AS category_color,
+                c.icon AS category_icon,
+                e.name AS entity_name
+            FROM $this->table
+            LEFT JOIN wallets w ON w.id = templates.wallet_id
+            LEFT JOIN categories c ON c.id = templates.category_id
+            LEFT JOIN entities e ON e.id = templates.entity_id
+            WHERE templates.user_id = :user_id
+                AND templates.active = 1
+            ORDER BY templates.month_day ASC, templates.id ASC
+        ";
+
+        // Inicializa a consulta dos templates previstos
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':user_id', $userId, \PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
+
     public function updateNextRunDate(int $id, int $userId, string $nextRunDate): bool {
         // Salva a proxima data de execucao do template informado
         $query = "UPDATE $this->table SET next_run_date = :next_run_date WHERE id = :id AND user_id = :user_id";

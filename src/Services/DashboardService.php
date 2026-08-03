@@ -10,17 +10,20 @@ use App\DTOs\Dashboard\Milestone;
 use App\DTOs\Dashboard\NextIncome;
 use App\Models\Repositories\SettingRepository;
 use App\Models\Repositories\TransactionRepository;
+use App\Models\Repositories\TemplateRepository;
 use App\Models\Repositories\WalletRepository;
 
 class DashboardService {
     private $userID;
     private $transactions;
+    private $templates;
     private $wallets;
     private $settings;
 
     public function __construct() {
         $this->userID = (int) Session::get('user_id');
         $this->transactions = new TransactionRepository;
+        $this->templates = new TemplateRepository;
         $this->wallets = new WalletRepository;
         $this->settings = (new SettingRepository)->firstFromUser($this->userID);
     }
@@ -50,22 +53,94 @@ class DashboardService {
      * @return \App\DTOs\Dashboard\Balance
      */
     public function getBalance(): Balance {
-        $currentCycle = $this->getCurrentCycle();
+        // Carrega o proximo ciclo para calcular as despesas ja comprometidas nele
+        $nextCycle = $this->getNextCycle();
 
         // Saldo atual: saldo inicial da wallet + total de transacoes efetuadas.
         $current = $this->getCurrentBalance();
 
-        // Comprometido: todas as transacoes pendentes previstas para o ciclo atual.
-        $commited = $this->transactions->sumCommittedUntil(
-            $this->userID,
-            $this->getTodayDate(),
-            $currentCycle->end
-        );
+        // Comprometido: despesas pendentes e templates ativos previstos para o proximo ciclo.
+        $commited = $this->getNextCycleCommitted($nextCycle);
 
         // Disponivel: saldo atual - valor comprometido.
         $spendable = max(0, $current - $commited);
 
         return new Balance($current, $commited, $spendable);
+    }
+
+    /**
+     * Obtem o valor comprometido no proximo ciclo financeiro.
+     * @return float
+     */
+    private function getNextCycleCommitted(Cycle $nextCycle): float {
+        // Calcula as despesas pendentes ja inseridas no periodo do proximo ciclo
+        $transactionsTotal = $this->transactions->sumPendingExpensesInCycle(
+            $this->userID,
+            $nextCycle->start,
+            $nextCycle->end
+        );
+
+        // Calcula as despesas previstas por templates ativos no mesmo periodo
+        $templatesTotal = $this->sumTemplateExpensesInCycle($nextCycle->start, $nextCycle->end);
+
+        return $transactionsTotal + $templatesTotal;
+    }
+
+    /**
+     * Soma templates ativos de despesa cujo dia do mes cai dentro do ciclo informado.
+     * @return float
+     */
+    private function sumTemplateExpensesInCycle(string $start, string $end): float {
+        // Carrega templates ativos de despesa do usuario atual
+        $templates = $this->templates->allActiveExpensesFromUser($this->userID);
+
+        // Inicializa o total de templates comprometidos no ciclo
+        $total = 0;
+
+        // Percorre todos os templates para localizar ocorrencias dentro do ciclo
+        foreach ($templates as $template) {
+            // Percorre as possiveis datas mensais do template dentro do ciclo
+            foreach ($this->getTemplateDatesInCycle((int) ($template['month_day'] ?? 1), $start, $end) as $date) {
+                // Verifica se o template esta vigente na data calculada
+                if (!$this->templateRunsOnDate($template, $date)) {
+                    // Interrompe a soma desta ocorrencia fora da vigencia
+                    continue;
+                }
+
+                // Verifica se o template ja gerou uma transacao nessa data
+                if ($this->transactions->existsFromTemplateOnDate($this->userID, (int) $template['id'], $date)) {
+                    // Interrompe a soma desta ocorrencia para evitar duplicidade
+                    continue;
+                }
+
+                // Calcula o total comprometido pelos templates ainda nao lancados
+                $total += (float) ($template['amount'] ?? 0);
+            }
+        }
+
+        // Retorna o total previsto pelos templates
+        return $total;
+    }
+
+    /**
+     * Indica se o template esta vigente para a data informada.
+     * @return bool
+     */
+    private function templateRunsOnDate(array $template, string $date): bool {
+        // Verifica se a data esta antes do inicio do template
+        if (!empty($template['start_date']) && $date < $template['start_date']) {
+            // Interrompe templates que ainda nao iniciaram
+            return false;
+        }
+
+        // Verifica se a data esta depois do fim do template
+        if (!empty($template['end_date']) && $date > $template['end_date']) {
+            // Interrompe templates que ja encerraram
+            return false;
+        }
+
+        // Retorna que o template esta vigente para a data informada
+        return true;
     }
 
     /**
@@ -203,17 +278,23 @@ class DashboardService {
      * @return \App\DTOs\Dashboard\Cycle
      */
     private function buildCycle(string $start, string $end, int $progress, float $openingBalance): Cycle {
-        // Entradas: todas as entradas registradas no ciclo.
-        $income = $this->transactions->sumIncomeInCycle($this->userID, $start, $end);
+        // Transacoes cruas do ciclo. A preparacao visual fica no presenter.
+        $cycleTransactions = $this->transactions->allInCycleFromUser($this->userID, $start, $end);
 
-        // Gastos: todas as saidas registradas no ciclo.
-        $expenses = $this->transactions->sumExpenseInCycle($this->userID, $start, $end);
+        // Templates previstos do ciclo exibidos como lancamentos virtuais.
+        $scheduledTransactions = $this->getScheduledTemplateTransactionsInCycle($start, $end);
+
+        // Junta lancamentos reais e previstos para montar a visao projetada do ciclo.
+        $cycleTransactions = $this->sortTransactionsByDate(array_merge($cycleTransactions, $scheduledTransactions));
+
+        // Entradas: todas as entradas registradas ou previstas no ciclo.
+        $income = $this->sumTransactionsByType($cycleTransactions, 'I');
+
+        // Gastos: todas as saidas registradas ou previstas no ciclo.
+        $expenses = $this->sumTransactionsByType($cycleTransactions, 'E');
 
         // Saldo: entradas - gastos.
         $balance = $income - $expenses;
-
-        // Transacoes cruas do ciclo. A preparacao visual fica no presenter.
-        $cycleTransactions = $this->transactions->allInCycleFromUser($this->userID, $start, $end);
 
         return new Cycle(
             $start,
@@ -225,6 +306,125 @@ class DashboardService {
             $cycleTransactions,
             $openingBalance
         );
+    }
+
+    /**
+     * Obtem templates ativos como lancamentos virtuais dentro do ciclo.
+     * @return array
+     */
+    private function getScheduledTemplateTransactionsInCycle(string $start, string $end): array {
+        // Carrega templates ativos do usuario atual
+        $templates = $this->templates->allActiveScheduledFromUser($this->userID);
+        $transactions = [];
+
+        // Percorre todos os templates para criar as ocorrencias previstas
+        foreach ($templates as $template) {
+            // Percorre as datas mensais do template dentro do ciclo
+            foreach ($this->getTemplateDatesInCycle((int) ($template['month_day'] ?? 1), $start, $end) as $date) {
+                // Verifica se o template esta vigente na data calculada
+                if (!$this->templateRunsOnDate($template, $date)) {
+                    // Interrompe a criacao desta ocorrencia fora da vigencia
+                    continue;
+                }
+
+                // Verifica se a ocorrencia ja foi convertida em transacao real
+                if ($this->transactions->existsFromTemplateOnDate($this->userID, (int) $template['id'], $date)) {
+                    // Interrompe a criacao para evitar duplicidade visual
+                    continue;
+                }
+
+                // Define uma transacao virtual baseada no template
+                $transactions[] = $this->templateToScheduledTransaction($template, $date);
+            }
+        }
+
+        // Retorna as transacoes virtuais do ciclo
+        return $transactions;
+    }
+
+    /**
+     * Transforma um template ativo em lancamento previsto para a dashboard.
+     * @return array
+     */
+    private function templateToScheduledTransaction(array $template, string $date): array {
+        // Retorna a estrutura esperada pelo presenter de transacoes
+        return [
+            'id' => null,
+            'user_id' => $this->userID,
+            'wallet_id' => $template['wallet_id'] ?? null,
+            'type' => $template['type'] ?? null,
+            'category_id' => $template['category_id'] ?? null,
+            'entity_id' => $template['entity_id'] ?? null,
+            'template_id' => $template['id'] ?? null,
+            'payment_method_id' => null,
+            'title' => $template['title'] ?? '',
+            'paid' => 0,
+            'defines_cycle' => !empty($template['defines_cycle']) ? 1 : 0,
+            'amount' => (float) ($template['amount'] ?? 0),
+            'occurrence_date' => $date,
+            'due_date' => $date,
+            'paid_at' => null,
+            'category_name' => $template['category_name'] ?? null,
+            'category_color' => $template['category_color'] ?? null,
+            'category_icon' => $template['category_icon'] ?? null,
+            'wallet_name' => $template['wallet_name'] ?? null,
+            'entity_name' => $template['entity_name'] ?? null,
+            'template_title' => $template['title'] ?? '',
+            'payment_method_name' => null,
+            'source' => 'template',
+            'is_virtual' => true,
+        ];
+    }
+
+    /**
+     * Soma lancamentos de um tipo especifico.
+     * @return float
+     */
+    private function sumTransactionsByType(array $transactions, string $type): float {
+        // Inicializa o total do tipo solicitado
+        $total = 0;
+
+        // Percorre os lancamentos do ciclo
+        foreach ($transactions as $transaction) {
+            // Verifica se o lancamento pertence ao tipo solicitado
+            if (($transaction['type'] ?? null) !== $type) {
+                // Interrompe a soma do lancamento atual
+                continue;
+            }
+
+            // Calcula o total acumulado do tipo
+            $total += (float) ($transaction['amount'] ?? 0);
+        }
+
+        // Retorna o total calculado
+        return $total;
+    }
+
+    /**
+     * Ordena lancamentos pela data do ciclo.
+     * @return array
+     */
+    private function sortTransactionsByDate(array $transactions): array {
+        // Ordena lancamentos por data e identificador
+        usort($transactions, function ($first, $second) {
+            // Define a data da primeira transacao
+            $firstDate = $first['occurrence_date'] ?? '';
+
+            // Define a data da segunda transacao
+            $secondDate = $second['occurrence_date'] ?? '';
+
+            // Verifica se as datas sao iguais
+            if ($firstDate === $secondDate) {
+                // Calcula a ordem por identificador, mantendo previstos depois dos reais
+                return (int) ($first['id'] ?? PHP_INT_MAX) <=> (int) ($second['id'] ?? PHP_INT_MAX);
+            }
+
+            // Retorna a ordem cronologica
+            return strcmp($firstDate, $secondDate);
+        });
+
+        // Retorna a lista ordenada
+        return $transactions;
     }
 
     /**
@@ -265,6 +465,43 @@ class DashboardService {
         $progress = (int) round(($elapsedDays / $totalDays) * 100);
 
         return max(0, min($progress, 100));
+    }
+
+    /**
+     * Obtem as datas mensais de um template dentro de um ciclo.
+     * @return array
+     */
+    private function getTemplateDatesInCycle(int $monthDay, string $start, string $end): array {
+        // Inicializa as fronteiras do ciclo
+        $startDate = new \DateTimeImmutable($start);
+        $endDate = new \DateTimeImmutable($end);
+
+        // Define o dia valido para gerar as datas mensais
+        $day = max(1, min($monthDay, 31));
+
+        // Inicializa a busca no primeiro mes do ciclo
+        $cursor = $startDate->modify('first day of this month');
+
+        // Inicializa as datas encontradas dentro do ciclo
+        $dates = [];
+
+        // Percorre todos os meses tocados pelo ciclo
+        while ($cursor < $endDate) {
+            // Calcula a data do template no mes atual
+            $date = $this->dateInMonth($cursor, $day);
+
+            // Verifica se a data calculada pertence ao intervalo do ciclo
+            if ($date >= $startDate && $date < $endDate) {
+                // Define a ocorrencia do template dentro do ciclo
+                $dates[] = $date->format('Y-m-d');
+            }
+
+            // Define o proximo mes a ser avaliado
+            $cursor = $cursor->modify('first day of next month');
+        }
+
+        // Retorna as datas mensais localizadas dentro do ciclo
+        return $dates;
     }
 
     /**
@@ -317,5 +554,20 @@ class DashboardService {
      */
     private function addDays(string $date, int $days): string {
         return (new \DateTimeImmutable($date))->modify("+$days days")->format('Y-m-d');
+    }
+
+    /**
+     * Obtem uma data segura dentro do mes informado.
+     * @return \DateTimeImmutable
+     */
+    private function dateInMonth(\DateTimeImmutable $baseDate, int $day): \DateTimeImmutable {
+        // Calcula o ultimo dia valido do mes
+        $lastDay = (int) $baseDate->format('t');
+
+        // Define o dia sem ultrapassar o limite do mes
+        $safeDay = min($day, $lastDay);
+
+        // Retorna a data ajustada para o dia valido do mes
+        return $baseDate->setDate((int) $baseDate->format('Y'), (int) $baseDate->format('m'), $safeDay);
     }
 }

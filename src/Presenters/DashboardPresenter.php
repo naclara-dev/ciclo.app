@@ -145,7 +145,10 @@ class DashboardPresenter {
             $transaction['amount_label'] = $this->formatMoneyWithExplicitSignal($signedAmount);
             $transaction['form_amount_label'] = number_format($amount, 2, ',', '.');
             $transaction['date_label'] = $this->formatShortDate($transaction['occurrence_date']);
-            $transaction['status_label'] = !empty($transaction['paid']) ? 'pago' : 'pendente';
+            // Define o status visual diferenciando lancamentos previstos dos reais
+            $transaction['status_label'] = !empty($transaction['is_virtual'])
+                ? 'previsto'
+                : (!empty($transaction['paid']) ? 'pago' : 'pendente');
             $transaction['category'] = [
                 'id' => $transaction['category_id'] ?: '',
                 'name' => $categoryName,
@@ -171,6 +174,9 @@ class DashboardPresenter {
             $transaction['meta_label'] = $entityName
                 ? $categoryName . ' - ' . $entityName . ' - ' . $walletName
                 : $categoryName . ' - ' . $walletName;
+            // Define a origem visual usada pela dashboard e pelo modal
+            $transaction['source'] = !empty($transaction['source']) ? $transaction['source'] : 'transaction';
+            $transaction['is_virtual'] = !empty($transaction['is_virtual']);
 
             return $transaction;
         }, $transactions);

@@ -48,20 +48,40 @@
         });
     });
 
-    // Intercepta cliques nas transações editáveis
+    // Intercepta cliques nos lancamentos editaveis
     document.addEventListener('click', function (event) {
-        // Carrega o botão de edição mais próximo do clique
+        // Carrega o botao de edicao mais proximo do clique
         const button = event.target.closest('[data-edit-transaction]');
 
-        // Verifica se o clique ocorreu em uma transação
-        if (!button || !button.dataset.transactionId) {
-            // Interrompe quando não existe uma transação para editar
+        // Verifica se o clique ocorreu em um lancamento editavel
+        if (!button) {
+            // Interrompe quando nao existe um lancamento para editar
             return;
         }
 
+        // Verifica se o lancamento previsto possui dados embutidos
+        if (button.dataset.transactionPayload) {
+            // Aborta edicao real em andamento antes de abrir uma previsao
+            if (activeFetchController) {
+                // Interrompe a requisicao pendente para evitar sobrescrita tardia
+                activeFetchController.abort();
+                activeFetchController = null;
+            }
+
+            // Preenche o modal com a previsao sem buscar uma transacao real
+            fillScheduledTransaction(button.dataset.transactionPayload);
+            return;
+        }
+
+        // Verifica se existe uma transacao real para carregar
+        if (!button.dataset.transactionId) {
+            // Interrompe quando nao existe uma transacao para editar
+            return;
+        }
+
+        // Carrega a transacao real pelo endpoint JSON
         fetchTransaction(button.dataset.transactionId);
     });
-
     // Aplica os dados relacionados quando o usuário escolhe um template
     selects.template.element.addEventListener('flux:select-change', function (event) {
         // Verifica se a opção selecionada possui dados de template
@@ -163,6 +183,23 @@
         selects['payment-method'].set(transaction.payment_method_id, '', false);
     }
 
+    // Preenche o formulario com uma previsao criada a partir de template
+    function fillScheduledTransaction(payload) {
+        try {
+            // Carrega os dados serializados no botao da dashboard
+            const transaction = JSON.parse(payload || '{}');
+
+            // Prepara o formulario como uma nova transacao real
+            resetForm();
+            fillForm(transaction);
+            form.elements.id.value = '';
+            setModalTitle('confirmar previsao');
+            transactionModal.open();
+        } catch (error) {
+            // Interrompe a abertura quando os dados da previsao estao invalidos
+            transactionModal.close();
+        }
+    }
     // Define o título exibido no modal
     function setModalTitle(title) {
         // Verifica se o título está disponível

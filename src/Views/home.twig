@@ -27,7 +27,6 @@
         </div>
 
         <div class="mt-5">
-            {# Exibe o feedback temporario das acoes da dashboard #}
             {% if dashboard_feedback|default(null) %}
                 <div class="mb-4 flex items-start gap-3 rounded border border-[var(--lilac)] bg-[rgba(193,127,215,0.08)] px-3 py-3 text-sm text-primary" role="alert">
                     <i class="fa-solid fa-circle-check mt-0.5"></i>
@@ -45,29 +44,17 @@
                 </div>
             </div>
 
-            {# Agrupa as acoes principais da dashboard em uma toolbar expansivel #}
-            <div class="mt-4 flex flex-wrap items-center gap-1" aria-label="Acoes da dashboard">
-                {# Recarrega os dados exibidos na dashboard #}
+            <div class="mt-4 flex flex-wrap items-center gap-1" aria-label="Ações da dashboard">
                 <button type="button" class="group flex h-9 items-center gap-1.5 overflow-hidden rounded px-2 text-sm text-primary transition hover:bg-[var(--yellow)] focus-visible:bg-[var(--yellow)] focus-visible:outline-none disabled:cursor-wait disabled:opacity-50" title="Atualizar dados" aria-label="Atualizar dados" data-refresh-home>
                     <i class="fa-solid fa-rotate-right flex w-5 justify-center"></i>
                     <span class="max-w-0 -translate-x-1 overflow-hidden whitespace-nowrap opacity-0 transition-all duration-200 ease-out group-hover:max-w-28 group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:max-w-28 group-focus-visible:translate-x-0 group-focus-visible:opacity-100">recarregar</span>
                 </button>
 
-                {# Abre a versao do ciclo preparada para impressao #}
                 <button type="button" class="group flex h-9 items-center gap-1.5 overflow-hidden rounded px-2 text-sm text-primary transition hover:bg-[var(--yellow)] focus-visible:bg-[var(--yellow)] focus-visible:outline-none disabled:cursor-wait disabled:opacity-50" title="Exportar ciclo" aria-label="Exportar ciclo" data-print-cycle data-print-url="{{ base_url }}/dashboard/cycle/print/">
                     <i class="fa-solid fa-download flex w-5 justify-center"></i>
                     <span class="max-w-0 -translate-x-1 overflow-hidden whitespace-nowrap opacity-0 transition-all duration-200 ease-out group-hover:max-w-24 group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:max-w-24 group-focus-visible:translate-x-0 group-focus-visible:opacity-100">exportar</span>
                 </button>
 
-                {# Envia a solicitacao de geracao de registros periodicos #}
-                <form method="post" action="{{ base_url }}/dashboard/periodic/generate/" data-confirm-form data-confirm-preset="periodic">
-                    <button type="submit" class="group flex h-9 items-center gap-1.5 overflow-hidden rounded px-2 text-sm text-primary transition hover:bg-[var(--yellow)] focus-visible:bg-[var(--yellow)] focus-visible:outline-none disabled:cursor-wait disabled:opacity-60" title="Inserir previsoes" aria-label="Inserir previsoes">
-                        <i class="fa-solid fa-calendar-plus flex w-5 justify-center"></i>
-                        <span class="max-w-0 -translate-x-1 overflow-hidden whitespace-nowrap opacity-0 transition-all duration-200 ease-out group-hover:max-w-40 group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:max-w-40 group-focus-visible:translate-x-0 group-focus-visible:opacity-100">inserir previs&otilde;es</span>
-                    </button>
-                </form>
-
-                {# Envia a solicitacao de encerramento do ciclo atual #}
                 <form method="post" action="{{ base_url }}/dashboard/cycle/close/" data-confirm-form data-confirm-preset="close-cycle">
                     <button type="submit" class="group flex h-9 items-center gap-1.5 overflow-hidden rounded px-2 text-sm text-primary transition hover:bg-[var(--yellow)] focus-visible:bg-[var(--yellow)] focus-visible:outline-none disabled:cursor-wait disabled:opacity-60" title="Encerrar ciclo" aria-label="Encerrar ciclo">
                         <i class="fa-solid fa-circle-check flex w-5 justify-center"></i>
@@ -78,7 +65,7 @@
         </div>
     </section>
 
-    <section class="mt-8 grid grid-cols-1 gap-8 2xl:grid-cols-[minmax(0,1fr)_320px]">
+    <section class="mt-8">
         <div class="space-y-6">
             <nav class="flex items-center justify-between gap-3" aria-label="Navegar entre ciclos">
                 <button type="button" class="flex items-center gap-2 rounded px-3 py-2 text-sm text-primary transition hover:bg-[var(--yellow)] disabled:cursor-wait disabled:opacity-50" data-cycle-previous>
@@ -91,7 +78,6 @@
                 </button>
             </nav>
 
-            {# Agrupa os filtros aplicados somente sobre os lançamentos do ciclo exibido #}
             <div class="flex flex-wrap items-end gap-3 rounded border border-[var(--yellow)] bg-[#fffff5] p-3" aria-label="Filtros de lançamentos">
                 <div class="min-w-[150px] flex-1" data-select data-select-placeholder="todas" data-cycle-filter-entity>
                     <label class="text-xs text-secondary">entidade</label>
@@ -168,18 +154,20 @@
                 </header>
 
                 <div class="mt-5 space-y-3 pl-0 transition-[max-height,margin-top] duration-300 ease-in-out md:pl-20" data-cycle-content>
-                    {# Percorre as transações e separa a exclusão da ação de edição #}
                     {% for transaction in dashboard.currentCycle.transactions %}
                         <div class="group relative flex items-center gap-2 md:block">
-                            {# Envia a exclusão pelo modal de confirmação compartilhado #}
-                            <form method="post" action="{{ base_url }}/transactions/delete/" class="shrink-0 md:absolute md:-left-12 md:top-1/2 md:-translate-y-1/2">
-                                <input type="hidden" name="id" value="{{ transaction.id|e('html_attr') }}">
-                                <button type="submit" class="flex h-9 w-9 cursor-pointer items-center justify-center text-secondary" aria-label="Excluir transação" title="Excluir transação" data-delete-button>
-                                    <i class="fa-regular fa-trash-can"></i>
-                                </button>
-                            </form>
+                            {% if not transaction.is_virtual %}
+                                <form method="post" action="{{ base_url }}/transactions/delete/" class="shrink-0 md:absolute md:-left-12 md:top-1/2 md:-translate-y-1/2">
+                                    <input type="hidden" name="id" value="{{ transaction.id|e('html_attr') }}">
+                                    <button type="submit" class="flex h-9 w-9 cursor-pointer items-center justify-center text-secondary" aria-label="Excluir transacao" title="Excluir transacao" data-delete-button>
+                                        <i class="fa-regular fa-trash-can"></i>
+                                    </button>
+                                </form>
+                            {% else %}
+                                <span class="hidden h-9 w-9 shrink-0 md:absolute md:-left-12 md:top-1/2 md:block md:-translate-y-1/2"></span>
+                            {% endif %}
 
-                            <button type="button" class="grid min-w-0 flex-1 gap-3 rounded border border-[var(--yellow)] bg-[var(--light)] p-3 text-left md:w-full {% if transaction.paid %}opacity-80{% endif %} sm:grid-cols-[1fr_auto] sm:items-center" data-edit-transaction data-transaction-id="{{ transaction.id|e('html_attr') }}">
+                            <button type="button" class="grid min-w-0 flex-1 gap-3 rounded border border-[var(--yellow)] bg-[var(--light)] p-3 text-left md:w-full {% if transaction.paid %}opacity-80{% endif %} sm:grid-cols-[1fr_auto] sm:items-center" data-edit-transaction data-transaction-id="{{ transaction.id|default('')|e('html_attr') }}" {% if transaction.is_virtual %}data-transaction-payload="{{ transaction|json_encode|e('html_attr') }}"{% endif %}>
                                 <div class="flex items-center gap-3">
                                     <div class="flex h-10 w-10 items-center justify-center rounded-full text-light" style="background-color: {{ transaction.category.color|e('html_attr') }}">
                                         <i class="{{ transaction.category.icon|e('html_attr') }}"></i>
@@ -192,7 +180,7 @@
                                 <div class="flex items-center justify-between gap-4 sm:block sm:text-right">
                                     <span class="text-xs text-secondary">{{ transaction.date_label }}</span>
                                     <strong class="block text-sm {% if transaction.type == 'I' %}text-primary{% else %}text-[var(--dark)]{% endif %}">{{ transaction.amount_label }}</strong>
-                                    <span class="badge">{{ transaction.status_label }}</span>
+                                    <span class="badge {% if transaction.is_virtual %}badge-scheduled{% endif %}">{{ transaction.status_label }}</span>
                                 </div>
                             </button>
                         </div>
@@ -204,14 +192,11 @@
                 </div>
             </article>
 
-            {# Exibe os resumos de despesas do ciclo selecionado #}
             <article class="rounded border border-[var(--yellow)] bg-[#fffff5] p-5">
                 <div class="grid gap-8 md:grid-cols-2">
-                    {# Agrupa as despesas por entidade #}
                     <section>
                         <h2 class="font-semibold text-primary">gastos por entidade</h2>
                         <div class="mt-4 space-y-4" data-entity-summary>
-                            {# Percorre os totais calculados para cada entidade #}
                             {% for item in dashboard.currentCycle.entitySummary %}
                                 <div>
                                     <div class="flex items-center justify-between gap-4 text-sm">
@@ -228,11 +213,9 @@
                         </div>
                     </section>
 
-                    {# Agrupa as despesas por categoria #}
                     <section>
                         <h2 class="font-semibold text-primary">gastos por categoria</h2>
                         <div class="mt-4 space-y-4" data-category-summary>
-                            {# Percorre os totais calculados para cada categoria #}
                             {% for item in dashboard.currentCycle.categorySummary %}
                                 <div>
                                     <div class="flex items-center justify-between gap-4 text-sm">
@@ -251,34 +234,10 @@
                 </div>
             </article>
         </div>
-
-        <aside class="space-y-4 2xl:min-w-[320px]">
-            <div class="rounded border border-[var(--yellow)] bg-[#fffff5] p-4">
-                <h2 class="font-semibold text-primary">próximos marcos</h2>
-                <div class="mt-4 space-y-3">
-                    {% for milestone in dashboard.milestones %}
-                        <div class="flex items-center justify-between gap-3">
-                            <div>
-                                <p class="text-sm font-medium">{{ milestone.title }}</p>
-                                <p class="text-xs text-secondary">{{ milestone.dateLabel }}</p>
-                            </div>
-                            <strong class="text-sm {% if milestone.type == 'I' %}text-primary{% endif %}">{{ milestone.amountLabel }}</strong>
-                        </div>
-                    {% else %}
-                        <p class="text-sm text-secondary">nenhum marco previsto.</p>
-                    {% endfor %}
-                </div>
-            </div>
-
-            <button type="button" class="modal-toggle fixed bottom-24 right-5 flex h-14 w-14 cursor-pointer items-center justify-center rounded-full bg-[var(--yellow)] text-2xl text-[var(--lilac)] shadow-lg md:hidden" data-modal-target="#transaction-modal" aria-label="Novo registro">
-                <i class="fa-solid fa-plus"></i>
-            </button>
-        </aside>
     </section>
 {% endblock %}
 
 {% block scripts %}
-    {# Disponibiliza as transações iniciais para os filtros client-side da dashboard #}
     <script type="application/json" data-cycle-initial-transactions>{{ dashboard.currentCycle.transactions|json_encode|raw }}</script>
     <script src="{{ base_url }}/assets/js/home.js"></script>
 {% endblock %}

@@ -13,13 +13,13 @@
                         <i class="fa-regular fa-circle-question"></i>
                     </button>
                     <div id="templates-info-hint" class="info-hint" role="tooltip">
-                        modelos base para movimentações financeiras recorrentes.
-                        possuem uma frequência definida, permitindo a inserção automática em cada ciclo.               
+                        modelos base para lancamentos mensais recorrentes.
+                        aparecem como previstos na dashboard pelo dia mensal escolhido.
                     </div>
                 </div>
             </div>
             <p class="text-sm mt-2">
-                defina modelos personalizados para lançamentos periódicos.
+                defina modelos personalizados para lancamentos mensais.
             </p>
         </div> 
         <div class="flex justify-end"> 
@@ -43,7 +43,7 @@
                         <div class="manage-card-text">
                             {{ template.title }}
                             <p class="mt-1 text-xs text-gray-400">
-                                proxima execução: {{ template.next_run_date|date('d/m/Y') }}
+                                todo dia {{ template.month_day }}
                             </p>
                         </div> 
                     </div>       
@@ -68,7 +68,7 @@
             <div class="flex items-center justify-between px-6 py-4">
                 <div>
                     <h2 class="text-xl font-bold text-primary" data-template-modal-title>novo template</h2>
-                    <p class="mt-1 text-xs text-[var(--dark)] opacity-70">informe origem, destino, valor e periodicidade.</p>
+                    <p class="mt-1 text-xs text-[var(--dark)] opacity-70">informe origem, destino, valor e dia mensal.</p>
                 </div>
                 <button type="button" class="modal-close flex h-9 w-9 items-center justify-center rounded text-primary transition hover:bg-[var(--yellow)]" aria-label="Fechar">
                     <i class="fa-solid fa-xmark"></i>
@@ -161,36 +161,12 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 gap-4 sm:grid-cols-[110px_1fr_110px]">
-                    <div class="form-group">
-                        <label for="template-interval-value">intervalo</label>
-                        <input id="template-interval-value" name="interval_value" type="number" min="1" value="1" data-type="required" class="mt-1 h-[29px] w-full bg-transparent leading-[21px] outline-none" data-template-interval-input>
-                    </div>
-
-                    {# Declara o combobox de frequência do template #}
-                    <div class="form-group" data-select data-select-name="frequency" data-select-placeholder="escolha uma frequencia">
-                        <label>frequencia</label>
-                        <input type="hidden" name="frequency_id" data-type="required" data-select-input>
-                        <button type="button" class="mt-1 flex h-[29px] w-full items-center justify-between rounded border-b-[1.5px] border-[var(--lilac)] bg-transparent px-[7px] py-[3px] text-left leading-[21px] transition hover:border-[var(--purple)]" data-select-toggle aria-expanded="false">
-                            <span data-select-label class="text-sm">escolha uma frequencia</span>
-                            <i class="fa-solid fa-chevron-down text-primary"></i>
-                        </button>
-                        <div class="mt-2 max-h-0 overflow-hidden rounded border border-transparent bg-[#fffff5] opacity-0 shadow-lg transition-all duration-200" data-select-menu>
-                            {% for frequency in frequencies %}
-                                <button type="button" class="flex w-full items-center rounded px-3 py-2 text-left text-sm transition hover:bg-[var(--yellow)] hover:text-primary" data-select-option data-value="{{ frequency.id|e('html_attr') }}" data-value-label="{{ frequency.name|e('html_attr') }}" aria-selected="false">
-                                    {{ frequency.name }}
-                                </button>
-                            {% endfor %}
-                        </div>
-                    </div>
-
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
                     <div class="form-group">
                         <label for="template-month-day">dia do mês</label>
                         <input id="template-month-day" name="month_day" type="number" min="1" max="31" value="1" data-type="required" class="mt-1 h-[29px] w-full bg-transparent leading-[21px] outline-none" data-template-month-day-input>
                     </div>
-                </div>
-
-                <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+    
                     <div class="form-group">
                         <label for="template-start-date">início</label>
                         <input id="template-start-date" name="start_date" type="date" data-type="required" class="mt-1 h-[29px] w-full bg-transparent leading-[21px] outline-none" data-template-start-date-input>
@@ -198,10 +174,6 @@
                     <div class="form-group">
                         <label for="template-end-date">fim</label>
                         <input id="template-end-date" name="end_date" type="date" class="mt-1 h-[29px] w-full bg-transparent leading-[21px] outline-none" data-template-end-date-input>
-                    </div>
-                    <div class="form-group">
-                        <label for="template-next-run-date">próxima execução</label>
-                        <input id="template-next-run-date" name="next_run_date" type="date" class="mt-1 h-[29px] w-full bg-transparent leading-[21px] outline-none" data-template-next-run-date-input>
                     </div>
                 </div>
 

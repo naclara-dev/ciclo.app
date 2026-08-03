@@ -679,43 +679,20 @@
     }
 
     function createTransactionButton(transaction) {
-        // Inicializa a linha que separa exclusão e edição
+        // Inicializa a linha que separa acao lateral e edicao
         const wrapper = document.createElement('div');
         wrapper.className = 'group relative flex items-center gap-2 md:block';
 
-        // Inicializa o formulário usado pelo modal de confirmação
-        const deleteForm = document.createElement('form');
-        deleteForm.method = 'post';
-        deleteForm.action = card.dataset.transactionDeleteUrl || '';
-        deleteForm.className = 'shrink-0 md:absolute md:-left-12 md:top-1/2 md:-translate-y-1/2';
+        // Inicializa a acao lateral do lancamento
+        const sideAction = createTransactionSideAction(transaction);
 
-        // Define o identificador enviado para exclusão
-        const deleteInput = document.createElement('input');
-        deleteInput.type = 'hidden';
-        deleteInput.name = 'id';
-        deleteInput.value = transaction.id || '';
-
-        // Inicializa o botão de exclusão da transação
-        const deleteButton = document.createElement('button');
-        deleteButton.type = 'submit';
-        deleteButton.className = 'flex h-9 w-9 cursor-pointer items-center justify-center rounded text-secondary transition hover:bg-[var(--yellow)] hover:text-primary';
-        deleteButton.setAttribute('data-delete-button', '');
-        deleteButton.setAttribute('aria-label', 'Excluir transação');
-        deleteButton.title = 'Excluir transação';
-
-        // Define o ícone da ação de exclusão
-        const deleteIcon = document.createElement('i');
-        deleteIcon.className = 'fa-regular fa-trash-can';
-        deleteButton.appendChild(deleteIcon);
-        deleteForm.append(deleteInput, deleteButton);
-
-        // Inicializa o card clicável usado para edição
+        // Inicializa o card clicavel usado para edicao
         const button = document.createElement('button');
         button.type = 'button';
         button.className = 'grid min-w-0 flex-1 gap-3 rounded border border-[var(--yellow)] bg-[var(--light)] p-3 text-left md:w-full sm:grid-cols-[1fr_auto] sm:items-center';
         button.setAttribute('data-edit-transaction', '');
 
-        // Verifica se a transação deve receber destaque visual de pagamento
+        // Verifica se a transacao deve receber destaque visual de pagamento
         if (isTransactionPaid(transaction)) {
             button.classList.add('opacity-80');
         }
@@ -762,19 +739,67 @@
 
         const status = document.createElement('span');
         status.className = 'badge';
+        if (transaction.is_virtual) {
+            status.classList.add('badge-scheduled');
+        }
         status.textContent = transaction.status_label;
         summary.append(date, amount, status);
 
         button.append(identity, summary);
-        wrapper.append(deleteForm, button);
+        wrapper.append(sideAction, button);
 
         return wrapper;
     }
 
-    function setTransactionData(button, transaction) {
-        button.dataset.transactionId = transaction.id || '';
+    function createTransactionSideAction(transaction) {
+        // Verifica se o lancamento previsto deve esconder a lixeira
+        if (transaction.is_virtual) {
+            // Reserva o espaco visual usado pela acao lateral dos lancamentos reais
+            const placeholder = document.createElement('span');
+            placeholder.className = 'hidden h-9 w-9 shrink-0 md:absolute md:-left-12 md:top-1/2 md:block md:-translate-y-1/2';
+
+            return placeholder;
+        }
+
+        // Inicializa o formulario usado pelo modal de confirmacao
+        const deleteForm = document.createElement('form');
+        deleteForm.method = 'post';
+        deleteForm.action = card.dataset.transactionDeleteUrl || '';
+        deleteForm.className = 'shrink-0 md:absolute md:-left-12 md:top-1/2 md:-translate-y-1/2';
+
+        // Define o identificador enviado para exclusao
+        const deleteInput = document.createElement('input');
+        deleteInput.type = 'hidden';
+        deleteInput.name = 'id';
+        deleteInput.value = transaction.id || '';
+
+        // Inicializa o botao de exclusao da transacao
+        const deleteButton = document.createElement('button');
+        deleteButton.type = 'submit';
+        deleteButton.className = 'flex h-9 w-9 cursor-pointer items-center justify-center rounded text-secondary transition hover:bg-[var(--yellow)] hover:text-primary';
+        deleteButton.setAttribute('data-delete-button', '');
+        deleteButton.setAttribute('aria-label', 'Excluir transacao');
+        deleteButton.title = 'Excluir transacao';
+
+        // Define o icone da acao de exclusao
+        const deleteIcon = document.createElement('i');
+        deleteIcon.className = 'fa-regular fa-trash-can';
+        deleteButton.appendChild(deleteIcon);
+        deleteForm.append(deleteInput, deleteButton);
+
+        return deleteForm;
     }
 
+    function setTransactionData(button, transaction) {
+        // Define o identificador da transacao real quando existir
+        button.dataset.transactionId = transaction.id || '';
+
+        // Verifica se o lancamento veio de um template previsto
+        if (transaction.is_virtual) {
+            // Define os dados usados para abrir o modal sem buscar uma transacao real
+            button.dataset.transactionPayload = JSON.stringify(transaction);
+        }
+    }
     function initializeCollapse() {
         if (!toggle || !content || !icon) {
             return;

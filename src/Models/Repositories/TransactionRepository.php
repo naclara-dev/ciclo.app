@@ -133,6 +133,18 @@ class TransactionRepository extends Repository
         return (float) $stmt->fetchColumn();
     }
 
+    public function sumPendingExpensesInCycle(int $userId, string $startDate, string $endDate): float {
+        // Calcula as despesas pendentes pela data de ocorrencia do ciclo
+        $query = "SELECT COALESCE(SUM(amount), 0) FROM $this->table WHERE user_id = :user_id AND type = 'E' AND paid = 0 AND occurrence_date >= :start_date AND occurrence_date < :end_date";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':user_id', $userId, \PDO::PARAM_INT);
+        $stmt->bindValue(':start_date', $startDate);
+        $stmt->bindValue(':end_date', $endDate);
+        $stmt->execute();
+
+        return (float) $stmt->fetchColumn();
+    }
+
     public function markCycleAsPaid(int $userId, string $startDate, string $endDate, string $paidAt): int
     {
         // Define todas as transacoes pendentes do ciclo como pagas
