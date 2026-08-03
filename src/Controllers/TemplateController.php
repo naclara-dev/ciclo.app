@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Core\Session;
 use App\Models\Repositories\TemplateRepository;
+use App\Models\Repositories\TransactionRepository;
 
 class TemplateController extends Controller {
     public function find() {
@@ -46,9 +47,13 @@ class TemplateController extends Controller {
         $this->requireAuth();
 
         $id = (int) $_POST["id"];
+        $userID = Session::get('user_id');
+        $transactionRepository = new TransactionRepository;
+        $transactionRepository->unlinkTemplateFromUser($userID, $id);
+
         $repository = new TemplateRepository;
         $repository->delete($id, [
-            'user_id' => Session::get('user_id')
+            'user_id' => $userID
         ]);
 
         redirect('manage/templates');

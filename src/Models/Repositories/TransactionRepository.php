@@ -75,6 +75,16 @@ class TransactionRepository extends Repository
         return (int) $stmt->fetchColumn() > 0;
     }
 
+    public function unlinkTemplateFromUser(int $userId, int $templateId): bool {
+        // Define as transacoes geradas pelo template como lancamentos independentes
+        $query = "UPDATE $this->table SET template_id = NULL WHERE user_id = :user_id AND template_id = :template_id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':user_id', $userId, \PDO::PARAM_INT);
+        $stmt->bindValue(':template_id', $templateId, \PDO::PARAM_INT);
+
+        return $stmt->execute();
+    }
+
     public function sumAmountInCycle(int $userId, string $startDate, string $endDate): float
     {
         $query = "SELECT COALESCE(SUM(CASE WHEN type = 'I' THEN amount ELSE -amount END), 0) FROM $this->table WHERE user_id = :user_id AND occurrence_date >= :start_date AND occurrence_date < :end_date";
