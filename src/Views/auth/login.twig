@@ -21,7 +21,7 @@
                 seu app de gestão de gastos inteligente.
             </p>
         </article>
-        <article class="auth-column flex-1 flex flex-col justify-center items-center p-8">
+        <article class="auth-column flex-1 flex flex-col justify-center items-center p-5 sm:p-8">
             <nav class="tab-menu" aria-label="Alternar entre login e cadastro">
                 <a href="#" class="tab-item active" data-tab-target="login-form" aria-controls="login-form" aria-selected="true">
                     já tenho conta
@@ -33,47 +33,47 @@
 
             <img src="{{ base_url }}/assets/img/logo.svg" alt="Flux" class="w-25 auth-logo">
 
-            <div class="tab-stage w-100 mt-5">
-                <form action="{{ base_url }}/login/" method="post" id="login-form" class="tab is-active validate w-100">
+            <div class="tab-stage mt-5 w-full max-w-sm">
+                <form action="{{ base_url }}/login/" method="post" id="login-form" class="tab is-active validate w-full">
                     {% if login_error|default('') %}
                         <p class="mb-4 rounded border border-[var(--yellow)] bg-[#fffff5] px-3 py-2 text-sm text-primary">
                             {{ login_error }}
                         </p>
                     {% endif %}
 
-                    <div class="form-group w-100">
+                    <div class="form-group w-full">
                         <label for="email">e-mail</label>
-                        <input id="email" name="email" autocomplete="username" class="w-100" type="text" data-type="required|email|exists" data-exists-url="{{ base_url }}/login/check-email/">
+                        <input id="email" name="email" autocomplete="username" class="w-full" type="text" data-type="required|email|exists" data-exists-url="{{ base_url }}/login/check-email/">
                     </div>
-                    <div class="form-group w-100 mt-4">
+                    <div class="form-group w-full mt-4">
                         <label for="password">senha</label>
-                        <input id="password" name="password" autocomplete="current-password" class="w-100" type="password" data-type="required">
+                        <input id="password" name="password" autocomplete="current-password" class="w-full" type="password" data-type="required">
                     </div>
-                    <button type="submit" class="btn-secondary mt-4 w-100 font-bold">
+                    <button type="submit" class="btn-secondary mt-4 w-full font-bold">
                         <i class="fa-solid fa-arrow-right-to-bracket mr-2"></i>
                         entrar
                     </button>
 
-                    <a href="{{ base_url }}/login/google/" class="mt-3 flex w-100 items-center justify-center rounded border border-[var(--yellow)] bg-[#fffff5] px-3 py-2 font-bold text-primary transition hover:bg-[var(--yellow)]">
+                    <a href="{{ base_url }}/login/google/" class="mt-3 flex w-full items-center justify-center rounded border border-[var(--yellow)] bg-[#fffff5] px-3 py-2 font-bold text-primary transition hover:bg-[var(--yellow)]">
                         <i class="fa-brands fa-google mr-2"></i>
                         entrar com google
                     </a>
                 </form>
 
-                <form action="{{ base_url }}/register/" method="post" id="register-form" class="tab is-after validate w-100" hidden>
-                    <div class="form-group w-100">
+                <form action="{{ base_url }}/register/" method="post" id="register-form" class="tab is-after validate w-full" hidden>
+                    <div class="form-group w-full">
                         <label for="register-name">nome</label>
-                        <input id="register-name" name="name" class="w-100" type="text" data-type="required">
+                        <input id="register-name" name="name" class="w-full" type="text" data-type="required">
                     </div>
-                    <div class="form-group w-100 mt-4">
+                    <div class="form-group w-full mt-4">
                         <label for="register-email">e-mail</label>
-                        <input id="register-email" name="email" type="email" autocomplete="username" class="w-100" data-type="required|email|unique" data-unique-url="{{ base_url }}/register/check-email/">
+                        <input id="register-email" name="email" type="email" autocomplete="username" class="w-full" data-type="required|email|unique" data-unique-url="{{ base_url }}/register/check-email/">
                     </div>
-                    <div class="form-group w-100 mt-4">
+                    <div class="form-group w-full mt-4">
                         <label for="register-password">senha</label>
-                        <input id="register-password" name="password" autocomplete="new-password" class="w-100" type="password" data-type="required">
+                        <input id="register-password" name="password" autocomplete="new-password" class="w-full" type="password" data-type="required">
                     </div>
-                    <button type="submit" class="btn-secondary mt-4 w-100 font-bold">
+                    <button type="submit" class="btn-secondary mt-4 w-full font-bold">
                         <i class="fa-solid fa-user-plus mr-2"></i>
                         criar conta
                     </button>

@@ -426,11 +426,38 @@ h1 {
        right: 20px;
        bottom: 10px;
        left: 10px;
+       position: fixed;
     }
 
     .app-sidebar .nav-item {
         flex: 1 1 0;
         justify-content: center;
+    }
+
+    /* Define o botão de novo registro como ação flutuante no mobile */
+    .app-sidebar .nav-item-new {
+        position: absolute;
+        top: -3.75rem;
+        right: 0;
+        flex: 0 0 auto;
+    }
+
+    /* Destaca o atalho de criação sem apertar os demais itens */
+    .app-sidebar .nav-item-new .nav-item-link {
+        width: 3rem;
+        height: 3rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--yellow);
+        color: var(--lilac);
+        border-radius: 0.375rem;
+        box-shadow: 0 0.25rem 0.7rem rgba(176, 105, 217, 0.24);
+    }
+
+    /* Oculta a legenda do botão flutuante para preservar espaço */
+    .app-sidebar .nav-item-new .nav-item-label {
+        display: none;
     }
 
     .app-sidebar .nav-item:has(.nav-item-link.active) {
