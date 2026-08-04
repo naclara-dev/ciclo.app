@@ -41,14 +41,14 @@
 
             // Define o estado visual aberto
             menu.classList.remove('max-h-0', 'border-transparent', 'opacity-0', 'overflow-hidden');
-            menu.classList.add('max-h-56', 'border-[var(--yellow)]', 'opacity-100', 'overflow-y-auto');
+            menu.classList.add('max-h-56', 'border-[var(--secondary)]', 'opacity-100', 'overflow-y-auto');
             toggle.setAttribute('aria-expanded', 'true');
         }
 
         // Fecha o menu do combobox
         function close() {
             // Define o estado visual fechado
-            menu.classList.remove('max-h-56', 'border-[var(--yellow)]', 'opacity-100', 'overflow-y-auto');
+            menu.classList.remove('max-h-56', 'border-[var(--secondary)]', 'opacity-100', 'overflow-y-auto');
             menu.classList.add('max-h-0', 'border-transparent', 'opacity-0', 'overflow-hidden');
             toggle.setAttribute('aria-expanded', 'false');
         }
@@ -86,7 +86,7 @@
             // Verifica se o evento de mudança deve ser emitido
             if (emitChange !== false) {
                 // Emite os dados selecionados para regras específicas da tela
-                select.dispatchEvent(new CustomEvent('flux:select-change', {
+                select.dispatchEvent(new CustomEvent('ciclo:select-change', {
                     detail: {
                         value: input.value,
                         label: label.textContent,
@@ -221,7 +221,7 @@
     });
 
     // Expõe a API compartilhada para regras específicas das páginas
-    window.FluxSelect = {
+    window.CicloSelect = {
         create: create,
         get: get,
         closeAll: closeAll

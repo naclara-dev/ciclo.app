@@ -7,7 +7,7 @@
     const modalTitle = document.querySelector('[data-template-modal-title]');
 
     // Carrega o controlador compartilhado do modal
-    const templateModal = window.FluxModal ? window.FluxModal.get(modal) : null;
+    const templateModal = window.CicloModal ? window.CicloModal.get(modal) : null;
 
     // Define a URL usada para carregar os dados da edição
     const findUrl = modal ? modal.dataset.templateFindUrl : '';
@@ -126,12 +126,12 @@
     // Carrega um combobox do formulário pelo nome
     function getSelect(name) {
         // Verifica se a API compartilhada e o modal estão disponíveis
-        if (!window.FluxSelect || !modal) {
+        if (!window.CicloSelect || !modal) {
             // Interrompe a busca sem a estrutura compartilhada
             return null;
         }
 
-        return window.FluxSelect.get(modal.querySelector('[data-select-name="' + name + '"]'));
+        return window.CicloSelect.get(modal.querySelector('[data-select-name="' + name + '"]'));
     }
 
     // Formata um valor para o padrão monetário do formulário

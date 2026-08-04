@@ -1,11 +1,11 @@
-<dialog id="transaction-modal" class="modal fixed top-1/2 left-1/2 w-[min(92vw,760px)] -translate-x-1/2 -translate-y-1/2 scale-95 rounded-lg border border-[var(--yellow)] bg-[#fffff5] p-0 text-[var(--dark)] opacity-0 shadow-xl transition duration-200 backdrop:bg-[rgba(58,56,53,0.35)]" data-transaction-modal data-transaction-find-url="{{ base_url }}/transactions/find/" data-default-wallet-id="{{ transaction_settings.default_wallet_id|default('')|e('html_attr') }}" data-default-entity-id="{{ transaction_settings.default_entity_id|default('')|e('html_attr') }}" data-default-payment-method-id="{{ transaction_settings.default_payment_method_id|default('')|e('html_attr') }}" data-default-type="{{ transaction_settings.default_type|default('')|e('html_attr') }}">
+<dialog id="transaction-modal" class="modal fixed top-1/2 left-1/2 w-[min(92vw,760px)] -translate-x-1/2 -translate-y-1/2 scale-95 rounded-lg border border-[var(--secondary)] bg-[#fffff5] p-0 text-[var(--dark)] opacity-0 shadow-xl transition duration-200 backdrop:bg-[rgba(58,56,53,0.35)]" data-transaction-modal data-transaction-find-url="{{ base_url }}/transactions/find/" data-default-wallet-id="{{ transaction_settings.default_wallet_id|default('')|e('html_attr') }}" data-default-entity-id="{{ transaction_settings.default_entity_id|default('')|e('html_attr') }}" data-default-payment-method-id="{{ transaction_settings.default_payment_method_id|default('')|e('html_attr') }}" data-default-type="{{ transaction_settings.default_type|default('')|e('html_attr') }}">
     <form method="post" action="{{ base_url }}/transactions/store" class="validate" data-transaction-form>
         <div class="flex items-center justify-between px-6 py-4">
             <div>
                 <h2 class="text-xl font-bold text-primary" data-transaction-modal-title>nova transação</h2>
                 <p class="mt-1 text-xs text-[var(--dark)] opacity-70">registre uma movimentação financeira.</p>
             </div>
-            <button type="button" class="modal-close flex h-9 w-9 items-center justify-center rounded text-primary transition hover:bg-[var(--yellow)]" aria-label="Fechar">
+            <button type="button" class="modal-close flex h-9 w-9 items-center justify-center rounded text-primary transition hover:bg-[var(--secondary)]" aria-label="Fechar">
                 <i class="fa-solid fa-xmark"></i>
             </button>
         </div>
@@ -18,15 +18,15 @@
                 <div class="form-group" data-select data-select-name="type" data-select-placeholder="escolha o tipo">
                     <label>tipo</label>
                     <input type="hidden" name="type" data-type="required" data-select-input>
-                    <button type="button" class="mt-1 flex h-[29px] w-full items-center justify-between rounded border-b-[1.5px] border-[var(--lilac)] bg-transparent px-[7px] py-[3px] text-left leading-[21px] transition hover:border-[var(--purple)]" data-select-toggle aria-expanded="false">
+                    <button type="button" class="mt-1 flex h-[29px] w-full items-center justify-between rounded border-b-[1.5px] border-[var(--primary)] bg-transparent px-[7px] py-[3px] text-left leading-[21px] transition hover:border-[var(--primary-dark)]" data-select-toggle aria-expanded="false">
                         <span data-select-label class="text-sm">escolha o tipo</span>
                         <i class="fa-solid fa-chevron-down text-primary"></i>
                     </button>
                     <div class="mt-2 max-h-0 overflow-hidden rounded border border-transparent bg-[#fffff5] opacity-0 shadow-lg transition-all duration-200" data-select-menu>
-                        <button type="button" class="flex w-full items-center rounded px-3 py-2 text-left text-sm transition hover:bg-[var(--yellow)] hover:text-primary" data-select-option data-value="E" data-value-label="despesa" aria-selected="false">
+                        <button type="button" class="flex w-full items-center rounded px-3 py-2 text-left text-sm transition hover:bg-[var(--secondary)] hover:text-primary" data-select-option data-value="E" data-value-label="despesa" aria-selected="false">
                             saída
                         </button>
-                        <button type="button" class="flex w-full items-center rounded px-3 py-2 text-left text-sm transition hover:bg-[var(--yellow)] hover:text-primary" data-select-option data-value="I" data-value-label="receita" aria-selected="false">
+                        <button type="button" class="flex w-full items-center rounded px-3 py-2 text-left text-sm transition hover:bg-[var(--secondary)] hover:text-primary" data-select-option data-value="I" data-value-label="receita" aria-selected="false">
                             entrada
                         </button>
                     </div>
@@ -48,13 +48,13 @@
                 <div class="form-group" data-select data-select-name="wallet" data-select-placeholder="escolha uma wallet">
                     <label>wallet</label>
                     <input type="hidden" name="wallet_id" data-type="required" data-select-input>
-                    <button type="button" class="mt-1 flex h-[29px] w-full items-center justify-between rounded border-b-[1.5px] border-[var(--lilac)] bg-transparent px-[7px] py-[3px] text-left leading-[21px] transition hover:border-[var(--purple)]" data-select-toggle aria-expanded="false">
+                    <button type="button" class="mt-1 flex h-[29px] w-full items-center justify-between rounded border-b-[1.5px] border-[var(--primary)] bg-transparent px-[7px] py-[3px] text-left leading-[21px] transition hover:border-[var(--primary-dark)]" data-select-toggle aria-expanded="false">
                         <span data-select-label class="text-sm">escolha uma wallet</span>
                         <i class="fa-solid fa-chevron-down text-primary"></i>
                     </button>
                     <div class="mt-2 max-h-0 overflow-hidden rounded border border-transparent bg-[#fffff5] opacity-0 shadow-lg transition-all duration-200" data-select-menu>
                         {% for wallet in transaction_wallets|default([]) %}
-                            <button type="button" class="flex w-full items-center rounded px-3 py-2 text-left text-sm transition hover:bg-[var(--yellow)] hover:text-primary" data-select-option data-value="{{ wallet.id|e('html_attr') }}" data-value-label="{{ wallet.name|e('html_attr') }}" aria-selected="false">
+                            <button type="button" class="flex w-full items-center rounded px-3 py-2 text-left text-sm transition hover:bg-[var(--secondary)] hover:text-primary" data-select-option data-value="{{ wallet.id|e('html_attr') }}" data-value-label="{{ wallet.name|e('html_attr') }}" aria-selected="false">
                                 {{ wallet.name }}
                             </button>
                         {% endfor %}
@@ -65,13 +65,13 @@
                 <div class="form-group" data-select data-select-name="category" data-select-placeholder="escolha uma categoria">
                     <label>categoria</label>
                     <input type="hidden" name="category_id" data-select-input>
-                    <button type="button" class="mt-1 flex h-[29px] w-full items-center justify-between rounded border-b-[1.5px] border-[var(--lilac)] bg-transparent px-[7px] py-[3px] text-left leading-[21px] transition hover:border-[var(--purple)]" data-select-toggle aria-expanded="false">
+                    <button type="button" class="mt-1 flex h-[29px] w-full items-center justify-between rounded border-b-[1.5px] border-[var(--primary)] bg-transparent px-[7px] py-[3px] text-left leading-[21px] transition hover:border-[var(--primary-dark)]" data-select-toggle aria-expanded="false">
                         <span data-select-label class="text-sm">escolha uma categoria</span>
                         <i class="fa-solid fa-chevron-down text-primary"></i>
                     </button>
                     <div class="mt-2 max-h-0 overflow-hidden rounded border border-transparent bg-[#fffff5] opacity-0 shadow-lg transition-all duration-200" data-select-menu>
                         {% for category in transaction_categories|default([]) %}
-                            <button type="button" class="flex w-full items-center rounded px-3 py-2 text-left text-sm transition hover:bg-[var(--yellow)] hover:text-primary" data-select-option data-value="{{ category.id|e('html_attr') }}" data-value-label="{{ category.name|e('html_attr') }}" aria-selected="false">
+                            <button type="button" class="flex w-full items-center rounded px-3 py-2 text-left text-sm transition hover:bg-[var(--secondary)] hover:text-primary" data-select-option data-value="{{ category.id|e('html_attr') }}" data-value-label="{{ category.name|e('html_attr') }}" aria-selected="false">
                                 {{ category.name }}
                             </button>
                         {% endfor %}
@@ -82,13 +82,13 @@
                 <div class="form-group" data-select data-select-name="entity" data-select-placeholder="escolha uma entidade">
                     <label>entidade</label>
                     <input type="hidden" name="entity_id" data-select-input>
-                    <button type="button" class="mt-1 flex h-[29px] w-full items-center justify-between rounded border-b-[1.5px] border-[var(--lilac)] bg-transparent px-[7px] py-[3px] text-left leading-[21px] transition hover:border-[var(--purple)]" data-select-toggle aria-expanded="false">
+                    <button type="button" class="mt-1 flex h-[29px] w-full items-center justify-between rounded border-b-[1.5px] border-[var(--primary)] bg-transparent px-[7px] py-[3px] text-left leading-[21px] transition hover:border-[var(--primary-dark)]" data-select-toggle aria-expanded="false">
                         <span data-select-label class="text-sm">escolha uma entidade</span>
                         <i class="fa-solid fa-chevron-down text-primary"></i>
                     </button>
                     <div class="mt-2 max-h-0 overflow-hidden rounded border border-transparent bg-[#fffff5] opacity-0 shadow-lg transition-all duration-200" data-select-menu>
                         {% for entity in transaction_entities|default([]) %}
-                            <button type="button" class="flex w-full items-center rounded px-3 py-2 text-left text-sm transition hover:bg-[var(--yellow)] hover:text-primary" data-select-option data-value="{{ entity.id|e('html_attr') }}" data-value-label="{{ entity.name|e('html_attr') }}" aria-selected="false">
+                            <button type="button" class="flex w-full items-center rounded px-3 py-2 text-left text-sm transition hover:bg-[var(--secondary)] hover:text-primary" data-select-option data-value="{{ entity.id|e('html_attr') }}" data-value-label="{{ entity.name|e('html_attr') }}" aria-selected="false">
                                 {{ entity.name }}
                             </button>
                         {% endfor %}
@@ -101,13 +101,13 @@
                 <div class="form-group" data-select data-select-name="template" data-select-placeholder="sem template">
                     <label>template</label>
                     <input type="hidden" name="template_id" data-select-input>
-                    <button type="button" class="mt-1 flex h-[29px] w-full items-center justify-between rounded border-b-[1.5px] border-[var(--lilac)] bg-transparent px-[7px] py-[3px] text-left leading-[21px] transition hover:border-[var(--purple)]" data-select-toggle aria-expanded="false">
+                    <button type="button" class="mt-1 flex h-[29px] w-full items-center justify-between rounded border-b-[1.5px] border-[var(--primary)] bg-transparent px-[7px] py-[3px] text-left leading-[21px] transition hover:border-[var(--primary-dark)]" data-select-toggle aria-expanded="false">
                         <span data-select-label class="text-sm">sem template</span>
                         <i class="fa-solid fa-chevron-down text-primary"></i>
                     </button>
                     <div class="mt-2 max-h-0 overflow-hidden rounded border border-transparent bg-[#fffff5] opacity-0 shadow-lg transition-all duration-200" data-select-menu>
                         {% for template in transaction_templates|default([]) %}
-                            <button type="button" class="flex w-full items-center rounded px-3 py-2 text-left text-sm transition hover:bg-[var(--yellow)] hover:text-primary" data-select-option data-value="{{ template.id|e('html_attr') }}" data-value-label="{{ template.title|e('html_attr') }}" data-template-type="{{ template.type|e('html_attr') }}" data-template-wallet-id="{{ template.wallet.id|e('html_attr') }}" data-template-wallet-name="{{ template.wallet.name|e('html_attr') }}" data-template-category-id="{{ template.category.id|e('html_attr') }}" data-template-category-name="{{ template.category.name|e('html_attr') }}" data-template-entity-id="{{ template.entity.id|e('html_attr') }}" data-template-entity-name="{{ template.entity.name|e('html_attr') }}" data-template-amount="{{ template.amount|e('html_attr') }}" data-template-month-day="{{ template.month_day|e('html_attr') }}" data-template-defines-cycle="{{ template.defines_cycle|default(0)|e('html_attr') }}" aria-selected="false">
+                            <button type="button" class="flex w-full items-center rounded px-3 py-2 text-left text-sm transition hover:bg-[var(--secondary)] hover:text-primary" data-select-option data-value="{{ template.id|e('html_attr') }}" data-value-label="{{ template.title|e('html_attr') }}" data-template-type="{{ template.type|e('html_attr') }}" data-template-wallet-id="{{ template.wallet.id|e('html_attr') }}" data-template-wallet-name="{{ template.wallet.name|e('html_attr') }}" data-template-category-id="{{ template.category.id|e('html_attr') }}" data-template-category-name="{{ template.category.name|e('html_attr') }}" data-template-entity-id="{{ template.entity.id|e('html_attr') }}" data-template-entity-name="{{ template.entity.name|e('html_attr') }}" data-template-amount="{{ template.amount|e('html_attr') }}" data-template-month-day="{{ template.month_day|e('html_attr') }}" data-template-defines-cycle="{{ template.defines_cycle|default(0)|e('html_attr') }}" aria-selected="false">
                                 {{ template.title }}
                             </button>
                         {% endfor %}
@@ -118,13 +118,13 @@
                 <div class="form-group" data-select data-select-name="payment-method" data-select-placeholder="escolha uma forma">
                     <label>forma de pagamento</label>
                     <input type="hidden" name="payment_method_id" data-select-input>
-                    <button type="button" class="mt-1 flex h-[29px] w-full items-center justify-between rounded border-b-[1.5px] border-[var(--lilac)] bg-transparent px-[7px] py-[3px] text-left leading-[21px] transition hover:border-[var(--purple)]" data-select-toggle aria-expanded="false">
+                    <button type="button" class="mt-1 flex h-[29px] w-full items-center justify-between rounded border-b-[1.5px] border-[var(--primary)] bg-transparent px-[7px] py-[3px] text-left leading-[21px] transition hover:border-[var(--primary-dark)]" data-select-toggle aria-expanded="false">
                         <span data-select-label class="text-sm">escolha uma forma</span>
                         <i class="fa-solid fa-chevron-down text-primary"></i>
                     </button>
                     <div class="mt-2 max-h-0 overflow-hidden rounded border border-transparent bg-[#fffff5] opacity-0 shadow-lg transition-all duration-200" data-select-menu>
                         {% for method in transaction_payment_methods|default([]) %}
-                            <button type="button" class="flex w-full items-center rounded px-3 py-2 text-left text-sm transition hover:bg-[var(--yellow)] hover:text-primary" data-select-option data-value="{{ method.id|e('html_attr') }}" data-value-label="{{ method.name|e('html_attr') }}" aria-selected="false">
+                            <button type="button" class="flex w-full items-center rounded px-3 py-2 text-left text-sm transition hover:bg-[var(--secondary)] hover:text-primary" data-select-option data-value="{{ method.id|e('html_attr') }}" data-value-label="{{ method.name|e('html_attr') }}" aria-selected="false">
                                 {{ method.name }}
                             </button>
                         {% endfor %}
@@ -151,7 +151,7 @@
                 <label class="flex cursor-pointer items-center gap-3 text-sm text-[var(--dark)]">
                     <input type="hidden" name="paid" value="0">
                     <input type="checkbox" name="paid" value="1" class="peer sr-only" data-transaction-paid-input>
-                    <span class="flex h-5 w-5 items-center justify-center rounded border-[1.5px] border-[var(--lilac)] text-[0px] text-light transition peer-checked:bg-[var(--lilac)] peer-checked:text-xs">
+                    <span class="flex h-5 w-5 items-center justify-center rounded border-[1.5px] border-[var(--primary)] text-[0px] text-light transition peer-checked:bg-[var(--primary)] peer-checked:text-xs">
                         <i class="fa-solid fa-check"></i>
                     </span>
                     pago
@@ -160,7 +160,7 @@
                 <label class="flex cursor-pointer items-center gap-3 text-sm text-[var(--dark)]">
                     <input type="hidden" name="defines_cycle" value="0">
                     <input type="checkbox" name="defines_cycle" value="1" class="peer sr-only" data-transaction-defines-cycle-input>
-                    <span class="flex h-5 w-5 items-center justify-center rounded border-[1.5px] border-[var(--lilac)] text-[0px] text-light transition peer-checked:bg-[var(--lilac)] peer-checked:text-xs">
+                    <span class="flex h-5 w-5 items-center justify-center rounded border-[1.5px] border-[var(--primary)] text-[0px] text-light transition peer-checked:bg-[var(--primary)] peer-checked:text-xs">
                         <i class="fa-solid fa-check"></i>
                     </span>
                     define ciclo

@@ -1,6 +1,6 @@
 const confirmModalElement = document.querySelector('[data-confirm-modal]');
 // Carrega o controlador compartilhado do modal de confirmacao
-const confirmModal = window.FluxModal ? window.FluxModal.get(confirmModalElement) : null;
+const confirmModal = window.CicloModal ? window.CicloModal.get(confirmModalElement) : null;
 const confirmDeleteButton = confirmModalElement ? confirmModalElement.querySelector('[data-confirm-delete]') : null;
 const confirmTitle = confirmModalElement ? confirmModalElement.querySelector('[data-confirm-title]') : null;
 const confirmMessage = confirmModalElement ? confirmModalElement.querySelector('[data-confirm-message]') : null;
@@ -12,7 +12,7 @@ let pendingConfirmForm = null;
 // Define os textos originais do modal compartilhado
 const defaultConfirmContent = {
     title: confirmTitle ? confirmTitle.textContent : 'excluir registro?',
-    message: confirmMessage ? confirmMessage.textContent : 'cuidado! essa acao e permanente.',
+    message: confirmMessage ? confirmMessage.textContent : 'cuidado! essa ação é permanente.',
     icon: confirmIcon ? confirmIcon.className : 'fa-regular fa-trash-can',
     label: confirmLabel ? confirmLabel.textContent : 'excluir'
 };

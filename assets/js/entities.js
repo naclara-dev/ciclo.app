@@ -9,9 +9,9 @@
     const modalTitle = document.querySelector('[data-entity-modal-title]');
 
     // Carrega os controladores compartilhados do modal e do combobox
-    const entityModal = window.FluxModal ? window.FluxModal.get(modal) : null;
-    const typeSelect = window.FluxSelect && modal
-        ? window.FluxSelect.get(modal.querySelector('[data-select]'))
+    const entityModal = window.CicloModal ? window.CicloModal.get(modal) : null;
+    const typeSelect = window.CicloSelect && modal
+        ? window.CicloSelect.get(modal.querySelector('[data-select]'))
         : null;
 
     // Define a URL usada para carregar os dados da edição

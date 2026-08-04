@@ -1,11 +1,11 @@
 <div align="center">
 
-# Flux
+# Ciclo
 
 **A web app for managing personal finances.**
 **Um app web para gestão de finanças pessoais.**
 
-🌐 **Live:** [flux.naclara.dev](https://flux.naclara.dev)
+🌐 **Live:** [ciclo.naclara.dev](https://ciclo.naclara.dev)
 
 </div>
 
@@ -15,7 +15,7 @@
 
 ## 🇬🇧 English
 
-Flux helps you track income and expenses, organize them by wallets, categories
+Ciclo helps you track income and expenses, organize them by wallets, categories
 and entities, automate recurring entries with templates, and visualize your
 finances through a dashboard built around billing cycles.
 
@@ -69,8 +69,8 @@ index.php       front controller
 1. **Clone & install dependencies**
 
    ```bash
-   git clone https://github.com/naclara-dev/flux.git
-   cd flux
+   git clone https://github.com/naclara-dev/ciclo.app.git
+   cd ciclo.app
    composer install
    ```
 
@@ -79,13 +79,13 @@ index.php       front controller
    ```dotenv
    DB_HOST=localhost
    DB_PORT=3306
-   DB_NAME=flux
+   DB_NAME=ciclo
    DB_USER=root
    DB_PASS=
 
    GOOGLE_CLIENT_ID=your-google-client-id
    GOOGLE_CLIENT_SECRET=your-google-client-secret
-   GOOGLE_REDIRECT_URI=http://localhost/flux/login/google/callback/
+   GOOGLE_REDIRECT_URI=http://localhost/ciclo/login/google/callback/
    ```
 
 3. **Create the database** named to match `DB_NAME`, then run migrations and
@@ -112,7 +112,7 @@ Released under the [MIT License](LICENSE).
 
 ## 🇧🇷 Português
 
-O Flux ajuda você a acompanhar receitas e despesas, organizá-las por carteiras
+O Ciclo ajuda você a acompanhar receitas e despesas, organizá-las por carteiras
 (wallets), categorias e entidades, automatizar lançamentos recorrentes com
 templates e visualizar suas finanças por meio de um dashboard organizado por
 ciclos de cobrança.
@@ -170,8 +170,8 @@ index.php       front controller
 1. **Clone e instale as dependências**
 
    ```bash
-   git clone https://github.com/naclara-dev/flux.git
-   cd flux
+   git clone https://github.com/naclara-dev/ciclo.app.git
+   cd ciclo
    composer install
    ```
 
@@ -180,13 +180,13 @@ index.php       front controller
    ```dotenv
    DB_HOST=localhost
    DB_PORT=3306
-   DB_NAME=flux
+   DB_NAME=ciclo
    DB_USER=root
    DB_PASS=
 
    GOOGLE_CLIENT_ID=seu-google-client-id
    GOOGLE_CLIENT_SECRET=seu-google-client-secret
-   GOOGLE_REDIRECT_URI=http://localhost/flux/login/google/callback/
+   GOOGLE_REDIRECT_URI=http://localhost/ciclo/login/google/callback/
    ```
 
 3. **Crie o banco de dados** com o nome definido em `DB_NAME` e rode as

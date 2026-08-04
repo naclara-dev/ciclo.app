@@ -9,7 +9,7 @@
                 </h1>
                 {# Define a dica contextual da tela de categorias #}
                 <div class="info-hint-wrapper" data-info-hint>
-                    <button type="button" class="flex h-7 w-7 items-center justify-center rounded text-secondary transition hover:text-[var(--lilac)] focus-visible:bg-[var(--lilac)] focus-visible:outline-none" aria-label="Mostrar explicação sobre categorias" aria-describedby="categories-info-hint" aria-expanded="false" data-info-hint-toggle>
+                    <button type="button" class="flex h-7 w-7 items-center justify-center rounded text-secondary transition hover:text-[var(--primary)] focus-visible:bg-[var(--primary)] focus-visible:outline-none" aria-label="Mostrar explicação sobre categorias" aria-describedby="categories-info-hint" aria-expanded="false" data-info-hint-toggle>
                         <i class="fa-regular fa-circle-question"></i>
                     </button>
                     <div id="categories-info-hint" class="info-hint" role="tooltip">
@@ -59,14 +59,14 @@
         {% endfor %}  
     </section>
 
-    <dialog id="category-modal" class="modal fixed top-1/2 left-1/2 w-[min(92vw,650px)] -translate-x-1/2 -translate-y-1/2 scale-95 rounded-lg border border-[var(--yellow)] bg-[#fffff5] p-0 text-[var(--dark)] opacity-0 shadow-xl transition duration-200 backdrop:bg-[rgba(58,56,53,0.35)]" data-category-modal data-icons-url="{{ base_url }}/assets/vendor/fontawesome/icons.json">
+    <dialog id="category-modal" class="modal fixed top-1/2 left-1/2 w-[min(92vw,650px)] -translate-x-1/2 -translate-y-1/2 scale-95 rounded-lg border border-[var(--secondary)] bg-[#fffff5] p-0 text-[var(--dark)] opacity-0 shadow-xl transition duration-200 backdrop:bg-[rgba(58,56,53,0.35)]" data-category-modal data-icons-url="{{ base_url }}/assets/vendor/fontawesome/icons.json">
         <form method="post" action="{{ base_url }}/manage/categories/store" class="validate" data-category-form>
             <div class="flex items-center justify-between px-6 py-4">
                 <div>
                     <h2 class="text-xl font-medium text-primary font-bold" data-category-modal-title>nova categoria</h2>
                     <p class="mt-1 text-xs text-[var(--dark)] opacity-70">escolha nome, cor e ícone.</p>
                 </div>
-                <button type="button" class="modal-close flex h-9 w-9 items-center justify-center rounded text-primary transition hover:bg-[var(--yellow)]" aria-label="Fechar">
+                <button type="button" class="modal-close flex h-9 w-9 items-center justify-center rounded text-primary transition hover:bg-[var(--secondary)]" aria-label="Fechar">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -89,7 +89,7 @@
                         <label>ícone</label>
                         <input type="hidden" name="icon" data-category-icon-input>
 
-                        <button type="button" class="h-10 border-b-[1.5px] border-[var(--lilac)] mt-2 flex w-full items-center justify-between rounded text-left transition" data-toggle-icon-picker>
+                        <button type="button" class="h-10 border-b-[1.5px] border-[var(--primary)] mt-2 flex w-full items-center justify-between rounded text-left transition" data-toggle-icon-picker>
                             <span class="flex items-center gap-3">
                                 <span class="flex h-9 w-9 items-center justify-center rounded text-primary" data-selected-icon-preview>
                                     <i class="fa-solid fa-icons"></i>
@@ -103,7 +103,7 @@
                     </div>
                 </div>
 
-                <div class="hidden rounded border border-[var(--yellow)] bg-[var(--light)] p-3" data-icon-picker>
+                <div class="hidden rounded border border-[var(--secondary)] bg-[var(--light)] p-3" data-icon-picker>
                     <div class="form-group mb-3">
                         <label for="category-icon-search">Buscar ícone</label>
                         <input id="category-icon-search" type="search" class="mt-1 w-full bg-transparent outline-none" placeholder="Ex.: casa, carro, mercado" data-icon-search>

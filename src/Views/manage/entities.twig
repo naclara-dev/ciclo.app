@@ -9,7 +9,7 @@
                 </h1>
                 {# Define a dica contextual da tela de entidades #}
                 <div class="info-hint-wrapper" data-info-hint>
-                    <button type="button" class="flex h-7 w-7 items-center justify-center rounded text-secondary transition hover:text-[var(--lilac)] focus-visible:bg-[var(--lilac)] focus-visible:outline-none" aria-label="Mostrar explicação sobre entidades" aria-describedby="entities-info-hint" aria-expanded="false" data-info-hint-toggle>
+                    <button type="button" class="flex h-7 w-7 items-center justify-center rounded text-secondary transition hover:text-[var(--primary)] focus-visible:bg-[var(--primary)] focus-visible:outline-none" aria-label="Mostrar explicação sobre entidades" aria-describedby="entities-info-hint" aria-expanded="false" data-info-hint-toggle>
                         <i class="fa-regular fa-circle-question"></i>
                     </button>
                     <div id="entities-info-hint" class="info-hint" role="tooltip">
@@ -55,14 +55,14 @@
         {% endfor %}  
     </section>
 
-    <dialog id="entity-modal" class="modal fixed top-1/2 left-1/2 w-[min(92vw,650px)] -translate-x-1/2 -translate-y-1/2 scale-95 rounded-lg border border-[var(--yellow)] bg-[#fffff5] p-0 text-[var(--dark)] opacity-0 shadow-xl transition duration-200 backdrop:bg-[rgba(58,56,53,0.35)]" data-entity-modal data-entity-find-url="{{ base_url }}/manage/entities/find">
+    <dialog id="entity-modal" class="modal fixed top-1/2 left-1/2 w-[min(92vw,650px)] -translate-x-1/2 -translate-y-1/2 scale-95 rounded-lg border border-[var(--secondary)] bg-[#fffff5] p-0 text-[var(--dark)] opacity-0 shadow-xl transition duration-200 backdrop:bg-[rgba(58,56,53,0.35)]" data-entity-modal data-entity-find-url="{{ base_url }}/manage/entities/find">
         <form method="post" action="{{ base_url }}/manage/entities/store" class="validate" data-entity-form>
             <div class="flex items-center justify-between px-6 py-4">
                 <div>
                     <h2 class="text-xl font-bold text-primary" data-entity-modal-title>nova entidade</h2>
                     <p class="mt-1 text-xs text-[var(--dark)] opacity-70">informe nome e tipo da entidade.</p>
                 </div>
-                <button type="button" class="modal-close flex h-9 w-9 items-center justify-center rounded text-primary transition hover:bg-[var(--yellow)]" aria-label="Fechar">
+                <button type="button" class="modal-close flex h-9 w-9 items-center justify-center rounded text-primary transition hover:bg-[var(--secondary)]" aria-label="Fechar">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -80,7 +80,7 @@
                     <label>tipo</label>
                     <input type="hidden" name="type_id" data-type="required" data-select-input>
 
-                    <button type="button" class="mt-1 flex h-[29px] w-full items-center justify-between rounded border-b-[1.5px] border-[var(--lilac)] bg-transparent px-[7px] py-[3px] text-left leading-[21px] transition hover:border-[var(--purple)]" data-select-toggle aria-expanded="false">
+                    <button type="button" class="mt-1 flex h-[29px] w-full items-center justify-between rounded border-b-[1.5px] border-[var(--primary)] bg-transparent px-[7px] py-[3px] text-left leading-[21px] transition hover:border-[var(--primary-dark)]" data-select-toggle aria-expanded="false">
                         <span data-select-label class="text-sm">
                             escolha um tipo
                         </span>
@@ -89,7 +89,7 @@
 
                     <div class="mt-2 max-h-0 overflow-hidden rounded border border-transparent bg-[#fffff5] opacity-0 shadow-lg transition-all duration-200" data-select-menu>
                         {% for type in entity_types %}
-                            <button type="button" class="flex w-full items-center rounded px-3 py-2 text-left text-sm transition hover:bg-[var(--yellow)] hover:text-primary" data-select-option data-value="{{ type.id|e('html_attr') }}" data-value-label="{{ type.name|e('html_attr') }}" aria-selected="false">
+                            <button type="button" class="flex w-full items-center rounded px-3 py-2 text-left text-sm transition hover:bg-[var(--secondary)] hover:text-primary" data-select-option data-value="{{ type.id|e('html_attr') }}" data-value-label="{{ type.name|e('html_attr') }}" aria-selected="false">
                                 {{ type.name }}
                             </button>
                         {% endfor %}

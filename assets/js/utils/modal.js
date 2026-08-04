@@ -81,8 +81,8 @@
                 // Percorre os comboboxes internos para fechar menus abertos
                 modal.querySelectorAll('[data-select]').forEach(function (select) {
                     // Verifica se o controlador compartilhado está disponível
-                    if (window.FluxSelect) {
-                        window.FluxSelect.get(select).close();
+                    if (window.CicloSelect) {
+                        window.CicloSelect.get(select).close();
                     }
                 });
 
@@ -162,7 +162,7 @@
         }
     });
 
-    window.FluxModal = {
+    window.CicloModal = {
         create: create,
         get: get
     };

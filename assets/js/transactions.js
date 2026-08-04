@@ -8,7 +8,7 @@
     const modalTitle = document.querySelector('[data-transaction-modal-title]');
 
     // Carrega o controlador compartilhado do modal
-    const transactionModal = window.FluxModal ? window.FluxModal.get(modal) : null;
+    const transactionModal = window.CicloModal ? window.CicloModal.get(modal) : null;
 
     // Define a URL usada para carregar os dados da edição
     const findUrl = modal ? modal.dataset.transactionFindUrl : '';
@@ -83,7 +83,7 @@
         fetchTransaction(button.dataset.transactionId);
     });
     // Aplica os dados relacionados quando o usuário escolhe um template
-    selects.template.element.addEventListener('flux:select-change', function (event) {
+    selects.template.element.addEventListener('ciclo:select-change', function (event) {
         // Verifica se a opção selecionada possui dados de template
         if (!event.detail.option) {
             // Interrompe quando o template foi limpo
@@ -211,12 +211,12 @@
     // Carrega um combobox do formulário pelo nome
     function getSelect(name) {
         // Verifica se a API compartilhada e o modal estão disponíveis
-        if (!window.FluxSelect || !modal) {
+        if (!window.CicloSelect || !modal) {
             // Interrompe a busca sem a estrutura compartilhada
             return null;
         }
 
-        return window.FluxSelect.get(modal.querySelector('[data-select-name="' + name + '"]'));
+        return window.CicloSelect.get(modal.querySelector('[data-select-name="' + name + '"]'));
     }
 
     // Aplica as configurações padrão do usuário

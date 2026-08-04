@@ -23,9 +23,9 @@
     });
 
     // Verifica se o controlador compartilhado do modal está disponível
-    if (window.FluxModal && accountModal) {
+    if (window.CicloModal && accountModal) {
         // Restaura o collapse quando o modal é fechado
-        window.FluxModal.create(accountModal, {
+        window.CicloModal.create(accountModal, {
             onClose: function () {
                 setExpanded(false);
             }
@@ -40,7 +40,7 @@
         }
 
         // Abre o modal para exibir a mensagem ao usuário
-        window.FluxModal.get(accountModal).open();
+        window.CicloModal.get(accountModal).open();
     }
 
     // Define o estado visual e funcional dos campos de senha

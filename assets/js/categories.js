@@ -19,7 +19,7 @@
     let icons = [];
 
     // Carrega o controlador compartilhado do modal
-    const categoryModal = window.FluxModal ? window.FluxModal.get(modal) : null;
+    const categoryModal = window.CicloModal ? window.CicloModal.get(modal) : null;
 
     if (!categoryModal || !form || !openButton || !picker || !pickerToggle || !grid || !search || !idInput || !nameInput || !colorInput || !iconInput || !selectedIconPreview || !selectedIconLabel || !modalTitle || !iconsUrl) {
         return;
