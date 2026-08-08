@@ -1,0 +1,21 @@
+{
+  "name": "Ciclo | Gestão de Gastos",
+  "short_name": "Ciclo",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8e9b6",
+  "theme_color": "#52b5b2",
+  "description": "Seu app de gestão de gastos inteligente.",
+  "icons": [
+    {
+      "src": "/assets/img/favicon.png",
+      "type": "image/png",
+      "sizes": "500x449"
+    },
+    {
+      "src": "/assets/img/favicon-200x180.png",
+      "type": "image/png",
+      "sizes": "200x180"
+    }
+  ]
+}
