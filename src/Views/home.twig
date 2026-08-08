@@ -1,7 +1,7 @@
 {% extends 'layouts/app.twig' %}
 
 {% block content %}
-    <section class="-mx-5 -mt-5 border-b border-[var(--secondary)] bg-[var(--light)] px-5 pb-5 pt-5 lg:-mx-8 lg:-mt-8 lg:px-8 lg:pt-8">
+    <section class="-mx-5 -mt-5 border-b border-[var(--border)] bg-[var(--background)] px-5 pb-5 pt-5 lg:-mx-8 lg:-mt-8 lg:px-8 lg:pt-8">
         <div class="flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between">
             <div class="flex items-start justify-between gap-4">
                 <div>
@@ -15,20 +15,20 @@
             </div>
 
             <div class="grid grid-cols-2 gap-3 xl:min-w-[680px]">
-                <div class="rounded border border-[var(--secondary)] bg-[#fffff5] p-3">
+                <div class="rounded border border-[var(--border)] bg-[var(--surface)] p-3">
                     <p class="text-xs text-secondary">saldo do ciclo</p>
                     <strong class="mt-1 block text-xl font-semibold text-primary" data-viewed-cycle-balance>{{ dashboard.currentCycle.balanceLabel }}</strong>
                 </div>
-                <div class="rounded border border-[var(--secondary)] bg-[#fffff5] p-3">
+                <div class="rounded border border-[var(--border)] bg-[var(--surface)] p-3">
                     <p class="text-xs text-secondary">comprometido</p>
-                    <strong class="mt-1 block text-xl font-semibold">{{ dashboard.balance.commitedLabel }}</strong>
+                    <strong class="mt-1 block text-xl font-semibold text-[var(--surface-contrast)]">{{ dashboard.balance.commitedLabel }}</strong>
                 </div>
             </div>
         </div>
 
         <div class="mt-5">
             {% if dashboard_feedback|default(null) %}
-                <div class="mb-4 flex items-start gap-3 rounded border border-[var(--primary)] bg-[rgba(193,127,215,0.08)] px-3 py-3 text-sm text-primary" role="alert">
+                <div class="mb-4 flex items-start gap-3 rounded border border-[var(--primary)] bg-[var(--primary-muted)] px-3 py-3 text-sm text-primary" role="alert">
                     <i class="fa-solid fa-circle-check mt-0.5"></i>
                     <span>{{ dashboard_feedback.message }}</span>
                 </div>
@@ -39,24 +39,24 @@
                     <span class="text-secondary">progresso do ciclo <span data-viewed-cycle-progress-label>{{ dashboard.currentCycle.label }}</span></span>
                     <span class="text-purple" data-viewed-cycle-progress-value>{{ dashboard.currentCycle.progress }}%</span>
                 </div>
-                <div class="mt-2 h-2 overflow-hidden rounded-full bg-[var(--secondary)]">
+                <div class="mt-2 h-2 overflow-hidden rounded-full bg-[var(--muted)]">
                     <div class="h-full rounded-full bg-[var(--primary)] transition-all duration-300" style="width: {{ dashboard.currentCycle.progress }}%" data-viewed-cycle-progress-bar></div>
                 </div>
             </div>
 
             <div class="mt-4 flex flex-wrap items-center gap-1" aria-label="Ações da dashboard">
-                <button type="button" class="group flex h-9 items-center gap-1.5 overflow-hidden rounded px-2 text-sm text-primary transition hover:bg-[var(--secondary)] focus-visible:bg-[var(--secondary)] focus-visible:outline-none disabled:cursor-wait disabled:opacity-50" title="Atualizar dados" aria-label="Atualizar dados" data-refresh-home>
+                <button type="button" class="group flex h-9 items-center gap-1.5 overflow-hidden rounded px-2 text-sm text-primary transition hover:bg-[var(--muted)] focus-visible:bg-[var(--muted)] focus-visible:outline-none disabled:cursor-wait disabled:opacity-50" title="Atualizar dados" aria-label="Atualizar dados" data-refresh-home>
                     <i class="fa-solid fa-rotate-right flex w-5 justify-center"></i>
                     <span class="max-w-0 -translate-x-1 overflow-hidden whitespace-nowrap opacity-0 transition-all duration-200 ease-out group-hover:max-w-28 group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:max-w-28 group-focus-visible:translate-x-0 group-focus-visible:opacity-100">recarregar</span>
                 </button>
 
-                <button type="button" class="group flex h-9 items-center gap-1.5 overflow-hidden rounded px-2 text-sm text-primary transition hover:bg-[var(--secondary)] focus-visible:bg-[var(--secondary)] focus-visible:outline-none disabled:cursor-wait disabled:opacity-50" title="Exportar ciclo" aria-label="Exportar ciclo" data-print-cycle data-print-url="{{ base_url }}/dashboard/cycle/print/">
+                <button type="button" class="group flex h-9 items-center gap-1.5 overflow-hidden rounded px-2 text-sm text-primary transition hover:bg-[var(--muted)] focus-visible:bg-[var(--muted)] focus-visible:outline-none disabled:cursor-wait disabled:opacity-50" title="Exportar ciclo" aria-label="Exportar ciclo" data-print-cycle data-print-url="{{ base_url }}/dashboard/cycle/print/">
                     <i class="fa-solid fa-download flex w-5 justify-center"></i>
                     <span class="max-w-0 -translate-x-1 overflow-hidden whitespace-nowrap opacity-0 transition-all duration-200 ease-out group-hover:max-w-24 group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:max-w-24 group-focus-visible:translate-x-0 group-focus-visible:opacity-100">exportar</span>
                 </button>
 
                 <form method="post" action="{{ base_url }}/dashboard/cycle/close/" data-confirm-form data-confirm-preset="close-cycle">
-                    <button type="submit" class="group flex h-9 items-center gap-1.5 overflow-hidden rounded px-2 text-sm text-primary transition hover:bg-[var(--secondary)] focus-visible:bg-[var(--secondary)] focus-visible:outline-none disabled:cursor-wait disabled:opacity-60" title="Encerrar ciclo" aria-label="Encerrar ciclo">
+                    <button type="submit" class="group flex h-9 items-center gap-1.5 overflow-hidden rounded px-2 text-sm text-primary transition hover:bg-[var(--muted)] focus-visible:bg-[var(--muted)] focus-visible:outline-none disabled:cursor-wait disabled:opacity-60" title="Encerrar ciclo" aria-label="Encerrar ciclo">
                         <i class="fa-solid fa-circle-check flex w-5 justify-center"></i>
                         <span class="max-w-0 -translate-x-1 overflow-hidden whitespace-nowrap opacity-0 transition-all duration-200 ease-out group-hover:max-w-32 group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:max-w-32 group-focus-visible:translate-x-0 group-focus-visible:opacity-100">encerrar ciclo</span>
                     </button>
@@ -68,27 +68,27 @@
     <section class="mt-8">
         <div class="space-y-6">
             <nav class="flex items-center justify-between gap-3" aria-label="Navegar entre ciclos">
-                <button type="button" class="flex items-center gap-2 rounded px-3 py-2 text-sm text-primary transition hover:bg-[var(--secondary)] disabled:cursor-wait disabled:opacity-50" data-cycle-previous>
+                <button type="button" class="flex items-center gap-2 rounded px-3 py-2 text-sm text-primary transition hover:bg-[var(--muted)] disabled:cursor-wait disabled:opacity-50" data-cycle-previous>
                     <i class="fa-solid fa-chevron-left"></i>
                     <span>ciclo anterior</span>
                 </button>
-                <button type="button" class="flex items-center gap-2 rounded px-3 py-2 text-sm text-primary transition hover:bg-[var(--secondary)] disabled:cursor-wait disabled:opacity-50" data-cycle-next>
+                <button type="button" class="flex items-center gap-2 rounded px-3 py-2 text-sm text-primary transition hover:bg-[var(--muted)] disabled:cursor-wait disabled:opacity-50" data-cycle-next>
                     <span>pr&oacute;ximo ciclo</span>
                     <i class="fa-solid fa-chevron-right"></i>
                 </button>
             </nav>
 
-            <section class="rounded border border-[var(--secondary)] bg-[#fffff5]" data-cycle-filter-panel>
+            <section class="rounded border border-[var(--border)] bg-[var(--surface)]" data-cycle-filter-panel>
                 <div class="grid grid-cols-1 items-end gap-3 p-3 transition-[max-height,padding] duration-300 md:grid-cols-[minmax(150px,1fr)_auto_auto_auto]" aria-label="Filtros de lançamentos" data-cycle-filter-content>
                     <div data-select data-select-placeholder="todas" data-cycle-filter-entity>
                     <label class="text-xs text-secondary">entidade</label>
                     <input type="hidden" value="" data-select-input>
-                    <button type="button" class="mt-1 flex h-9 w-full items-center justify-between rounded border-b-[1.5px] border-[var(--primary)] bg-[var(--light)] px-3 py-2 text-left text-sm leading-[21px] text-primary transition hover:border-[var(--primary-dark)]" data-select-toggle aria-expanded="false">
+                    <button type="button" class="mt-1 flex h-9 w-full items-center justify-between rounded border-b-[1.5px] border-[var(--primary)] bg-[var(--background)] px-3 py-2 text-left text-sm leading-[21px] text-primary transition hover:border-[var(--primary)]" data-select-toggle aria-expanded="false">
                         <span data-select-label>todas</span>
                         <i class="fa-solid fa-chevron-down text-xs text-secondary"></i>
                     </button>
-                    <div class="mt-2 max-h-0 overflow-hidden rounded border border-transparent bg-[#fffff5] opacity-0 shadow-lg transition-all duration-200" data-select-menu>
-                        <button type="button" class="flex w-full items-center rounded px-3 py-2 text-left text-sm transition hover:bg-[var(--secondary)] hover:text-primary" data-select-option data-value="" data-value-label="todas" aria-selected="true">
+                    <div class="mt-2 max-h-0 overflow-hidden rounded border border-transparent bg-[var(--surface)] opacity-0 shadow-lg transition-all duration-200" data-select-menu>
+                        <button type="button" class="flex w-full items-center rounded px-3 py-2 text-left text-sm transition hover:bg-[var(--muted)] hover:text-primary" data-select-option data-value="" data-value-label="todas" aria-selected="true">
                             todas
                         </button>
                     </div>
@@ -96,11 +96,11 @@
                 <div>
                     <span class="text-xs text-secondary">tipo</span>
                     <div class="mt-1 flex h-9 items-center gap-2" data-cycle-filter-type>
-                        <button type="button" class="badge flex items-center gap-1.5 border border-[var(--primary)] !bg-transparent !px-2.5 !py-1 !text-[11px] font-medium transition hover:border-[var(--primary-dark)]" style="color: var(--primary-dark);" data-cycle-filter-type-option data-type="I" aria-pressed="true">
+                        <button type="button" class="badge flex items-center gap-1.5 border border-[var(--primary)] !bg-transparent !px-2.5 !py-1 !text-[11px] font-medium transition hover:border-[var(--primary)]" style="color: var(--primary);" data-cycle-filter-type-option data-type="I" aria-pressed="true">
                             <i class="fa-solid fa-check text-[10px]" data-cycle-filter-type-icon></i>
                             <span>receita</span>
                         </button>
-                        <button type="button" class="badge flex items-center gap-1.5 border border-[var(--primary)] !bg-transparent !px-2.5 !py-1 !text-[11px] font-medium transition hover:border-[var(--primary-dark)]" style="color: var(--primary-dark);" data-cycle-filter-type-option data-type="E" aria-pressed="true">
+                        <button type="button" class="badge flex items-center gap-1.5 border border-[var(--primary)] !bg-transparent !px-2.5 !py-1 !text-[11px] font-medium transition hover:border-[var(--primary)]" style="color: var(--primary);" data-cycle-filter-type-option data-type="E" aria-pressed="true">
                             <i class="fa-solid fa-check text-[10px]" data-cycle-filter-type-icon></i>
                             <span>despesa</span>
                         </button>
@@ -110,34 +110,34 @@
                     <span class="text-xs text-secondary">status</span>
                     <div class="mt-1 flex h-9 items-center justify-between gap-2">
                         <div class="flex items-center gap-2" data-cycle-filter-status>
-                            <button type="button" class="badge flex items-center gap-1.5 border border-[var(--primary)] !bg-transparent !px-2.5 !py-1 !text-[11px] font-medium transition hover:border-[var(--primary-dark)]" style="color: var(--primary-dark);" data-cycle-filter-status-option data-status="paid" aria-pressed="true">
+                            <button type="button" class="badge flex items-center gap-1.5 border border-[var(--primary)] !bg-transparent !px-2.5 !py-1 !text-[11px] font-medium transition hover:border-[var(--primary)]" style="color: var(--primary);" data-cycle-filter-status-option data-status="paid" aria-pressed="true">
                                 <i class="fa-solid fa-check text-[10px]" data-cycle-filter-status-icon></i>
                                 <span>pago</span>
                             </button>
-                            <button type="button" class="badge flex items-center gap-1.5 border border-[var(--primary)] !bg-transparent !px-2.5 !py-1 !text-[11px] font-medium transition hover:border-[var(--primary-dark)]" style="color: var(--primary-dark);" data-cycle-filter-status-option data-status="pending" aria-pressed="true">
+                            <button type="button" class="badge flex items-center gap-1.5 border border-[var(--primary)] !bg-transparent !px-2.5 !py-1 !text-[11px] font-medium transition hover:border-[var(--primary)]" style="color: var(--primary);" data-cycle-filter-status-option data-status="pending" aria-pressed="true">
                                 <i class="fa-solid fa-check text-[10px]" data-cycle-filter-status-icon></i>
                                 <span>pendente</span>
                             </button>
                         </div>
-                        <button type="button" class="flex h-9 w-9 items-center justify-center rounded text-primary transition hover:bg-[var(--secondary)] focus-visible:bg-[var(--secondary)] focus-visible:outline-none md:hidden" title="Limpar filtros" aria-label="Limpar filtros" data-cycle-filter-clear>
+                        <button type="button" class="flex h-9 w-9 items-center justify-center rounded text-primary transition hover:bg-[var(--muted)] focus-visible:bg-[var(--muted)] focus-visible:outline-none md:hidden" title="Limpar filtros" aria-label="Limpar filtros" data-cycle-filter-clear>
                             <i class="fa-solid fa-filter-circle-xmark"></i>
                         </button>
                     </div>
                 </div>
-                <button type="button" class="hidden h-9 w-9 items-center justify-center rounded text-primary transition hover:bg-[var(--secondary)] focus-visible:bg-[var(--secondary)] focus-visible:outline-none md:flex" title="Limpar filtros" aria-label="Limpar filtros" data-cycle-filter-clear>
+                <button type="button" class="hidden h-9 w-9 items-center justify-center rounded text-primary transition hover:bg-[var(--muted)] focus-visible:bg-[var(--muted)] focus-visible:outline-none md:flex" title="Limpar filtros" aria-label="Limpar filtros" data-cycle-filter-clear>
                     <i class="fa-solid fa-filter-circle-xmark"></i>
                 </button>
             </div>
             </section>
-            <article class="relative rounded border border-[var(--secondary)] bg-[#fffff5] p-5" data-cycle-card data-cycle-url="{{ base_url }}/dashboard/cycle/" data-transaction-delete-url="{{ base_url }}/transactions/delete/" data-cycle-start="{{ dashboard.currentCycle.start|e('html_attr') }}" data-cycle-end="{{ dashboard.currentCycle.end|e('html_attr') }}">
+            <article class="relative rounded border border-[var(--border)] bg-[var(--surface)] p-5" data-cycle-card data-cycle-url="{{ base_url }}/dashboard/cycle/" data-transaction-delete-url="{{ base_url }}/transactions/delete/" data-cycle-start="{{ dashboard.currentCycle.start|e('html_attr') }}" data-cycle-end="{{ dashboard.currentCycle.end|e('html_attr') }}">
                 <header>
                     <button type="button" class="grid w-full gap-4 text-left md:grid-cols-[auto_1fr_auto_auto] md:items-center" data-cycle-toggle aria-expanded="true">
-                        <div class="flex h-14 w-14 items-center justify-center rounded-full bg-[var(--secondary)] text-primary">
-                            <span class="text-lg font-semibold" data-cycle-start-day>{{ dashboard.currentCycle.startDayLabel }}</span>
+                        <div class="flex h-14 w-14 items-center justify-center rounded-full bg-[var(--primary)]">
+                            <span class="text-[var(--primary-contrast)] text-lg font-semibold" data-cycle-start-day>{{ dashboard.currentCycle.startDayLabel }}</span>
                         </div>
                         <div>
                             <h2 class="text-xl font-semibold text-primary" data-cycle-label>{{ dashboard.currentCycle.label }}</h2>
-                            <p class="mt-1 text-sm opacity-70" data-cycle-description>ciclo atual at&eacute; o pr&oacute;ximo recebimento</p>
+                            <p class="mt-1 text-sm text-[var(--muted-contrast)]" data-cycle-description>ciclo atual at&eacute; o pr&oacute;ximo recebimento</p>
                         </div>
                         <div class="grid grid-cols-3 gap-3 text-right text-xs md:min-w-[360px]">
                             <div>
@@ -150,10 +150,10 @@
                             </div>
                             <div>
                                 <p class="text-secondary">sobra</p>
-                                <strong class="block text-sm text-[var(--dark)]" data-cycle-balance>{{ dashboard.currentCycle.balanceLabel }}</strong>
+                                <strong class="block text-sm text-[var(--surface-contrast)]" data-cycle-balance>{{ dashboard.currentCycle.balanceLabel }}</strong>
                             </div>
                         </div>
-                        <span class="flex h-9 w-9 items-center justify-center rounded text-primary transition hover:bg-[var(--secondary)] hidden md:flex" aria-hidden="true">
+                        <span class="flex h-9 w-9 items-center justify-center rounded text-primary transition hover:bg-[var(--muted)] hidden md:flex" aria-hidden="true">
                             <i class="fa-solid fa-chevron-up transition-transform duration-200" data-cycle-icon></i>
                         </span>
                     </button>
@@ -163,7 +163,7 @@
                     {% for transaction in dashboard.currentCycle.transactions %}
                         <div class="group relative flex items-center gap-2 overflow-hidden rounded md:block md:overflow-visible" {% if not transaction.is_virtual %}data-swipe-transaction{% endif %}>
                             {% if not transaction.is_virtual %}
-                                <div class="absolute inset-y-0 right-0 flex w-24 items-center justify-end rounded border border-[var(--secondary)] bg-[var(--secondary)] pr-5 text-[var(--primary)] md:hidden" aria-hidden="true">
+                                <div class="absolute inset-y-0 right-0 flex w-24 items-center justify-end rounded border border-[var(--border)] bg-[var(--muted)] pr-5 text-[var(--primary)] md:hidden" aria-hidden="true">
                                     <i class="fa-regular fa-trash-can"></i>
                                 </div>
                                 <form method="post" action="{{ base_url }}/transactions/delete/" class="hidden shrink-0 md:absolute md:-left-12 md:top-1/2 md:flex md:-translate-y-1/2">
@@ -176,43 +176,43 @@
                                 <span class="hidden h-9 w-9 shrink-0 md:absolute md:-left-12 md:top-1/2 md:block md:-translate-y-1/2"></span>
                             {% endif %}
 
-                            <button type="button" class="relative z-10 grid min-w-0 flex-1 touch-pan-y gap-3 rounded border border-[var(--secondary)] bg-[var(--light)] p-3 text-left transition-transform md:w-full {% if transaction.paid %}opacity-80{% endif %} sm:grid-cols-[1fr_auto] sm:items-center" data-edit-transaction data-swipe-card data-transaction-id="{{ transaction.id|default('')|e('html_attr') }}" {% if transaction.is_virtual %}data-transaction-payload="{{ transaction|json_encode|e('html_attr') }}"{% endif %}>
+                            <button type="button" class="relative z-10 grid min-w-0 flex-1 touch-pan-y gap-3 rounded border border-[var(--border)] bg-[var(--surface-alt)] p-3 text-left transition-transform md:w-full {% if transaction.paid %}opacity-80{% endif %} sm:grid-cols-[1fr_auto] sm:items-center" data-edit-transaction data-swipe-card data-transaction-id="{{ transaction.id|default('')|e('html_attr') }}" {% if transaction.is_virtual %}data-transaction-payload="{{ transaction|json_encode|e('html_attr') }}"{% endif %}>
                                 <div class="flex items-center gap-3">
                                     <div class="flex h-10 w-10 items-center justify-center rounded-full text-light" style="background-color: {{ transaction.category.color|e('html_attr') }}">
                                         <i class="{{ transaction.category.icon|e('html_attr') }}"></i>
                                     </div>
                                     <div>
-                                        <h3 class="font-medium">{{ transaction.title }}</h3>
+                                        <h3 class="font-medium text-[var(--surface-contrast)]">{{ transaction.title }}</h3>
                                         <p class="text-xs text-secondary">{{ transaction.meta_label }}</p>
                                     </div>
                                 </div>
                                 <div class="flex items-center justify-between gap-4 sm:block sm:text-right">
                                     <span class="text-xs text-secondary">{{ transaction.date_label }}</span>
-                                    <strong class="block text-sm {% if transaction.type == 'I' %}text-primary{% else %}text-[var(--dark)]{% endif %}">{{ transaction.amount_label }}</strong>
+                                    <strong class="block text-sm {% if transaction.type == 'I' %}text-primary{% else %}text-[var(--surface-contrast)]{% endif %}">{{ transaction.amount_label }}</strong>
                                     <span class="badge {% if transaction.is_virtual %}badge-scheduled{% endif %}">{{ transaction.status_label }}</span>
                                 </div>
                             </button>
                         </div>
                     {% else %}
-                        <div class="rounded border border-[var(--secondary)] bg-[var(--light)] p-4 text-sm text-secondary">
+                        <div class="rounded border border-[var(--border)] bg-[var(--surface-alt)] p-4 text-sm text-secondary">
                             nenhum lançamento neste ciclo.
                         </div>
                     {% endfor %}
                 </div>
             </article>
 
-            <article class="rounded border border-[var(--secondary)] bg-[#fffff5] p-5">
+            <article class="rounded border border-[var(--border)] bg-[var(--surface)] p-5">
                 <div class="grid gap-8 md:grid-cols-2">
                     <section>
                         <h2 class="font-semibold text-primary">gastos por entidade</h2>
                         <div class="mt-4 space-y-4" data-entity-summary>
                             {% for item in dashboard.currentCycle.entitySummary %}
                                 <div>
-                                    <div class="flex items-center justify-between gap-4 text-sm">
+                                    <div class="flex items-center justify-between gap-4 text-sm text-secondary">
                                         <span class="truncate">{{ item.label }}</span>
                                         <strong>{{ item.amountLabel }}</strong>
                                     </div>
-                                    <div class="mt-1.5 h-1.5 overflow-hidden rounded-full bg-[var(--secondary)]">
+                                    <div class="mt-1.5 h-1.5 overflow-hidden rounded-full bg-[var(--muted)]">
                                         <div class="h-full rounded-full bg-[var(--primary)] transition-all duration-300" style="width: {{ item.percentage }}%"></div>
                                     </div>
                                 </div>
@@ -227,11 +227,11 @@
                         <div class="mt-4 space-y-4" data-category-summary>
                             {% for item in dashboard.currentCycle.categorySummary %}
                                 <div>
-                                    <div class="flex items-center justify-between gap-4 text-sm">
+                                    <div class="flex items-center justify-between gap-4 text-sm text-secondary">
                                         <span class="truncate">{{ item.label }}</span>
                                         <strong>{{ item.amountLabel }}</strong>
                                     </div>
-                                    <div class="mt-1.5 h-1.5 overflow-hidden rounded-full bg-[var(--secondary)]">
+                                    <div class="mt-1.5 h-1.5 overflow-hidden rounded-full bg-[var(--muted)]">
                                         <div class="h-full rounded-full bg-[var(--primary)] transition-all duration-300" style="width: {{ item.percentage }}%"></div>
                                     </div>
                                 </div>

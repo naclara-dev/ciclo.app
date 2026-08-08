@@ -19,7 +19,7 @@
 
     <title>Ciclo | Gestão de Gastos</title>
 </head>
-<body>
+<body class="{% if dark_theme|default(false) %} dark {% endif %}">
     {% block sidebar %}
         {% if show_menu is not defined or show_menu %}
             {% include 'components/sidebar.twig' %}
@@ -34,7 +34,6 @@
     {% include 'components/confirm-modal.twig' %}
     {% include 'components/transaction-modal.twig' %}
 
-    {# Exibe o feedback global enquanto a pagina processa acoes demoradas #}
     <div class="global-loading-overlay" data-global-loading hidden aria-hidden="true">
         <span class="loading --primary global-loading-spinner" role="status" aria-label="Carregando"></span>
     </div>

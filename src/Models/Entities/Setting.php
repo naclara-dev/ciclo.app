@@ -11,6 +11,7 @@ class Setting
     private $defaultEntityId = null;
     private $defaultType = null;
     private $cycleStartsAfterIncome = null;
+    private $darkTheme = null;
 
     public function getId(): ?int
     {
@@ -80,5 +81,14 @@ class Setting
     public function setCycleStartsAfterIncome(?bool $cycleStartsAfterIncome): void
     {
         $this->cycleStartsAfterIncome = $cycleStartsAfterIncome;
+    }
+    public function getDarkTheme(): ?bool
+    {
+        return $this->darkTheme;
+    }
+
+    public function setDarkTheme(?bool $darkTheme): void
+    {
+        $this->darkTheme = $darkTheme;
     }
 }

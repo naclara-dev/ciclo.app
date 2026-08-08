@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Core\Session;
 use App\Models\Repositories\TemplateRepository;
+use App\Models\Repositories\TemplateOccurrenceRepository;
 use App\Models\Repositories\TransactionRepository;
 
 class TransactionController extends Controller {
@@ -49,7 +50,22 @@ class TransactionController extends Controller {
             }
         }
 
-        $repository->save($data);
+        // Salva a transacao real informada pelo usuario
+        $savedTransaction = $repository->save($data);
+
+        // Define o identificador da transacao salva ou atualizada
+        $transactionId = empty($data['id']) ? (int) $savedTransaction : (int) $data['id'];
+
+        // Verifica se a transacao representa uma ocorrencia convertida de template
+        if ($transactionId > 0 && !empty($data['template_id']) && !empty($data['occurrence_date'])) {
+            // Salva a ocorrencia como convertida para evitar previsoes duplicadas
+            (new TemplateOccurrenceRepository)->markConverted(
+                (int) Session::get('user_id'),
+                (int) $data['template_id'],
+                $data['occurrence_date'],
+                $transactionId
+            );
+        }
 
         redirect();
         exit;
@@ -72,10 +88,28 @@ class TransactionController extends Controller {
         // Define o identificador recebido pelo formulário
         $id = (int) ($_POST['id'] ?? 0);
 
-        // Verifica se o identificador é válido
+        // Verifica se o identificador e valido
         if ($id > 0) {
-            // Exclui somente a transação pertencente ao usuário atual
-            (new TransactionRepository)->delete($id, [
+            // Carrega a transacao antes da exclusao para preservar a ocorrencia do template
+            $repository = new TransactionRepository;
+            $transaction = $repository->find([
+                'id' => $id,
+                'user_id' => Session::get('user_id')
+            ]);
+
+            // Verifica se a transacao pertence a uma ocorrencia de template
+            if ($transaction && !empty($transaction['template_id']) && !empty($transaction['occurrence_date'])) {
+                // Salva a ocorrencia como descartada antes de remover a transacao real
+                (new TemplateOccurrenceRepository)->markDismissed(
+                    (int) Session::get('user_id'),
+                    (int) $transaction['template_id'],
+                    $transaction['occurrence_date'],
+                    (int) $transaction['id']
+                );
+            }
+
+            // Exclui somente a transacao pertencente ao usuario atual
+            $repository->delete($id, [
                 'user_id' => Session::get('user_id')
             ]);
         }

@@ -27,6 +27,7 @@ class SettingRepository extends Repository
             'default_entity_id' => null,
             'default_type' => null,
             'cycle_starts_after_income' => 1,
+            'dark_theme' => 0,
         ];
     }
 }

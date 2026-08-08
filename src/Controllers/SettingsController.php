@@ -62,6 +62,9 @@ class SettingsController extends Controller {
             'cycle_starts_after_income' => array_key_exists('cycle_starts_after_income', $data)
                 ? (!empty($data['cycle_starts_after_income']) ? 1 : 0)
                 : (int) ($current['cycle_starts_after_income'] ?? 1),
+            'dark_theme' => array_key_exists('dark_theme', $data)
+                ? (!empty($data['dark_theme']) ? 1 : 0)
+                : (int) ($current['dark_theme'] ?? 0),
         ];
     }
 

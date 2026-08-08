@@ -11,12 +11,14 @@ use App\DTOs\Dashboard\NextIncome;
 use App\Models\Repositories\SettingRepository;
 use App\Models\Repositories\TransactionRepository;
 use App\Models\Repositories\TemplateRepository;
+use App\Models\Repositories\TemplateOccurrenceRepository;
 use App\Models\Repositories\WalletRepository;
 
 class DashboardService {
     private $userID;
     private $transactions;
     private $templates;
+    private $templateOccurrences;
     private $wallets;
     private $settings;
 
@@ -24,6 +26,7 @@ class DashboardService {
         $this->userID = (int) Session::get('user_id');
         $this->transactions = new TransactionRepository;
         $this->templates = new TemplateRepository;
+        $this->templateOccurrences = new TemplateOccurrenceRepository;
         $this->wallets = new WalletRepository;
         $this->settings = (new SettingRepository)->firstFromUser($this->userID);
     }
@@ -107,9 +110,9 @@ class DashboardService {
                     continue;
                 }
 
-                // Verifica se o template ja gerou uma transacao nessa data
-                if ($this->transactions->existsFromTemplateOnDate($this->userID, (int) $template['id'], $date)) {
-                    // Interrompe a soma desta ocorrencia para evitar duplicidade
+                // Verifica se a ocorrencia ja foi convertida ou descartada pelo usuario
+                if ($this->templateOccurrences->existsHandledFromTemplateOnDate($this->userID, (int) $template['id'], $date)) {
+                    // Interrompe a soma desta ocorrencia para evitar duplicidade ou retorno visual
                     continue;
                 }
 
@@ -327,9 +330,9 @@ class DashboardService {
                     continue;
                 }
 
-                // Verifica se a ocorrencia ja foi convertida em transacao real
-                if ($this->transactions->existsFromTemplateOnDate($this->userID, (int) $template['id'], $date)) {
-                    // Interrompe a criacao para evitar duplicidade visual
+                // Verifica se a ocorrencia ja foi convertida ou descartada pelo usuario
+                if ($this->templateOccurrences->existsHandledFromTemplateOnDate($this->userID, (int) $template['id'], $date)) {
+                    // Interrompe a criacao para evitar duplicidade visual ou retorno apos exclusao
                     continue;
                 }
 

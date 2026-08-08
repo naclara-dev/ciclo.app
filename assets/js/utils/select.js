@@ -41,14 +41,14 @@
 
             // Define o estado visual aberto
             menu.classList.remove('max-h-0', 'border-transparent', 'opacity-0', 'overflow-hidden');
-            menu.classList.add('max-h-56', 'border-[var(--secondary)]', 'opacity-100', 'overflow-y-auto');
+            menu.classList.add('max-h-56', 'border-[var(--border)]', 'opacity-100', 'overflow-y-auto');
             toggle.setAttribute('aria-expanded', 'true');
         }
 
         // Fecha o menu do combobox
         function close() {
             // Define o estado visual fechado
-            menu.classList.remove('max-h-56', 'border-[var(--secondary)]', 'opacity-100', 'overflow-y-auto');
+            menu.classList.remove('max-h-56', 'border-[var(--border)]', 'opacity-100', 'overflow-y-auto');
             menu.classList.add('max-h-0', 'border-transparent', 'opacity-0', 'overflow-hidden');
             toggle.setAttribute('aria-expanded', 'false');
         }

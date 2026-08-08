@@ -61,7 +61,8 @@ class CategoryController extends Controller {
             "id"      => empty($data["id"]) ? null : (int) $data["id"],
             "user_id" => Session::get('user_id'),
             "name"    => trim($data["name"] ?? ""),
-            "color"   => strtolower(trim($data["color"] ?? "#c17fd7")),
+            // Define a cor como token visual quando o formulário não envia valor
+            "color"   => strtolower(trim($data["color"] ?? "var(--category-default)")),
             "icon"    => trim($data["icon"] ?? "")
         ];
     }

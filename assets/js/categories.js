@@ -18,6 +18,11 @@
     const iconsUrl = modal ? modal.dataset.iconsUrl : '';
     let icons = [];
 
+    // Carrega a cor padrÃ£o de categoria definida pelo tema atual
+    function getDefaultCategoryColor() {
+        return getComputedStyle(document.body || document.documentElement).getPropertyValue('--category-default').trim();
+    }
+
     // Carrega o controlador compartilhado do modal
     const categoryModal = window.CicloModal ? window.CicloModal.get(modal) : null;
 
@@ -34,7 +39,7 @@
             fillForm({
                 id: button.dataset.categoryId || '',
                 name: button.dataset.categoryName || '',
-                color: button.dataset.categoryColor || '#c17fd7',
+                color: button.dataset.categoryColor || getDefaultCategoryColor(),
                 icon: button.dataset.categoryIcon || ''
             });
 
@@ -67,7 +72,7 @@
     function resetForm() {
         form.reset();
         idInput.value = '';
-        colorInput.value = '#c17fd7';
+        colorInput.value = getDefaultCategoryColor();
         iconInput.value = '';
         modalTitle.textContent = 'nova categoria';
         selectedIconPreview.innerHTML = '<i class="fa-solid fa-icons"></i>';
@@ -80,7 +85,7 @@
     function fillForm(category) {
         idInput.value = category.id;
         nameInput.value = category.name;
-        colorInput.value = category.color || '#c17fd7';
+        colorInput.value = category.color || getDefaultCategoryColor();
         modalTitle.textContent = 'editar categoria';
         picker.classList.add('hidden');
         search.value = '';
@@ -99,7 +104,7 @@
         visibleIcons.forEach(function (icon) {
             const button = document.createElement('button');
             button.type = 'button';
-            button.className = 'flex h-12 items-center justify-center rounded border border-transparent text-lg text-primary transition hover:border-[var(--lilac)] hover:bg-[#fffff5]';
+            button.className = 'flex h-12 items-center justify-center rounded border border-transparent text-lg text-primary transition hover:border-[var(--primary)] hover:bg-[var(--surface)]';
             button.title = icon.label;
             button.setAttribute('aria-label', icon.label);
             button.innerHTML = '<i class="' + icon.style + '"></i>';

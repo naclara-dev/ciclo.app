@@ -152,7 +152,7 @@ class DashboardPresenter {
             $transaction['category'] = [
                 'id' => $transaction['category_id'] ?: '',
                 'name' => $categoryName,
-                'color' => $transaction['category_color'] ?: '#c17fd7',
+                'color' => $transaction['category_color'] ?: 'var(--category-default)',
                 'icon' => $transaction['category_icon'] ?: 'fa-solid fa-tag',
             ];
             $transaction['wallet'] = [

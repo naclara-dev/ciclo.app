@@ -2,7 +2,7 @@
 {% set manage_active = 'manage/' in current_path %}
 {% set settings_active = current_path == (base_url ~ '/settings/') %}
 
-<aside class="app-sidebar flex flex-col justify-between items-center max-[600px]:flex-row max-[600px]:!w-auto max-[600px]:!h-auto max-[600px]:bg-[var(--primary)] max-[600px]:!text-[var(--light)] max-[600px]:rounded-md max-[600px]:text-[1.1rem]">
+<aside class="app-sidebar flex flex-col justify-between items-center max-[600px]:flex-row max-[600px]:!w-auto max-[600px]:!h-auto max-[600px]:bg-[var(--primary)] max-[600px]:!text-[var(--background)] max-[600px]:rounded-md max-[600px]:text-[1.1rem]">
     <a class="pl-8 pt-8 brand-mark hidden md:block" href="{{ base_url }}/" aria-label="Ciclo">
         <img src="{{ base_url }}/assets/img/logo.png" alt="Ciclo">
     </a>

@@ -55,12 +55,12 @@
         {% endfor %}  
     </section>
 
-    <dialog id="wallet-modal" class="modal fixed top-1/2 left-1/2 w-[min(92vw,650px)] -translate-x-1/2 -translate-y-1/2 scale-95 rounded-lg border border-[var(--secondary)] bg-[#fffff5] p-0 text-[var(--dark)] opacity-0 shadow-xl transition duration-200 backdrop:bg-[rgba(58,56,53,0.35)]" data-wallet-modal data-wallet-find-url="{{ base_url }}/manage/wallets/find">
+    <dialog id="wallet-modal" class="modal fixed top-1/2 left-1/2 w-[min(92vw,650px)] -translate-x-1/2 -translate-y-1/2 scale-95 rounded-lg border border-[var(--secondary)] bg-[var(--surface)] p-0 text-[var(--surface-contrast)] opacity-0 shadow-xl transition duration-200 backdrop:bg-[var(--overlay)]" data-wallet-modal data-wallet-find-url="{{ base_url }}/manage/wallets/find">
         <form method="post" action="{{ base_url }}/manage/wallets/store" class="validate" data-wallet-form>
             <div class="flex items-center justify-between px-6 py-4">
                 <div>
                     <h2 class="text-xl font-bold text-primary" data-wallet-modal-title>nova wallet</h2>
-                    <p class="mt-1 text-xs text-[var(--dark)] opacity-70">informe nome, tipo, saldo inicial e status.</p>
+                    <p class="mt-1 text-xs text-[var(--surface-contrast)] opacity-70">informe nome, tipo, saldo inicial e status.</p>
                 </div>
                 <button type="button" class="modal-close flex h-9 w-9 items-center justify-center rounded text-primary transition hover:bg-[var(--secondary)]" aria-label="Fechar">
                     <i class="fa-solid fa-xmark"></i>
@@ -81,14 +81,14 @@
                         <label>tipo</label>
                         <input type="hidden" name="type_id" data-type="required" data-select-input>
 
-                        <button type="button" class="mt-1 flex h-[29px] w-full items-center justify-between rounded border-b-[1.5px] border-[var(--primary)] bg-transparent px-[7px] py-[3px] text-left leading-[21px] transition hover:border-[var(--primary-dark)]" data-select-toggle aria-expanded="false">
+                        <button type="button" class="mt-1 flex h-[29px] w-full items-center justify-between rounded border-b-[1.5px] border-[var(--primary)] bg-transparent px-[7px] py-[3px] text-left leading-[21px] transition hover:border-[var(--primary)]" data-select-toggle aria-expanded="false">
                             <span data-select-label class="text-sm">
                                 escolha um tipo
                             </span>
                             <i class="fa-solid fa-chevron-down text-primary"></i>
                         </button>
 
-                        <div class="mt-2 max-h-0 overflow-hidden rounded border border-transparent bg-[#fffff5] opacity-0 shadow-lg transition-all duration-200" data-select-menu>
+                        <div class="mt-2 max-h-0 overflow-hidden rounded border border-transparent bg-[var(--surface)] opacity-0 shadow-lg transition-all duration-200" data-select-menu>
                             {% for type in wallet_types %}
                                 <button type="button" class="flex w-full items-center rounded px-3 py-2 text-left text-sm transition hover:bg-[var(--secondary)] hover:text-primary" data-select-option data-value="{{ type.id|e('html_attr') }}" data-value-label="{{ type.name|e('html_attr') }}" aria-selected="false">
                                     {{ type.name }}
@@ -103,7 +103,7 @@
                     </div>
                 </div>
 
-                <label class="flex cursor-pointer items-center gap-3 text-sm text-[var(--dark)]">
+                <label class="flex cursor-pointer items-center gap-3 text-sm text-[var(--surface-contrast)]">
                     <input type="hidden" name="active" value="0">
                     <input type="checkbox" name="active" value="1" checked class="peer sr-only" data-wallet-active-input>
                     <span class="flex h-5 w-5 items-center justify-center rounded border-[1.5px] border-[var(--primary)] text-[0px] text-light transition peer-checked:bg-[var(--primary)] peer-checked:text-xs">

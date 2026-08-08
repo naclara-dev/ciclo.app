@@ -558,7 +558,7 @@
         option.type = 'button';
 
         // Define a aparência compartilhada das opções customizadas
-        option.className = 'flex w-full items-center rounded px-3 py-2 text-left text-sm transition hover:bg-[var(--secondary)] hover:text-primary';
+        option.className = 'flex w-full items-center rounded px-3 py-2 text-left text-sm transition hover:bg-[var(--muted)] hover:text-primary';
 
         // Marca o elemento como opção do utilitário de combobox
         option.setAttribute('data-select-option', '');
@@ -666,7 +666,7 @@
 
             // Inicializa o fundo da barra percentual
             const track = document.createElement('div');
-            track.className = 'mt-1.5 h-1.5 overflow-hidden rounded-full bg-[var(--secondary)]';
+            track.className = 'mt-1.5 h-1.5 overflow-hidden rounded-full bg-[var(--muted)]';
 
             // Define o preenchimento percentual da barra
             const fill = document.createElement('div');
@@ -686,7 +686,7 @@
 
         if (transactions.length === 0) {
             const empty = document.createElement('div');
-            empty.className = 'rounded border border-[var(--secondary)] bg-[var(--light)] p-4 text-sm text-secondary';
+            empty.className = 'rounded border border-[var(--border)] bg-[var(--surface-alt)] p-4 text-sm text-secondary';
             empty.textContent = hasActiveTransactionFilter()
                 ? 'nenhum lançamento encontrado para os filtros selecionados.'
                 : 'nenhum lançamento neste ciclo.';
@@ -785,7 +785,7 @@
         // Inicializa o card clicavel usado para edicao
         const button = document.createElement('button');
         button.type = 'button';
-        button.className = 'relative z-10 grid min-w-0 flex-1 touch-pan-y gap-3 rounded border border-[var(--secondary)] bg-[var(--light)] p-3 text-left transition-transform md:w-full sm:grid-cols-[1fr_auto] sm:items-center';
+        button.className = 'relative z-10 grid min-w-0 flex-1 touch-pan-y gap-3 rounded border border-[var(--border)] bg-[var(--surface-alt)] p-3 text-left transition-transform md:w-full sm:grid-cols-[1fr_auto] sm:items-center';
         button.setAttribute('data-edit-transaction', '');
         button.setAttribute('data-swipe-card', '');
 
@@ -813,7 +813,7 @@
 
         const text = document.createElement('div');
         const title = document.createElement('h3');
-        title.className = 'font-medium';
+        title.className = 'font-medium text-[var(--surface-contrast)]';
         title.textContent = transaction.title;
 
         const meta = document.createElement('p');
@@ -831,7 +831,7 @@
 
         const amount = document.createElement('strong');
         amount.className = 'block text-sm';
-        amount.classList.add(transaction.type === 'I' ? 'text-primary' : 'text-[var(--dark)]');
+        amount.classList.add(transaction.type === 'I' ? 'text-primary' : 'text-[var(--surface-contrast)]');
         amount.textContent = transaction.amount_label;
 
         const status = document.createElement('span');
@@ -859,7 +859,7 @@
         }
 
         // Define a aparencia do fundo de exclusao
-        swipeAction.className = 'absolute inset-y-0 right-0 flex w-24 items-center justify-end rounded border border-[var(--secondary)] bg-[var(--secondary-dark)] pr-5 text-[var(--primary)] md:hidden';
+        swipeAction.className = 'absolute inset-y-0 right-0 flex w-24 items-center justify-end rounded border border-[var(--border)] bg-[var(--muted)] pr-5 text-[var(--primary)] md:hidden';
         swipeAction.setAttribute('aria-hidden', 'true');
 
         // Define o icone exibido durante o arraste
@@ -895,7 +895,7 @@
         // Inicializa o botao de exclusao da transacao
         const deleteButton = document.createElement('button');
         deleteButton.type = 'submit';
-        deleteButton.className = 'flex h-9 w-9 cursor-pointer items-center justify-center rounded text-secondary transition hover:bg-[var(--secondary)] hover:text-primary';
+        deleteButton.className = 'flex h-9 w-9 cursor-pointer items-center justify-center rounded text-secondary transition hover:bg-[var(--muted)] hover:text-primary';
         deleteButton.setAttribute('data-delete-button', '');
         deleteButton.setAttribute('aria-label', 'Excluir transacao');
         deleteButton.title = 'Excluir transacao';
