@@ -8,14 +8,14 @@
   "description": "Seu app de gestão de gastos inteligente.",
   "icons": [
     {
-      "src": "/assets/img/favicon.png",
+      "src": "/assets/img/icon-192.png",
       "type": "image/png",
-      "sizes": "500x449"
+      "sizes": "192x192"
     },
     {
-      "src": "/assets/img/favicon-200x180.png",
+      "src": "/assets/img/icon-512.png",
       "type": "image/png",
-      "sizes": "200x180"
+      "sizes": "512x512"
     }
   ]
 }
