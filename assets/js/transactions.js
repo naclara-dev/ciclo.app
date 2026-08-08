@@ -100,7 +100,7 @@
         form.elements.occurrence_date.value = new Date().toISOString().slice(0, 10);
         paidInput.checked = false;
         definesCycleInput.checked = false;
-        setModalTitle('novo registro');
+        setModalTitle(window.CicloTranslate('transactions.new_record', 'novo registro'));
 
         // Percorre os comboboxes para restaurar seus placeholders
         Object.values(selects).forEach(function (select) {
@@ -127,7 +127,7 @@
 
         // Prepara o formulário e abre o modal antes da resposta para mascarar a latência
         resetForm();
-        setModalTitle('carregando…');
+        setModalTitle(window.CicloTranslate('transactions.loading', 'carregando...'));
         transactionModal.open();
 
         fetch(findUrl + '?id=' + encodeURIComponent(id), {
@@ -172,7 +172,7 @@
         form.elements.paid_at.value = transaction.paid_at || '';
         paidInput.checked = !!Number(transaction.paid);
         definesCycleInput.checked = !!Number(transaction.defines_cycle);
-        setModalTitle('editar registro');
+        setModalTitle(window.CicloTranslate('transactions.edit', 'editar registro'));
 
         // Define os relacionamentos selecionados; o label resolve a partir do data-value-label das opções
         selects.type.set(transaction.type, '', false);
@@ -193,7 +193,7 @@
             resetForm();
             fillForm(transaction);
             form.elements.id.value = '';
-            setModalTitle('confirmar previsao');
+            setModalTitle(window.CicloTranslate('transactions.confirm_forecast', 'confirmar previsao'));
             transactionModal.open();
         } catch (error) {
             // Interrompe a abertura quando os dados da previsao estao invalidos

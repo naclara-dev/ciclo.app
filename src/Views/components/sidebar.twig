@@ -3,51 +3,51 @@
 {% set settings_active = current_path == (base_url ~ '/settings/') %}
 
 <aside class="app-sidebar flex flex-col justify-between items-center max-[600px]:flex-row max-[600px]:!w-auto max-[600px]:!h-auto max-[600px]:bg-[var(--primary)] max-[600px]:!text-[var(--background)] max-[600px]:rounded-md max-[600px]:text-[1.1rem]">
-    <a class="pl-8 pt-8 brand-mark hidden md:block" href="{{ base_url }}/" aria-label="Ciclo">
-        <img src="{{ base_url }}/assets/img/logo.png" alt="Ciclo">
+    <a class="pl-8 pt-8 brand-mark hidden md:block" href="{{ base_url }}/" aria-label="{{ t('sidebar.brand') }}">
+        <img src="{{ base_url }}/assets/img/logo.png" alt="{{ t('sidebar.brand') }}">
     </a>
 
-    <nav class="p-8 flex items-center justify-center max-[600px]:!py-2 max-[600px]:!px-4 max-[600px]:w-full" aria-label="Menu principal">
+    <nav class="p-8 flex items-center justify-center max-[600px]:!py-2 max-[600px]:!px-4 max-[600px]:w-full" aria-label="{{ t('sidebar.main_menu') }}">
         <ul class="flex flex-cow md:flex-col gap-0 md:gap-8 justify-between max-[600px]:w-full max-[600px]:gap-1">
             <li class="nav-item flex items-center">
-                <a class="nav-item-link p-1 {{ home_active ? 'active' : '' }} inline-block" href="{{ base_url }}/" aria-label="Visão Geral">
+                <a class="nav-item-link p-1 {{ home_active ? 'active' : '' }} inline-block" href="{{ base_url }}/" aria-label="{{ t('sidebar.home') }}">
                     <i class="fa-regular fa-house fa-xl" aria-hidden="true"></i>
                 </a>
                 <span class="nav-item-label hidden md:d-inline-block">
-                    visão geral
+                    {{ t('sidebar.home') }}
                 </span>
             </li>
             <li class="nav-item flex items-center">
-                <a class="nav-item-link p-1 {{ manage_active ? 'active' : '' }} inline-block" href="{{ base_url }}/manage/" aria-label="Cadastros">
+                <a class="nav-item-link p-1 {{ manage_active ? 'active' : '' }} inline-block" href="{{ base_url }}/manage/" aria-label="{{ t('sidebar.manage') }}">
                     <i class="fa-regular fa-rectangle-list fa-xl" aria-hidden="true"></i>
                 </a>
                 <span class="nav-item-label hidden md:d-inline-block">
-                    cadastros
+                    {{ t('sidebar.manage') }}
                 </span>
             </li>
-            {# Exibe o novo registro como ação principal no menu #}
+            {# Exibe o {{ t('sidebar.new_record') }} como ação principal no menu #}
             <li class="nav-item nav-item-new flex items-center">
-                <button type="button" class="modal-toggle nav-item-link p-1 inline-block cursor-pointer" data-modal-target="#transaction-modal" aria-label="Novo Registro">
+                <button type="button" class="modal-toggle nav-item-link p-1 inline-block cursor-pointer" data-modal-target="#transaction-modal" aria-label="{{ t('sidebar.new_record') }}">
                     <i class="fa-solid fa-plus fa-xl" aria-hidden="true"></i>
                 </button>
                 <span class="nav-item-label hidden md:d-inline-block">
-                    novo registro
+                    {{ t('sidebar.new_record') }}
                 </span>
             </li>
             <li class="nav-item flex items-center">
-                <a class="nav-item-link p-1 {{ settings_active ? 'active' : '' }} inline-block" href="{{ base_url }}/settings/" aria-label="Configurações">
+                <a class="nav-item-link p-1 {{ settings_active ? 'active' : '' }} inline-block" href="{{ base_url }}/settings/" aria-label="{{ t('sidebar.settings') }}">
                     <i class="fa-solid fa-gear fa-xl" aria-hidden="true"></i>
                 </a>
                 <span class="nav-item-label hidden md:d-inline-block">
-                    ajustes
+                    {{ t('sidebar.settings') }}
                 </span>
             </li>
             <li class="nav-item flex items-center">
-                <a class="nav-item-link p-1 inline-block" href="{{ base_url }}/logoff" aria-label="Sair">
+                <a class="nav-item-link p-1 inline-block" href="{{ base_url }}/logoff" aria-label="{{ t('sidebar.logout') }}">
                     <i class="fa-solid fa-power-off fa-xl" aria-hidden="true"></i>
                 </a>
                 <span class="nav-item-label hidden md:d-inline-block">
-                    sair
+                    {{ t('sidebar.logout') }}
                 </span>
             </li>
         </ul>

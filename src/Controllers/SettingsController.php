@@ -29,6 +29,7 @@ class SettingsController extends Controller {
                 'id' => $userId
             ]),
             'account_feedback' => $accountFeedback,
+            'languages' => $this->availableLanguages(),
         ]);
     }
 
@@ -52,8 +53,11 @@ class SettingsController extends Controller {
         $repository = new SettingRepository;
         $current = $repository->firstFromUser((int) Session::get('user_id'));
 
+        // Define o ID atual para atualizar a configuracao existente quando o formulario nao envia ID
+        $settingId = empty($data['id']) ? ($current['id'] ?? null) : (int) $data['id'];
+
         return [
-            'id' => empty($data['id']) ? null : (int) $data['id'],
+            'id' => $settingId,
             'user_id' => Session::get('user_id'),
             'default_payment_method_id' => $this->normalizeOptionalInteger($data, $current, 'default_payment_method_id'),
             'default_wallet_id' => $this->normalizeOptionalInteger($data, $current, 'default_wallet_id'),
@@ -65,6 +69,16 @@ class SettingsController extends Controller {
             'dark_theme' => array_key_exists('dark_theme', $data)
                 ? (!empty($data['dark_theme']) ? 1 : 0)
                 : (int) ($current['dark_theme'] ?? 0),
+            'language' => $this->normalizeOptionalLanguage($data, $current),
+        ];
+    }
+
+    private function availableLanguages(): array {
+        return [
+            ['id' => 'pt-br', 'name' => 'Português'],
+            ['id' => 'en-us', 'name' => 'English'],
+            ['id' => 'es-mx', 'name' => 'Español'],
+            ['id' => 'it-it', 'name' => 'Italiano'],
         ];
     }
 
@@ -74,6 +88,16 @@ class SettingsController extends Controller {
         }
 
         return empty($data[$field]) ? null : (int) $data[$field];
+    }
+
+    private function normalizeOptionalLanguage(array $data, array $current): string {
+        // Define o idioma atual quando o formulario nao envia a preferencia
+        $language = strtolower((string) ($data['language'] ?? $current['language'] ?? 'pt-br'));
+
+        // Define os idiomas aceitos a partir da lista exibida no formulario
+        $allowedLanguages = array_column($this->availableLanguages(), 'id');
+
+        return in_array($language, $allowedLanguages, true) ? $language : 'pt-br';
     }
 
     private function normalizeOptionalEnum(array $data, array $current, string $field, array $allowed) {

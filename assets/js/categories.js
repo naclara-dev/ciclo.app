@@ -74,9 +74,9 @@
         idInput.value = '';
         colorInput.value = getDefaultCategoryColor();
         iconInput.value = '';
-        modalTitle.textContent = 'nova categoria';
+        modalTitle.textContent = window.CicloTranslate('manage.categories.new', 'nova categoria');
         selectedIconPreview.innerHTML = '<i class="fa-solid fa-icons"></i>';
-        selectedIconLabel.textContent = 'escolha um icone';
+        selectedIconLabel.textContent = window.CicloTranslate('manage.categories.choose_icon', 'escolha um icone');
         picker.classList.add('hidden');
         search.value = '';
         renderIcons('');
@@ -86,7 +86,7 @@
         idInput.value = category.id;
         nameInput.value = category.name;
         colorInput.value = category.color || getDefaultCategoryColor();
-        modalTitle.textContent = 'editar categoria';
+        modalTitle.textContent = window.CicloTranslate('manage.categories.edit', 'editar categoria');
         picker.classList.add('hidden');
         search.value = '';
         setSelectedIcon(category.icon);
@@ -125,6 +125,6 @@
 
         iconInput.value = iconStyle;
         selectedIconPreview.innerHTML = iconStyle ? '<i class="' + iconStyle + '"></i>' : '<i class="fa-solid fa-icons"></i>';
-        selectedIconLabel.textContent = icon ? icon.label : 'icone selecionado';
+        selectedIconLabel.textContent = icon ? icon.label : window.CicloTranslate('manage.categories.selected_icon', 'icone selecionado');
     }
 })();

@@ -231,10 +231,10 @@
     </style>
 </head>
 <body>
-    <nav class="print-actions" aria-label="Ações de impressão">
+    <nav class="print-actions" aria-label="{{ t('dashboard.print.actions_label') }}">
         <button type="button" onclick="window.print()">
             <i class="fa-solid fa-print"></i>
-            imprimir ou salvar PDF
+            {{ t('dashboard.print.print_or_save_pdf') }}
         </button>
         <button type="button" onclick="window.close()">
             fechar
@@ -250,7 +250,7 @@
                             <div class="cycle-day">{{ cycle.startDayLabel }}</div>
                             <div>
                                 <h1 class="cycle-title">{{ cycle.label }}</h1>
-                                <p class="cycle-subtitle">lançamentos do ciclo financeiro</p>
+                                <p class="cycle-subtitle">{{ t('dashboard.cycle.financial_entries') }}</p>
                             </div>
                         </div>
                     </td>
@@ -283,7 +283,7 @@
                 {% else %}
                     <tr>
                         <td>
-                            <div class="empty-state">nenhum lançamento neste ciclo.</div>
+                            <div class="empty-state">{{ t('dashboard.transactions.empty') }}</div>
                         </td>
                     </tr>
                 {% endfor %}

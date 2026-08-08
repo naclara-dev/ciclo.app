@@ -11,11 +11,16 @@ class SettingRepository extends Repository
 
     public function firstFromUser(int $userId): array
     {
-        $settings = $this->find([
-            'user_id' => $userId
-        ]);
+        // Carrega a configuração mais recente para evitar linhas antigas do mesmo usuário
+        $stmt = $this->db->prepare("SELECT * FROM $this->table WHERE user_id = :user_id ORDER BY id DESC LIMIT 1");
+        $stmt->bindValue(':user_id', $userId);
+        $stmt->execute();
+
+        // Define as configurações encontradas para o usuário autenticado
+        $settings = $stmt->fetch();
 
         if ($settings) {
+            // Retorna a configuração persistida no banco
             return $settings;
         }
 
@@ -28,6 +33,7 @@ class SettingRepository extends Repository
             'default_type' => null,
             'cycle_starts_after_income' => 1,
             'dark_theme' => 0,
+            'language' => 'pt-br',
         ];
     }
 }

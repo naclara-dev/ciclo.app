@@ -5,27 +5,24 @@
         <div>
             <div class="flex items-center gap-2">
                 <h1 class="text-primary text-3xl">
-                    entidades
+                    {{ t('manage.entities.title') }}
                 </h1>
-                {# Define a dica contextual da tela de entidades #}
+                {# Define a dica contextual da tela de {{ t('manage.entities.title') }} #}
                 <div class="info-hint-wrapper" data-info-hint>
-                    <button type="button" class="flex h-7 w-7 items-center justify-center rounded text-secondary transition hover:text-[var(--primary)] focus-visible:bg-[var(--primary)] focus-visible:outline-none" aria-label="Mostrar explicação sobre entidades" aria-describedby="entities-info-hint" aria-expanded="false" data-info-hint-toggle>
+                    <button type="button" class="flex h-7 w-7 items-center justify-center rounded text-secondary transition hover:text-[var(--primary)] focus-visible:bg-[var(--primary)] focus-visible:outline-none" aria-label="{{ t('manage.entities.info_label') }}" aria-describedby="entities-info-hint" aria-expanded="false" data-info-hint-toggle>
                         <i class="fa-regular fa-circle-question"></i>
                     </button>
-                    <div id="entities-info-hint" class="info-hint" role="tooltip">
-                        pessoas, grupos ou organizações relacionadas aos lançamentos.
-                        ajudam a identificar quem recebe, paga ou participa da movimentação.
-                    </div>
+                    <div id="entities-info-hint" class="info-hint" role="tooltip">{{ t('manage.entities.tooltip') }}</div>
                 </div>
             </div>
-            <p class="text-sm mt-2">
-                crie e gerencie pessoas, grupos e organizações credoras.
+            <p class="text-sm mt-2 text-secondary">
+                {{ t('manage.entities.description') }}
             </p>
         </div> 
         <div class="flex justify-end"> 
             <button type="button" class="modal-toggle btn-primary w-50 mt-4 text-xl" data-modal-target="#entity-modal">
                 <i class="fa-solid fa-plus fa-sm mr-1"></i>
-                criar
+                {{ t('common.actions.create') }}
             </button>
         </div> 
     </section>  
@@ -43,14 +40,14 @@
 
                 <form method="post" action="{{ base_url }}/manage/entities/delete" class="absolute right-2 top-3">
                     <input type="hidden" name="id" value="{{ entity.id|e('html_attr') }}">
-                    <button type="submit" class="cursor-pointer flex h-8 w-8 items-center justify-center rounded text-secondary" aria-label="Excluir Entidade" data-delete-button>
+                    <button type="submit" class="cursor-pointer flex h-8 w-8 items-center justify-center rounded text-secondary" aria-label="{{ t('manage.entities.delete_label') }}" data-delete-button>
                         <i class="fa-regular fa-trash-can"></i>
                     </button>
                 </form>
             </div>
         {% else %} 
             <p class="col-span-4 flex min-h-[calc(100vh-220px)] items-center justify-center text-center text-secondary text-3xl">
-                você ainda não cadastrou nenhuma entidade :/ 
+                {{ t('manage.entities.empty') }} 
             </p>            
         {% endfor %}  
     </section>
@@ -59,10 +56,10 @@
         <form method="post" action="{{ base_url }}/manage/entities/store" class="validate" data-entity-form>
             <div class="flex items-center justify-between px-6 py-4">
                 <div>
-                    <h2 class="text-xl font-bold text-primary" data-entity-modal-title>nova entidade</h2>
-                    <p class="mt-1 text-xs text-[var(--surface-contrast)] opacity-70">informe nome e tipo da entidade.</p>
+                    <h2 class="text-xl font-bold text-primary" data-entity-modal-title>{{ t('manage.entities.new') }}</h2>
+                    <p class="mt-1 text-xs text-[var(--surface-contrast)] opacity-70">{{ t('manage.entities.form_description') }}</p>
                 </div>
-                <button type="button" class="modal-close flex h-9 w-9 items-center justify-center rounded text-primary transition hover:bg-[var(--secondary)]" aria-label="Fechar">
+                <button type="button" class="modal-close flex h-9 w-9 items-center justify-center rounded text-primary transition hover:bg-[var(--secondary)]" aria-label="{{ t('common.actions.close') }}">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -71,18 +68,18 @@
                 <input type="hidden" name="id" data-entity-id-input>
 
                 <div class="form-group">
-                    <label for="entity-name">nome</label>
+                    <label for="entity-name">{{ t('common.fields.name') }}</label>
                     <input id="entity-name" name="name" type="text" data-type="required" class="mt-1 w-full bg-transparent outline-none" autocomplete="off" data-entity-name-input>
                 </div>
 
                 {# Declara o combobox de tipo da entidade #}
-                <div class="form-group" data-select data-select-placeholder="escolha um tipo">
-                    <label>tipo</label>
+                <div class="form-group" data-select data-select-placeholder="{{ t('common.placeholders.choose_type') }}">
+                    <label>{{ t('common.fields.type') }}</label>
                     <input type="hidden" name="type_id" data-type="required" data-select-input>
 
                     <button type="button" class="mt-1 flex h-[29px] w-full items-center justify-between rounded border-b-[1.5px] border-[var(--primary)] bg-transparent px-[7px] py-[3px] text-left leading-[21px] transition hover:border-[var(--primary)]" data-select-toggle aria-expanded="false">
                         <span data-select-label class="text-sm">
-                            escolha um tipo
+                            {{ t('common.placeholders.choose_type') }}
                         </span>
                         <i class="fa-solid fa-chevron-down text-primary"></i>
                     </button>
@@ -99,11 +96,11 @@
 
             <div class="flex justify-end gap-3 px-6 py-4">
                 <button type="button" class="modal-close btn-secondary">
-                    cancelar
+                    {{ t('common.actions.cancel') }}
                 </button>
                 <button type="submit" class="btn-primary">
                     <i class="fa-solid fa-check"></i>
-                    salvar
+                    {{ t('common.actions.save') }}
                 </button>
             </div>
         </form>

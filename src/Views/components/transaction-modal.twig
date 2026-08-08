@@ -2,10 +2,10 @@
     <form method="post" action="{{ base_url }}/transactions/store" class="validate" data-transaction-form>
         <div class="flex items-center justify-between px-6 py-4">
             <div>
-                <h2 class="text-xl font-bold text-primary" data-transaction-modal-title>nova transação</h2>
-                <p class="mt-1 text-xs text-[var(--surface-contrast)] opacity-70">registre uma movimentação financeira.</p>
+                <h2 class="text-xl font-bold text-primary" data-transaction-modal-title>{{ t('transactions.new') }}</h2>
+                <p class="mt-1 text-xs text-[var(--surface-contrast)] opacity-70">{{ t('transactions.modal_description') }}</p>
             </div>
-            <button type="button" class="modal-close flex h-9 w-9 items-center justify-center rounded text-primary transition hover:bg-[var(--secondary)]" aria-label="Fechar">
+            <button type="button" class="modal-close flex h-9 w-9 items-center justify-center rounded text-primary transition hover:bg-[var(--secondary)]" aria-label="{{ t('common.actions.close') }}">
                 <i class="fa-solid fa-xmark"></i>
             </button>
         </div>
@@ -15,41 +15,41 @@
 
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {# Declara o combobox de tipo da transação #}
-                <div class="form-group" data-select data-select-name="type" data-select-placeholder="escolha o tipo">
-                    <label>tipo</label>
+                <div class="form-group" data-select data-select-name="type" data-select-placeholder="{{ t('common.placeholders.choose_type') }}">
+                    <label>{{ t('common.fields.type') }}</label>
                     <input type="hidden" name="type" data-type="required" data-select-input>
                     <button type="button" class="mt-1 flex h-[29px] w-full items-center justify-between rounded border-b-[1.5px] border-[var(--primary)] bg-transparent px-[7px] py-[3px] text-left leading-[21px] transition hover:border-[var(--primary)]" data-select-toggle aria-expanded="false">
-                        <span data-select-label class="text-sm">escolha o tipo</span>
+                        <span data-select-label class="text-sm">{{ t('common.placeholders.choose_type') }}</span>
                         <i class="fa-solid fa-chevron-down text-primary"></i>
                     </button>
                     <div class="mt-2 max-h-0 overflow-hidden rounded border border-transparent bg-[var(--surface)] opacity-0 shadow-lg transition-all duration-200" data-select-menu>
-                        <button type="button" class="flex w-full items-center rounded px-3 py-2 text-left text-sm transition hover:bg-[var(--secondary)] hover:text-primary" data-select-option data-value="E" data-value-label="despesa" aria-selected="false">
-                            saída
+                        <button type="button" class="flex w-full items-center rounded px-3 py-2 text-left text-sm transition hover:bg-[var(--secondary)] hover:text-primary" data-select-option data-value="E" data-value-label="{{ t('common.types.expense') }}" aria-selected="false">
+                            {{ t('common.types.expense') }}
                         </button>
-                        <button type="button" class="flex w-full items-center rounded px-3 py-2 text-left text-sm transition hover:bg-[var(--secondary)] hover:text-primary" data-select-option data-value="I" data-value-label="receita" aria-selected="false">
-                            entrada
+                        <button type="button" class="flex w-full items-center rounded px-3 py-2 text-left text-sm transition hover:bg-[var(--secondary)] hover:text-primary" data-select-option data-value="I" data-value-label="{{ t('common.types.income') }}" aria-selected="false">
+                            {{ t('common.types.income') }}
                         </button>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="transaction-amount">valor</label>
+                    <label for="transaction-amount">{{ t('common.fields.amount') }}</label>
                     <input id="transaction-amount" name="amount" type="text" inputmode="decimal" value="0,00" data-type="required" class="mt-1 h-[29px] w-full bg-transparent leading-[21px] outline-none" autocomplete="off">
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="transaction-title">titulo</label>
+                <label for="transaction-title">{{ t('common.fields.title') }}</label>
                 <input id="transaction-title" name="title" type="text" data-type="required" class="mt-1 w-full bg-transparent outline-none" autocomplete="off">
             </div>
 
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
                 {# Declara o combobox de wallet da transação #}
-                <div class="form-group" data-select data-select-name="wallet" data-select-placeholder="escolha uma wallet">
-                    <label>wallet</label>
+                <div class="form-group" data-select data-select-name="wallet" data-select-placeholder="{{ t('common.placeholders.choose_wallet') }}">
+                    <label>{{ t('common.fields.wallet') }}</label>
                     <input type="hidden" name="wallet_id" data-type="required" data-select-input>
                     <button type="button" class="mt-1 flex h-[29px] w-full items-center justify-between rounded border-b-[1.5px] border-[var(--primary)] bg-transparent px-[7px] py-[3px] text-left leading-[21px] transition hover:border-[var(--primary)]" data-select-toggle aria-expanded="false">
-                        <span data-select-label class="text-sm">escolha uma wallet</span>
+                        <span data-select-label class="text-sm">{{ t('common.placeholders.choose_wallet') }}</span>
                         <i class="fa-solid fa-chevron-down text-primary"></i>
                     </button>
                     <div class="mt-2 max-h-0 overflow-hidden rounded border border-transparent bg-[var(--surface)] opacity-0 shadow-lg transition-all duration-200" data-select-menu>
@@ -62,11 +62,11 @@
                 </div>
 
                 {# Declara o combobox de categoria da transação #}
-                <div class="form-group" data-select data-select-name="category" data-select-placeholder="escolha uma categoria">
-                    <label>categoria</label>
+                <div class="form-group" data-select data-select-name="category" data-select-placeholder="{{ t('common.placeholders.choose_category') }}">
+                    <label>{{ t('common.fields.category') }}</label>
                     <input type="hidden" name="category_id" data-select-input>
                     <button type="button" class="mt-1 flex h-[29px] w-full items-center justify-between rounded border-b-[1.5px] border-[var(--primary)] bg-transparent px-[7px] py-[3px] text-left leading-[21px] transition hover:border-[var(--primary)]" data-select-toggle aria-expanded="false">
-                        <span data-select-label class="text-sm">escolha uma categoria</span>
+                        <span data-select-label class="text-sm">{{ t('common.placeholders.choose_category') }}</span>
                         <i class="fa-solid fa-chevron-down text-primary"></i>
                     </button>
                     <div class="mt-2 max-h-0 overflow-hidden rounded border border-transparent bg-[var(--surface)] opacity-0 shadow-lg transition-all duration-200" data-select-menu>
@@ -79,11 +79,11 @@
                 </div>
 
                 {# Declara o combobox de entidade da transação #}
-                <div class="form-group" data-select data-select-name="entity" data-select-placeholder="escolha uma entidade">
-                    <label>entidade</label>
+                <div class="form-group" data-select data-select-name="entity" data-select-placeholder="{{ t('common.placeholders.choose_entity') }}">
+                    <label>{{ t('common.fields.entity') }}</label>
                     <input type="hidden" name="entity_id" data-select-input>
                     <button type="button" class="mt-1 flex h-[29px] w-full items-center justify-between rounded border-b-[1.5px] border-[var(--primary)] bg-transparent px-[7px] py-[3px] text-left leading-[21px] transition hover:border-[var(--primary)]" data-select-toggle aria-expanded="false">
-                        <span data-select-label class="text-sm">escolha uma entidade</span>
+                        <span data-select-label class="text-sm">{{ t('common.placeholders.choose_entity') }}</span>
                         <i class="fa-solid fa-chevron-down text-primary"></i>
                     </button>
                     <div class="mt-2 max-h-0 overflow-hidden rounded border border-transparent bg-[var(--surface)] opacity-0 shadow-lg transition-all duration-200" data-select-menu>
@@ -98,11 +98,11 @@
 
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {# Declara o combobox de template da transação #}
-                <div class="form-group" data-select data-select-name="template" data-select-placeholder="sem template">
-                    <label>template</label>
+                <div class="form-group" data-select data-select-name="template" data-select-placeholder="{{ t('common.placeholders.no_template') }}">
+                    <label>{{ t('common.fields.template') }}</label>
                     <input type="hidden" name="template_id" data-select-input>
                     <button type="button" class="mt-1 flex h-[29px] w-full items-center justify-between rounded border-b-[1.5px] border-[var(--primary)] bg-transparent px-[7px] py-[3px] text-left leading-[21px] transition hover:border-[var(--primary)]" data-select-toggle aria-expanded="false">
-                        <span data-select-label class="text-sm">sem template</span>
+                        <span data-select-label class="text-sm">{{ t('common.placeholders.no_template') }}</span>
                         <i class="fa-solid fa-chevron-down text-primary"></i>
                     </button>
                     <div class="mt-2 max-h-0 overflow-hidden rounded border border-transparent bg-[var(--surface)] opacity-0 shadow-lg transition-all duration-200" data-select-menu>
@@ -115,11 +115,11 @@
                 </div>
 
                 {# Declara o combobox da forma de pagamento da transação #}
-                <div class="form-group" data-select data-select-name="payment-method" data-select-placeholder="escolha uma forma">
-                    <label>forma de pagamento</label>
+                <div class="form-group" data-select data-select-name="payment-method" data-select-placeholder="{{ t('common.placeholders.choose_payment_method') }}">
+                    <label>{{ t('common.fields.payment_method') }}</label>
                     <input type="hidden" name="payment_method_id" data-select-input>
                     <button type="button" class="mt-1 flex h-[29px] w-full items-center justify-between rounded border-b-[1.5px] border-[var(--primary)] bg-transparent px-[7px] py-[3px] text-left leading-[21px] transition hover:border-[var(--primary)]" data-select-toggle aria-expanded="false">
-                        <span data-select-label class="text-sm">escolha uma forma</span>
+                        <span data-select-label class="text-sm">{{ t('common.placeholders.choose_payment_method') }}</span>
                         <i class="fa-solid fa-chevron-down text-primary"></i>
                     </button>
                     <div class="mt-2 max-h-0 overflow-hidden rounded border border-transparent bg-[var(--surface)] opacity-0 shadow-lg transition-all duration-200" data-select-menu>
@@ -134,15 +134,15 @@
 
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
                 <div class="form-group">
-                    <label for="transaction-occurrence-date">data</label>
+                    <label for="transaction-occurrence-date">{{ t('common.fields.date') }}</label>
                     <input id="transaction-occurrence-date" name="occurrence_date" type="date" data-type="required" class="mt-1 h-[29px] w-full bg-transparent leading-[21px] outline-none">
                 </div>
                 <div class="form-group">
-                    <label for="transaction-due-date">vencimento</label>
+                    <label for="transaction-due-date">{{ t('common.fields.due_date') }}</label>
                     <input id="transaction-due-date" name="due_date" type="date" class="mt-1 h-[29px] w-full bg-transparent leading-[21px] outline-none">
                 </div>
                 <div class="form-group">
-                    <label for="transaction-paid-at">pagamento</label>
+                    <label for="transaction-paid-at">{{ t('common.fields.paid_at') }}</label>
                     <input id="transaction-paid-at" name="paid_at" type="date" class="mt-1 h-[29px] w-full bg-transparent leading-[21px] outline-none">
                 </div>
             </div>
@@ -154,7 +154,7 @@
                     <span class="flex h-5 w-5 items-center justify-center rounded border-[1.5px] border-[var(--primary)] text-[0px] text-light transition peer-checked:bg-[var(--primary)] peer-checked:text-xs">
                         <i class="fa-solid fa-check"></i>
                     </span>
-                    pago
+                    {{ t('transactions.paid') }}
                 </label>
 
                 <label class="flex cursor-pointer items-center gap-3 text-sm text-[var(--surface-contrast)]">
@@ -163,18 +163,18 @@
                     <span class="flex h-5 w-5 items-center justify-center rounded border-[1.5px] border-[var(--primary)] text-[0px] text-light transition peer-checked:bg-[var(--primary)] peer-checked:text-xs">
                         <i class="fa-solid fa-check"></i>
                     </span>
-                    define ciclo
+                    {{ t('transactions.defines_cycle') }}
                 </label>
             </div>
         </div>
 
         <div class="flex justify-end gap-3 px-6 py-4">
             <button type="button" class="modal-close btn-secondary">
-                cancelar
+                {{ t('common.actions.cancel') }}
             </button>
             <button type="submit" class="btn-primary">
                 <i class="fa-solid fa-check"></i>
-                salvar
+                {{ t('common.actions.save') }}
             </button>
         </div>
     </form>

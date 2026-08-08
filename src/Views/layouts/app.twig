@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="{{ current_language|default('pt-br') }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="{{ base_url }}/assets/css/animations.css">
     <link rel="stylesheet" href="{{ base_url }}/assets/css/style.css">
 
-    <title>Ciclo | Gestão de Gastos</title>
+    <title>{{ t('app.title') }}</title>
 </head>
 <body class="{% if dark_theme|default(false) %} dark {% endif %}">
     {% block sidebar %}
@@ -35,9 +35,30 @@
     {% include 'components/transaction-modal.twig' %}
 
     <div class="global-loading-overlay" data-global-loading hidden aria-hidden="true">
-        <span class="loading --primary global-loading-spinner" role="status" aria-label="Carregando"></span>
+        <span class="loading --primary global-loading-spinner" role="status" aria-label="{{ t('common.loading') }}"></span>
     </div>
 
+    <script>
+        window.CicloTranslations = {{ current_translations|json_encode|raw }};
+
+        window.CicloTranslate = function (key, fallback) {
+            // Define o ponto inicial da busca no catálogo ativo
+            let value = window.CicloTranslations || {};
+
+            // Percorre a chave em formato dot notation
+            String(key).split('.').forEach(function (segment) {
+                if (value && Object.prototype.hasOwnProperty.call(value, segment)) {
+                    value = value[segment];
+                    return;
+                }
+
+                value = null;
+            });
+
+            // Retorna o texto encontrado ou o fallback informado pelo JS
+            return typeof value === 'string' ? value : fallback;
+        };
+    </script>
     <script src="{{ base_url }}/assets/js/utils/loading.js"></script>
     <script src="{{ base_url }}/assets/js/utils/validation.js"></script>
     <script src="{{ base_url }}/assets/js/utils/modal.js"></script>

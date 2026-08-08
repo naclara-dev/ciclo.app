@@ -5,26 +5,26 @@
         <div>
             <div class="flex items-center gap-2">
                 <h1 class="text-primary text-3xl">
-                    categorias
+                    {{ t('manage.categories.title') }}
                 </h1>
-                {# Define a dica contextual da tela de categorias #}
+                {# Define a dica contextual da tela de {{ t('manage.categories.title') }} #}
                 <div class="info-hint-wrapper" data-info-hint>
-                    <button type="button" class="flex h-7 w-7 items-center justify-center rounded text-secondary transition hover:text-[var(--primary)] focus-visible:bg-[var(--primary)] focus-visible:outline-none" aria-label="Mostrar explicação sobre categorias" aria-describedby="categories-info-hint" aria-expanded="false" data-info-hint-toggle>
+                    <button type="button" class="flex h-7 w-7 items-center justify-center rounded text-secondary transition hover:text-[var(--primary)] focus-visible:bg-[var(--primary)] focus-visible:outline-none" aria-label="{{ t('manage.categories.info_label') }}" aria-describedby="categories-info-hint" aria-expanded="false" data-info-hint-toggle>
                         <i class="fa-regular fa-circle-question"></i>
                     </button>
                     <div id="categories-info-hint" class="info-hint" role="tooltip">
-                        grupos para organizar as movimentações financeiras. ajudam a identificar origem, destino e finalidade.
+                        {{ t('manage.categories.tooltip') }}
                     </div>
                 </div>
             </div>
-            <p class="text-sm mt-2">
-                organize seus lançamentos em categorias personalizadas.
+            <p class="text-sm mt-2 text-secondary">
+                {{ t('manage.categories.description') }}
             </p>
         </div> 
         <div class="flex justify-end"> 
             <button type="button" class="modal-toggle btn-primary w-50 mt-4 text-xl" data-modal-target="#category-modal">
                 <i class="fa-solid fa-plus fa-sm mr-1"></i>
-                criar
+                {{ t('common.actions.create') }}
             </button>
         </div> 
     </section>
@@ -47,14 +47,14 @@
 
                 <form method="post" action="{{ base_url }}/manage/categories/delete" class="absolute right-2 top-3">
                     <input type="hidden" name="id" value="{{ category.id|e('html_attr') }}">
-                    <button type="submit" class="cursor-pointer flex h-8 w-8 items-center justify-center rounded text-secondary" aria-label="Excluir Categoria" data-delete-button>
+                    <button type="submit" class="cursor-pointer flex h-8 w-8 items-center justify-center rounded text-secondary" aria-label="{{ t('manage.categories.delete_label') }}" data-delete-button>
                         <i class="fa-regular fa-trash-can"></i>
                     </button>
                 </form>
             </div>
         {% else %} 
             <p class="col-span-4 flex min-h-[calc(100vh-220px)] items-center justify-center text-center text-secondary text-3xl">
-                você ainda não cadastrou nenhuma categoria :/ 
+                {{ t('manage.categories.empty') }} 
             </p>              
         {% endfor %}  
     </section>
@@ -63,10 +63,10 @@
         <form method="post" action="{{ base_url }}/manage/categories/store" class="validate" data-category-form>
             <div class="flex items-center justify-between px-6 py-4">
                 <div>
-                    <h2 class="text-xl font-medium text-primary font-bold" data-category-modal-title>nova categoria</h2>
-                    <p class="mt-1 text-xs text-[var(--surface-contrast)] opacity-70">escolha nome, cor e ícone.</p>
+                    <h2 class="text-xl font-medium text-primary font-bold" data-category-modal-title>{{ t('manage.categories.new') }}</h2>
+                    <p class="mt-1 text-xs text-[var(--surface-contrast)] opacity-70">{{ t('manage.categories.form_description') }}</p>
                 </div>
-                <button type="button" class="modal-close flex h-9 w-9 items-center justify-center rounded text-primary transition hover:bg-[var(--secondary)]" aria-label="Fechar">
+                <button type="button" class="modal-close flex h-9 w-9 items-center justify-center rounded text-primary transition hover:bg-[var(--secondary)]" aria-label="{{ t('common.actions.close') }}">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -75,18 +75,18 @@
                 <input type="hidden" name="id" data-category-id-input>
 
                 <div class="form-group">
-                    <label for="category-name">nome</label>
+                    <label for="category-name">{{ t('common.fields.name') }}</label>
                     <input id="category-name" name="name" type="text" data-type="required" class="mt-1 w-full bg-transparent outline-none" autocomplete="off" data-category-name-input>
                 </div>
 
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-[120px_1fr]">
                     <div class="form-group">
-                        <label for="category-color">cor</label>
+                        <label for="category-color">{{ t('common.fields.color') }}</label>
                         <input id="category-color" name="color" type="color" data-type="required" class="mt-2 h-10 w-24 cursor-pointer bg-transparent p-1" data-category-color-input>
                     </div>
 
                     <div class="form-group">
-                        <label>ícone</label>
+                        <label>{{ t('common.fields.icon') }}</label>
                         <input type="hidden" name="icon" data-category-icon-input>
 
                         <button type="button" class="h-10 border-b-[1.5px] border-[var(--primary)] mt-2 flex w-full items-center justify-between rounded text-left transition" data-toggle-icon-picker>
@@ -105,8 +105,8 @@
 
                 <div class="hidden rounded border border-[var(--secondary)] bg-[var(--background)] p-3" data-icon-picker>
                     <div class="form-group mb-3">
-                        <label for="category-icon-search">Buscar ícone</label>
-                        <input id="category-icon-search" type="search" class="mt-1 w-full bg-transparent outline-none" placeholder="Ex.: casa, carro, mercado" data-icon-search>
+                        <label for="category-icon-search">{{ t('manage.categories.icon_search') }}</label>
+                        <input id="category-icon-search" type="search" class="mt-1 w-full bg-transparent outline-none" placeholder="{{ t('common.placeholders.icon_search_example') }}" data-icon-search>
                     </div>
 
                     <div class="grid max-h-64 grid-cols-4 gap-2 overflow-y-auto pr-1 sm:grid-cols-6 md:grid-cols-8" data-icon-grid></div>
@@ -115,11 +115,11 @@
 
             <div class="flex justify-end gap-3 px-6 py-4">
                 <button type="button" class="modal-close btn-secondary">
-                    cancelar
+                    {{ t('common.actions.cancel') }}
                 </button>
                 <button type="submit" class="btn-primary">
                     <i class="fa-solid fa-check"></i> 
-                    salvar
+                    {{ t('common.actions.save') }}
                 </button>
             </div>
         </form>

@@ -63,7 +63,7 @@
         fields.month_day.value = '1';
         fields.active.checked = true;
         fields.defines_cycle.checked = false;
-        modalTitle.textContent = 'novo template';
+        modalTitle.textContent = window.CicloTranslate('manage.templates.new', 'novo template');
 
         // Percorre os comboboxes para restaurar seus placeholders
         Object.values(selects).forEach(function (select) {
@@ -81,7 +81,7 @@
         fields.end_date.value = template.end_date || '';
         fields.active.checked = template.active === true || template.active === 1 || template.active === '1';
         fields.defines_cycle.checked = template.defines_cycle === true || template.defines_cycle === 1 || template.defines_cycle === '1';
-        modalTitle.textContent = 'editar template';
+        modalTitle.textContent = window.CicloTranslate('manage.templates.edit', 'editar template');
 
         // Define os relacionamentos selecionados sem emitir eventos de usuário
         selects.type.set(template.type, '', false);

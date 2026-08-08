@@ -59,8 +59,8 @@
 
         // Atualiza o texto e o ícone do botão
         label.textContent = isExpanded
-            ? 'não quero alterar minha senha'
-            : 'quero alterar minha senha';
+            ? window.CicloTranslate('settings.account.cancel_change_password', 'nao quero alterar minha senha')
+            : window.CicloTranslate('settings.account.change_password', 'quero alterar minha senha');
         icon.classList.toggle('rotate-180', isExpanded);
 
         // Percorre os campos controlados pelo collapse

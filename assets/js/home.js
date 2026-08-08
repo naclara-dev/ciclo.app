@@ -10,6 +10,8 @@
     const statusFilter = document.querySelector('[data-cycle-filter-status]');
     const statusFilterOptions = Array.from(document.querySelectorAll('[data-cycle-filter-status-option]'));
     const clearFiltersButtons = Array.from(document.querySelectorAll('[data-cycle-filter-clear]'));
+    // Define o texto traduzido da opção padrão do filtro por entidade
+    const allEntitiesLabel = window.CicloTranslate ? window.CicloTranslate('common.placeholders.all', 'all') : 'todas';
     const initialTransactionsSource = document.querySelector('[data-cycle-initial-transactions]');
     const filterToggle = document.querySelector('[data-cycle-filter-toggle]');
     const filterContent = document.querySelector('[data-cycle-filter-content]');
@@ -446,7 +448,7 @@
         menu.replaceChildren();
 
         // Inicializa a opção padrão do filtro por entidade
-        menu.appendChild(createFilterOption('', 'todas'));
+        menu.appendChild(createFilterOption('', allEntitiesLabel));
 
         // Percorre as entidades ordenadas pelo nome apresentado
         Array.from(entities.entries())
@@ -477,7 +479,7 @@
 
         // Atualiza o texto visível do combobox para a opção padrão
         if (controller) {
-            controller.set('', 'todas', false);
+            controller.set('', allEntitiesLabel, false);
         }
     }
 
@@ -541,7 +543,7 @@
         // Verifica se o filtro por entidade existe na tela
         if (entityFilter) {
             // Define a opção padrão de entidade
-            setFilterValue(entityFilter, '', 'todas');
+            setFilterValue(entityFilter, '', allEntitiesLabel);
         }
 
         // Atualiza a aparência padrão das badges de tipo e status
@@ -639,7 +641,7 @@
             // Inicializa a mensagem de estado vazio
             const empty = document.createElement('p');
             empty.className = 'text-sm text-secondary';
-            empty.textContent = 'nenhuma saída neste ciclo.';
+            empty.textContent = window.CicloTranslate('dashboard.charts.empty_expenses', 'nenhuma saída neste ciclo.');
 
             // Salva a mensagem no container do resumo
             container.appendChild(empty);
@@ -688,8 +690,8 @@
             const empty = document.createElement('div');
             empty.className = 'rounded border border-[var(--border)] bg-[var(--surface-alt)] p-4 text-sm text-secondary';
             empty.textContent = hasActiveTransactionFilter()
-                ? 'nenhum lançamento encontrado para os filtros selecionados.'
-                : 'nenhum lançamento neste ciclo.';
+                ? window.CicloTranslate('dashboard.transactions.empty_filtered', 'nenhum lançamento encontrado para os filtros selecionados.')
+                : window.CicloTranslate('dashboard.transactions.empty', 'nenhum lançamento neste ciclo.');
             content.appendChild(empty);
             return;
         }
@@ -897,8 +899,8 @@
         deleteButton.type = 'submit';
         deleteButton.className = 'flex h-9 w-9 cursor-pointer items-center justify-center rounded text-secondary transition hover:bg-[var(--muted)] hover:text-primary';
         deleteButton.setAttribute('data-delete-button', '');
-        deleteButton.setAttribute('aria-label', 'Excluir transacao');
-        deleteButton.title = 'Excluir transacao';
+        deleteButton.setAttribute('aria-label', window.CicloTranslate('dashboard.transactions.delete', 'Excluir transacao'));
+        deleteButton.title = window.CicloTranslate('dashboard.transactions.delete', 'Excluir transacao');
 
         // Define o icone da acao de exclusao
         const deleteIcon = document.createElement('i');

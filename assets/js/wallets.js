@@ -45,7 +45,7 @@
         typeSelect.reset();
         balanceInput.value = '0,00';
         activeInput.checked = true;
-        modalTitle.textContent = 'nova wallet';
+        modalTitle.textContent = window.CicloTranslate('manage.wallets.new', 'nova wallet');
     }
 
     // Preenche o formulário com os dados da wallet
@@ -54,7 +54,7 @@
         nameInput.value = wallet.name;
         balanceInput.value = formatBalance(wallet.initial_balance);
         activeInput.checked = wallet.active === true || wallet.active === 1 || wallet.active === '1';
-        modalTitle.textContent = 'editar wallet';
+        modalTitle.textContent = window.CicloTranslate('manage.wallets.edit', 'editar wallet');
         typeSelect.set(wallet.type_id, '', false);
     }
 

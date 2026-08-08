@@ -5,27 +5,26 @@
         <div>
             <div class="flex items-center gap-2">
                 <h1 class="text-primary text-3xl">
-                    templates
+                    {{ t('manage.templates.title') }}
                 </h1>
                 {# Define a dica contextual da tela de templates #}
                 <div class="info-hint-wrapper" data-info-hint>
-                    <button type="button" class="flex h-7 w-7 items-center justify-center rounded text-secondary transition hover:text-[var(--primary)] focus-visible:bg-[var(--primary)] focus-visible:outline-none" aria-label="Mostrar explicação sobre templates" aria-describedby="templates-info-hint" aria-expanded="false" data-info-hint-toggle>
+                    <button type="button" class="flex h-7 w-7 items-center justify-center rounded text-secondary transition hover:text-[var(--primary)] focus-visible:bg-[var(--primary)] focus-visible:outline-none" aria-label="{{ t('manage.templates.info_label') }}" aria-describedby="templates-info-hint" aria-expanded="false" data-info-hint-toggle>
                         <i class="fa-regular fa-circle-question"></i>
                     </button>
                     <div id="templates-info-hint" class="info-hint" role="tooltip">
-                        modelos base para lancamentos mensais recorrentes.
-                        aparecem como previstos na dashboard pelo dia mensal escolhido.
+                        {{ t('manage.templates.tooltip') }}
                     </div>
                 </div>
             </div>
-            <p class="text-sm mt-2">
-                defina modelos personalizados para lancamentos mensais.
+            <p class="text-sm mt-2 text-secondary">
+                {{ t('manage.templates.description') }}
             </p>
         </div> 
         <div class="flex justify-end"> 
             <button type="button" class="modal-toggle btn-primary w-50 mt-4 text-xl" data-modal-target="#template-modal">
                 <i class="fa-solid fa-plus fa-sm mr-1"></i>
-                criar
+                {{ t('common.actions.create') }}
             </button>
         </div> 
     </section> 
@@ -43,7 +42,7 @@
                         <div class="manage-card-text">
                             {{ template.title }}
                             <p class="mt-1 text-xs text-gray-400">
-                                todo dia {{ template.month_day }}
+                                {{ t('manage.templates.every_month_day', {'day': template.month_day}) }}
                             </p>
                         </div> 
                     </div>       
@@ -51,14 +50,14 @@
 
                 <form method="post" action="{{ base_url }}/manage/templates/delete" class="absolute right-2 top-3">
                     <input type="hidden" name="id" value="{{ template.id|e('html_attr') }}">
-                    <button type="submit" class="cursor-pointer flex h-8 w-8 items-center justify-center rounded text-secondary" aria-label="Excluir Template" data-delete-button>
+                    <button type="submit" class="cursor-pointer flex h-8 w-8 items-center justify-center rounded text-secondary" aria-label="{{ t('manage.templates.delete_label') }}" data-delete-button>
                         <i class="fa-regular fa-trash-can"></i>
                     </button>
                 </form>
             </div>
         {% else %} 
             <p class="col-span-4 flex min-h-[calc(100vh-220px)] items-center justify-center text-center text-secondary text-3xl">
-                você ainda não criou nenhum template :/ 
+                {{ t('manage.templates.empty') }} 
             </p>            
         {% endfor %}  
     </section>
@@ -67,10 +66,10 @@
         <form method="post" action="{{ base_url }}/manage/templates/store" class="validate" data-template-form>
             <div class="flex items-center justify-between px-6 py-4">
                 <div>
-                    <h2 class="text-xl font-bold text-primary" data-template-modal-title>novo template</h2>
-                    <p class="mt-1 text-xs text-[var(--surface-contrast)] opacity-70">informe origem, destino, valor e dia mensal.</p>
+                    <h2 class="text-xl font-bold text-primary" data-template-modal-title>{{ t('manage.templates.new') }}</h2>
+                    <p class="mt-1 text-xs text-[var(--surface-contrast)] opacity-70">{{ t('manage.templates.form_description') }}</p>
                 </div>
-                <button type="button" class="modal-close flex h-9 w-9 items-center justify-center rounded text-primary transition hover:bg-[var(--secondary)]" aria-label="Fechar">
+                <button type="button" class="modal-close flex h-9 w-9 items-center justify-center rounded text-primary transition hover:bg-[var(--secondary)]" aria-label="{{ t('common.actions.close') }}">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -80,41 +79,41 @@
 
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     {# Declara o combobox de tipo do template #}
-                    <div class="form-group" data-select data-select-name="type" data-select-placeholder="escolha o tipo">
-                        <label>tipo</label>
+                    <div class="form-group" data-select data-select-name="type" data-select-placeholder="{{ t('common.placeholders.choose_type') }}">
+                        <label>{{ t('common.fields.type') }}</label>
                         <input type="hidden" name="type" data-type="required" data-select-input>
                         <button type="button" class="mt-1 flex h-[29px] w-full items-center justify-between rounded border-b-[1.5px] border-[var(--primary)] bg-transparent px-[7px] py-[3px] text-left leading-[21px] transition hover:border-[var(--primary)]" data-select-toggle aria-expanded="false">
-                            <span data-select-label class="text-sm">escolha o tipo</span>
+                            <span data-select-label class="text-sm">{{ t('common.placeholders.choose_type') }}</span>
                             <i class="fa-solid fa-chevron-down text-primary"></i>
                         </button>
                         <div class="mt-2 max-h-0 overflow-hidden rounded border border-transparent bg-[var(--surface)] opacity-0 shadow-lg transition-all duration-200" data-select-menu>
-                            <button type="button" class="flex w-full items-center rounded px-3 py-2 text-left text-sm transition hover:bg-[var(--secondary)] hover:text-primary" data-select-option data-value="E" data-value-label="despesa" aria-selected="false">
-                                despesa
+                            <button type="button" class="flex w-full items-center rounded px-3 py-2 text-left text-sm transition hover:bg-[var(--secondary)] hover:text-primary" data-select-option data-value="E" data-value-label="{{ t('common.types.expense') }}" aria-selected="false">
+                                {{ t('common.types.expense') }}
                             </button>
-                            <button type="button" class="flex w-full items-center rounded px-3 py-2 text-left text-sm transition hover:bg-[var(--secondary)] hover:text-primary" data-select-option data-value="I" data-value-label="receita" aria-selected="false">
-                                receita
+                            <button type="button" class="flex w-full items-center rounded px-3 py-2 text-left text-sm transition hover:bg-[var(--secondary)] hover:text-primary" data-select-option data-value="I" data-value-label="{{ t('common.types.income') }}" aria-selected="false">
+                                {{ t('common.types.income') }}
                             </button>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="template-amount">valor</label>
+                        <label for="template-amount">{{ t('common.fields.amount') }}</label>
                         <input id="template-amount" name="amount" type="text" inputmode="decimal" value="0,00" data-type="required" class="mt-1 h-[29px] w-full bg-transparent leading-[21px] outline-none" autocomplete="off" data-template-amount-input>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="template-title">título</label>
+                    <label for="template-title">{{ t('common.fields.title') }}</label>
                     <input id="template-title" name="title" type="text" data-type="required" class="mt-1 w-full bg-transparent outline-none" autocomplete="off" data-template-title-input>
                 </div>
 
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
                     {# Declara o combobox de wallet do template #}
-                    <div class="form-group" data-select data-select-name="wallet" data-select-placeholder="escolha uma wallet">
-                        <label>wallet</label>
+                    <div class="form-group" data-select data-select-name="wallet" data-select-placeholder="{{ t('common.placeholders.choose_wallet') }}">
+                        <label>{{ t('common.fields.wallet') }}</label>
                         <input type="hidden" name="wallet_id" data-type="required" data-select-input>
                         <button type="button" class="mt-1 flex h-[29px] w-full items-center justify-between rounded border-b-[1.5px] border-[var(--primary)] bg-transparent px-[7px] py-[3px] text-left leading-[21px] transition hover:border-[var(--primary)]" data-select-toggle aria-expanded="false">
-                            <span data-select-label class="text-sm">escolha uma wallet</span>
+                            <span data-select-label class="text-sm">{{ t('common.placeholders.choose_wallet') }}</span>
                             <i class="fa-solid fa-chevron-down text-primary"></i>
                         </button>
                         <div class="mt-2 max-h-0 overflow-hidden rounded border border-transparent bg-[var(--surface)] opacity-0 shadow-lg transition-all duration-200" data-select-menu>
@@ -127,11 +126,11 @@
                     </div>
 
                     {# Declara o combobox de categoria do template #}
-                    <div class="form-group" data-select data-select-name="category" data-select-placeholder="escolha uma categoria">
-                        <label>categoria</label>
+                    <div class="form-group" data-select data-select-name="category" data-select-placeholder="{{ t('common.placeholders.choose_category') }}">
+                        <label>{{ t('common.fields.category') }}</label>
                         <input type="hidden" name="category_id" data-type="required" data-select-input>
                         <button type="button" class="mt-1 flex h-[29px] w-full items-center justify-between rounded border-b-[1.5px] border-[var(--primary)] bg-transparent px-[7px] py-[3px] text-left leading-[21px] transition hover:border-[var(--primary)]" data-select-toggle aria-expanded="false">
-                            <span data-select-label class="text-sm">escolha uma categoria</span>
+                            <span data-select-label class="text-sm">{{ t('common.placeholders.choose_category') }}</span>
                             <i class="fa-solid fa-chevron-down text-primary"></i>
                         </button>
                         <div class="mt-2 max-h-0 overflow-hidden rounded border border-transparent bg-[var(--surface)] opacity-0 shadow-lg transition-all duration-200" data-select-menu>
@@ -144,11 +143,11 @@
                     </div>
 
                     {# Declara o combobox de entidade do template #}
-                    <div class="form-group" data-select data-select-name="entity" data-select-placeholder="escolha uma entidade">
-                        <label>entidade</label>
+                    <div class="form-group" data-select data-select-name="entity" data-select-placeholder="{{ t('common.placeholders.choose_entity') }}">
+                        <label>{{ t('common.fields.entity') }}</label>
                         <input type="hidden" name="entity_id" data-type="required" data-select-input>
                         <button type="button" class="mt-1 flex h-[29px] w-full items-center justify-between rounded border-b-[1.5px] border-[var(--primary)] bg-transparent px-[7px] py-[3px] text-left leading-[21px] transition hover:border-[var(--primary)]" data-select-toggle aria-expanded="false">
-                            <span data-select-label class="text-sm">escolha uma entidade</span>
+                            <span data-select-label class="text-sm">{{ t('common.placeholders.choose_entity') }}</span>
                             <i class="fa-solid fa-chevron-down text-primary"></i>
                         </button>
                         <div class="mt-2 max-h-0 overflow-hidden rounded border border-transparent bg-[var(--surface)] opacity-0 shadow-lg transition-all duration-200" data-select-menu>
@@ -163,16 +162,16 @@
 
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
                     <div class="form-group">
-                        <label for="template-month-day">dia do mês</label>
+                        <label for="template-month-day">{{ t('manage.templates.month_day') }}</label>
                         <input id="template-month-day" name="month_day" type="number" min="1" max="31" value="1" data-type="required" class="mt-1 h-[29px] w-full bg-transparent leading-[21px] outline-none" data-template-month-day-input>
                     </div>
     
                     <div class="form-group">
-                        <label for="template-start-date">início</label>
+                        <label for="template-start-date">{{ t('manage.templates.start') }}</label>
                         <input id="template-start-date" name="start_date" type="date" data-type="required" class="mt-1 h-[29px] w-full bg-transparent leading-[21px] outline-none" data-template-start-date-input>
                     </div>
                     <div class="form-group">
-                        <label for="template-end-date">fim</label>
+                        <label for="template-end-date">{{ t('manage.templates.end') }}</label>
                         <input id="template-end-date" name="end_date" type="date" class="mt-1 h-[29px] w-full bg-transparent leading-[21px] outline-none" data-template-end-date-input>
                     </div>
                 </div>
@@ -184,7 +183,7 @@
                         <span class="flex h-5 w-5 items-center justify-center rounded border-[1.5px] border-[var(--primary)] text-[0px] text-light transition peer-checked:bg-[var(--primary)] peer-checked:text-xs">
                             <i class="fa-solid fa-check"></i>
                         </span>
-                        ativo
+                        {{ t('manage.templates.active') }}
                     </label>
 
                     <label class="flex cursor-pointer items-center gap-3 text-sm text-[var(--surface-contrast)]">
@@ -193,18 +192,18 @@
                         <span class="flex h-5 w-5 items-center justify-center rounded border-[1.5px] border-[var(--primary)] text-[0px] text-light transition peer-checked:bg-[var(--primary)] peer-checked:text-xs">
                             <i class="fa-solid fa-check"></i>
                         </span>
-                        define ciclo
+                        {{ t('transactions.defines_cycle') }}
                     </label>
                 </div>
             </div>
 
             <div class="flex justify-end gap-3 px-6 py-4">
                 <button type="button" class="modal-close btn-secondary">
-                    cancelar
+                    {{ t('common.actions.cancel') }}
                 </button>
                 <button type="submit" class="btn-primary">
                     <i class="fa-solid fa-check"></i>
-                    salvar
+                    {{ t('common.actions.save') }}
                 </button>
             </div>
         </form>

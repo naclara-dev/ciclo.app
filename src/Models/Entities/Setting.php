@@ -12,6 +12,7 @@ class Setting
     private $defaultType = null;
     private $cycleStartsAfterIncome = null;
     private $darkTheme = null;
+    private $language = null;
 
     public function getId(): ?int
     {
@@ -90,5 +91,15 @@ class Setting
     public function setDarkTheme(?bool $darkTheme): void
     {
         $this->darkTheme = $darkTheme;
+    }
+
+    public function getLanguage(): ?string
+    {
+        return $this->language;
+    }
+
+    public function setLanguage(?string $language): void
+    {
+        $this->language = $language;
     }
 }

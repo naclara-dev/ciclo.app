@@ -41,14 +41,14 @@
         form.reset();
         idInput.value = '';
         typeSelect.reset();
-        modalTitle.textContent = 'nova entidade';
+        modalTitle.textContent = window.CicloTranslate('manage.entities.new', 'nova entidade');
     }
 
     // Preenche o formulário com os dados da entidade
     function fillForm(entity) {
         idInput.value = entity.id;
         nameInput.value = entity.name;
-        modalTitle.textContent = 'editar entidade';
+        modalTitle.textContent = window.CicloTranslate('manage.entities.edit', 'editar entidade');
         typeSelect.set(entity.type_id, '', false);
     }
 

@@ -5,21 +5,21 @@
         <div>
             <div class="flex items-center gap-2">
                 <h1 class="text-primary text-3xl">
-                    cadastros
+                    {{ t('manage.title') }}
                 </h1>
                 {# Define a dica contextual da tela de cadastros #}
                 <div class="info-hint-wrapper" data-info-hint>
-                    <button type="button" class="flex h-7 w-7 items-center justify-center rounded text-secondary transition hover:text-[var(--primary)] focus-visible:bg-[var(--primary)] focus-visible:outline-none" aria-label="Mostrar explicação sobre cadastros" aria-describedby="manage-info-hint" aria-expanded="false" data-info-hint-toggle>
+                    <button type="button" class="flex h-7 w-7 items-center justify-center rounded text-secondary transition hover:text-[var(--primary)] focus-visible:bg-[var(--primary)] focus-visible:outline-none" aria-label="{{ t('manage.info_label') }}" aria-describedby="manage-info-hint" aria-expanded="false" data-info-hint-toggle>
                         <i class="fa-regular fa-circle-question"></i>
                     </button>
                     <div id="manage-info-hint" class="info-hint" role="tooltip">
-                        atalhos para cadastrar as bases do Ciclo.
-                        categorias, wallets, entidades e templates alimentam os lançamentos e ciclos financeiros.
+                        {{ t('manage.tooltip_intro') }}
+                        {{ t('manage.tooltip_description') }}
                     </div>
                 </div>
             </div>
-            <p class="text-sm mt-2">
-                crie e gerencie todas as informações essenciais do Ciclo.
+            <p class="text-sm mt-2 text-secondary">
+                {{ t('manage.description') }}
             </p>
         </div>  
     </section>
@@ -31,15 +31,15 @@
             </div>
             <div class="manage-card-content">
                 <div class="manage-card-title">                
-                    categorias            
+                    {{ t('manage.categories.title') }}            
                 </div> 
                 <div class="manage-card-text text-dark">
-                    organize seus lançamentos em categorias personalizadas.
+                    {{ t('manage.categories.description') }}
                 </div> 
                 <div class="manage-card-info">
                     <span class="badge">
                         {{ categories_count }}
-                        categorias
+                        {{ t('manage.categories.title') }}
                     </span>
                 </div> 
             </div>       
@@ -50,15 +50,15 @@
             </div>
             <div class="manage-card-content">
                 <div class="manage-card-title">                
-                    wallets            
+                    {{ t('manage.wallets.title') }}            
                 </div> 
                 <div class="manage-card-text">
-                    crie e gerencie suas contas financeiras e fontes de saldo.
+                    {{ t('manage.wallets.description') }}
                 </div> 
                 <div class="manage-card-info">
                     <span class="badge">
                         {{ wallets_count }}
-                        wallets
+                        {{ t('manage.wallets.title') }}
                     </span>
                 </div> 
             </div>       
@@ -69,7 +69,7 @@
             </div>
             <div class="manage-card-content">
                 <div class="manage-card-title">                
-                    entidades            
+                    {{ t('manage.entities.title') }}            
                 </div> 
                 <div class="manage-card-text">
                     crie e gerencie pessoas, grupos e organizações credoras.
@@ -77,7 +77,7 @@
                 <div class="manage-card-info">
                     <span class="badge">
                         {{ entities_count }}
-                        entidades
+                        {{ t('manage.entities.title') }}
                     </span>
                 </div> 
             </div>       
@@ -88,15 +88,15 @@
             </div>
             <div class="manage-card-content">
                 <div class="manage-card-title">                
-                    templates            
+                    {{ t('manage.templates.title') }}            
                 </div> 
                 <div class="manage-card-text">
-                    defina modelos personalizados para lançamentos periódicos.
+                    {{ t('manage.templates.description') }}
                 </div> 
                 <div class="manage-card-info">
                     <span class="badge">
                         {{ templates_count }}
-                        templates
+                        {{ t('manage.templates.title') }}
                     </span>
                 </div> 
             </div>       

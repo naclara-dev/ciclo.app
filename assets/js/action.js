@@ -11,25 +11,25 @@ let pendingConfirmForm = null;
 
 // Define os textos originais do modal compartilhado
 const defaultConfirmContent = {
-    title: confirmTitle ? confirmTitle.textContent : 'excluir registro?',
-    message: confirmMessage ? confirmMessage.textContent : 'cuidado! essa ação é permanente.',
+    title: confirmTitle ? confirmTitle.textContent : window.CicloTranslate('confirm.delete_title', 'excluir registro?'),
+    message: confirmMessage ? confirmMessage.textContent : window.CicloTranslate('confirm.delete_message', 'cuidado! essa acao e permanente.'),
     icon: confirmIcon ? confirmIcon.className : 'fa-regular fa-trash-can',
-    label: confirmLabel ? confirmLabel.textContent : 'excluir'
+    label: confirmLabel ? confirmLabel.textContent : window.CicloTranslate('common.actions.delete', 'excluir')
 };
 
 // Define conteudos conhecidos para formularios de confirmacao
 const confirmPresets = {
     periodic: {
-        title: 'inserir previs\u00f5es?',
-        message: 'Ser\u00e3o criadas transa\u00e7\u00f5es para cada template ativo com pr\u00f3xima execu\u00e7\u00e3o dentro do ciclo atual.',
+        title: window.CicloTranslate('transactions.insert_forecast_title', 'inserir previsoes?'),
+        message: window.CicloTranslate('transactions.insert_forecast_message', 'Serao criadas transacoes para cada template ativo com proxima execucao dentro do ciclo atual.'),
         icon: 'fa-solid fa-calendar-plus',
-        label: 'inserir'
+        label: window.CicloTranslate('common.actions.create', 'inserir')
     },
     'close-cycle': {
-        title: 'encerrar ciclo?',
-        message: 'Todas as transa\u00e7\u00f5es pendentes do ciclo atual ser\u00e3o marcadas como pagas.',
+        title: window.CicloTranslate('dashboard.cycle.confirm_close_title', 'encerrar ciclo?'),
+        message: window.CicloTranslate('dashboard.cycle.confirm_close_message', 'Todas as transacoes pendentes do ciclo atual serao marcadas como pagas.'),
         icon: 'fa-solid fa-circle-check',
-        label: 'encerrar'
+        label: window.CicloTranslate('dashboard.cycle.close', 'encerrar')
     }
 };
 

@@ -5,27 +5,26 @@
         <div>
             <div class="flex items-center gap-2">
                 <h1 class="text-primary text-3xl">
-                    wallets
+                    {{ t('manage.wallets.title') }}
                 </h1>
                 {# Define a dica contextual da tela de wallets #}
                 <div class="info-hint-wrapper" data-info-hint>
-                    <button type="button" class="flex h-7 w-7 items-center justify-center rounded text-secondary transition hover:text-[var(--primary)] focus-visible:bg-[var(--primary)] focus-visible:outline-none" aria-label="Mostrar explicação sobre wallets" aria-describedby="wallets-info-hint" aria-expanded="false" data-info-hint-toggle>
+                    <button type="button" class="flex h-7 w-7 items-center justify-center rounded text-secondary transition hover:text-[var(--primary)] focus-visible:bg-[var(--primary)] focus-visible:outline-none" aria-label="{{ t('manage.wallets.info_label') }}" aria-describedby="wallets-info-hint" aria-expanded="false" data-info-hint-toggle>
                         <i class="fa-regular fa-circle-question"></i>
                     </button>
                     <div id="wallets-info-hint" class="info-hint" role="tooltip">
-                        contas ou fontes de saldo usadas nas movimentações.
-                        cada lançamento pertence a uma wallet e afeta seu saldo conforme o ciclo.
+                        {{ t('manage.wallets.tooltip') }}
                     </div>
                 </div>
             </div>
-            <p class="text-sm mt-2">
-                crie e gerencie suas contas financeiras e fontes de saldo.
+            <p class="text-sm mt-2 text-secondary">
+                {{ t('manage.wallets.description') }}
             </p>
         </div> 
         <div class="flex justify-end"> 
             <button type="button" class="modal-toggle btn-primary w-50 mt-4 text-xl" data-modal-target="#wallet-modal">
                 <i class="fa-solid fa-plus fa-sm mr-1"></i>
-                criar
+                {{ t('common.actions.create') }}
             </button>
         </div> 
     </section> 
@@ -43,14 +42,14 @@
 
                 <form method="post" action="{{ base_url }}/manage/wallets/delete" class="absolute right-2 top-3">
                     <input type="hidden" name="id" value="{{ wallet.id|e('html_attr') }}">
-                    <button type="submit" class="cursor-pointer flex h-8 w-8 items-center justify-center rounded text-secondary" aria-label="Excluir Wallet" data-delete-button>
+                    <button type="submit" class="cursor-pointer flex h-8 w-8 items-center justify-center rounded text-secondary" aria-label="{{ t('manage.wallets.delete_label') }}" data-delete-button>
                         <i class="fa-regular fa-trash-can"></i>
                     </button>
                 </form>
             </div>
         {% else %} 
             <p class="col-span-4 flex min-h-[calc(100vh-220px)] items-center justify-center text-center text-secondary text-3xl">
-                você ainda não cadastrou nenhuma wallet :/ 
+                {{ t('manage.wallets.empty') }} 
             </p>            
         {% endfor %}  
     </section>
@@ -59,10 +58,10 @@
         <form method="post" action="{{ base_url }}/manage/wallets/store" class="validate" data-wallet-form>
             <div class="flex items-center justify-between px-6 py-4">
                 <div>
-                    <h2 class="text-xl font-bold text-primary" data-wallet-modal-title>nova wallet</h2>
-                    <p class="mt-1 text-xs text-[var(--surface-contrast)] opacity-70">informe nome, tipo, saldo inicial e status.</p>
+                    <h2 class="text-xl font-bold text-primary" data-wallet-modal-title>{{ t('manage.wallets.new') }}</h2>
+                    <p class="mt-1 text-xs text-[var(--surface-contrast)] opacity-70">{{ t('manage.wallets.form_description') }}</p>
                 </div>
-                <button type="button" class="modal-close flex h-9 w-9 items-center justify-center rounded text-primary transition hover:bg-[var(--secondary)]" aria-label="Fechar">
+                <button type="button" class="modal-close flex h-9 w-9 items-center justify-center rounded text-primary transition hover:bg-[var(--secondary)]" aria-label="{{ t('common.actions.close') }}">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -71,19 +70,19 @@
                 <input type="hidden" name="id" data-wallet-id-input>
 
                 <div class="form-group">
-                    <label for="wallet-name">nome</label>
+                    <label for="wallet-name">{{ t('common.fields.name') }}</label>
                     <input id="wallet-name" name="name" type="text" data-type="required" class="mt-1 w-full bg-transparent outline-none" autocomplete="off" data-wallet-name-input>
                 </div>
 
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     {# Declara o combobox de tipo da wallet #}
-                    <div class="form-group" data-select data-select-placeholder="escolha um tipo">
-                        <label>tipo</label>
+                    <div class="form-group" data-select data-select-placeholder="{{ t('common.placeholders.choose_type') }}">
+                        <label>{{ t('common.fields.type') }}</label>
                         <input type="hidden" name="type_id" data-type="required" data-select-input>
 
                         <button type="button" class="mt-1 flex h-[29px] w-full items-center justify-between rounded border-b-[1.5px] border-[var(--primary)] bg-transparent px-[7px] py-[3px] text-left leading-[21px] transition hover:border-[var(--primary)]" data-select-toggle aria-expanded="false">
                             <span data-select-label class="text-sm">
-                                escolha um tipo
+                                {{ t('common.placeholders.choose_type') }}
                             </span>
                             <i class="fa-solid fa-chevron-down text-primary"></i>
                         </button>
@@ -98,7 +97,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="wallet-initial-balance">saldo inicial</label>
+                        <label for="wallet-initial-balance">{{ t('manage.wallets.initial_balance') }}</label>
                         <input id="wallet-initial-balance" name="initial_balance" type="text" inputmode="decimal" value="0,00" data-type="required" class="mt-1 h-[29px] w-full bg-transparent leading-[21px] outline-none" autocomplete="off" data-wallet-balance-input>
                     </div>
                 </div>
@@ -115,11 +114,11 @@
 
             <div class="flex justify-end gap-3 px-6 py-4">
                 <button type="button" class="modal-close btn-secondary">
-                    cancelar
+                    {{ t('common.actions.cancel') }}
                 </button>
                 <button type="submit" class="btn-primary">
                     <i class="fa-solid fa-check"></i>
-                    salvar
+                    {{ t('common.actions.save') }}
                 </button>
             </div>
         </form>
