@@ -34,6 +34,12 @@
     {% include 'components/confirm-modal.twig' %}
     {% include 'components/transaction-modal.twig' %}
 
+    {# Exibe o feedback global enquanto a pagina processa acoes demoradas #}
+    <div class="global-loading-overlay" data-global-loading hidden aria-hidden="true">
+        <span class="loading --primary global-loading-spinner" role="status" aria-label="Carregando"></span>
+    </div>
+
+    <script src="{{ base_url }}/assets/js/utils/loading.js"></script>
     <script src="{{ base_url }}/assets/js/utils/validation.js"></script>
     <script src="{{ base_url }}/assets/js/utils/modal.js"></script>
     <script src="{{ base_url }}/assets/js/utils/select.js"></script>
@@ -43,3 +49,4 @@
     {% block scripts %}{% endblock %}
 </body>
 </html>
+
