@@ -1,0 +1,257 @@
+{
+  "app": {
+    "name": "ciclo",
+    "title": "Ciclo | Gestión de gastos"
+  },
+  "common": {
+    "actions": {
+      "cancel": "cancelar",
+      "close": "cerrar",
+      "delete": "eliminar",
+      "edit": "editar",
+      "save": "guardar",
+      "close_label": "cerrar",
+      "create": "nuevo",
+      "export": "exportar",
+      "refresh": "actualizar"
+    },
+    "empty": "no se encontraron registros.",
+    "filters": {
+      "clear": "limpiar filtros",
+      "entity": "entidad",
+      "status": "estado",
+      "type": "tipo"
+    },
+    "status": {
+      "active": "activo",
+      "inactive": "inactivo",
+      "paid": "pagado",
+      "pending": "pendiente",
+      "planned": "previsto"
+    },
+    "types": {
+      "expense": "gasto",
+      "income": "ingreso"
+    },
+    "loading": "cargando",
+    "fields": {
+      "amount": "monto",
+      "category": "categoría",
+      "color": "color",
+      "date": "fecha",
+      "due_date": "vencimiento",
+      "email": "e-mail",
+      "entity": "entidad",
+      "icon": "ícono",
+      "name": "nombre",
+      "paid_at": "fecha de pago",
+      "password": "contraseña",
+      "payment_method": "método de pago",
+      "template": "template",
+      "title": "título",
+      "type": "tipo",
+      "wallet": "wallet"
+    },
+    "placeholders": {
+      "all": "todas",
+      "choose_category": "elige una categoría",
+      "choose_entity": "elige una entidad",
+      "choose_payment_method": "elige un método de pago",
+      "choose_type": "elige un tipo",
+      "choose_wallet": "elige una wallet",
+      "icon_search_example": "ej: casa, mercado, tarjeta...",
+      "no_template": "sin template"
+    }
+  },
+  "auth": {
+    "already_have_account": "ya tengo cuenta",
+    "create_account": "crear una cuenta",
+    "email": "e-mail",
+    "enter": "entrar",
+    "enter_with_google": "entrar con google",
+    "password": "contraseña",
+    "hero_hi": "hola :)",
+    "hero_welcome": "bienvenido a",
+    "hero_description": "tu app inteligente de gestión de gastos.",
+    "register": "registrarme",
+    "toggle": "alternar formulario de autenticación"
+  },
+  "dashboard": {
+    "greeting": "Hola",
+    "subtitle": "revisa tu flujo hasta tu próximo pago",
+    "balance": {
+      "cycle_balance": "saldo del ciclo",
+      "committed": "comprometido"
+    },
+    "cycle": {
+      "current_until_next_income": "ciclo actual hasta el próximo ingreso",
+      "expenses": "gastos",
+      "future_projected": "ciclo futuro proyectado",
+      "income": "recibe",
+      "next": "siguiente ciclo",
+      "previous": "ciclo anterior",
+      "progress": "progreso del ciclo",
+      "remaining": "restante",
+      "confirm_close_title": "¿cerrar ciclo?",
+      "confirm_close_message": "Todas las transacciones pendientes del ciclo actual se marcarán como pagadas.",
+      "close": "cerrar",
+      "financial_entries": "movimientos financieros"
+    },
+    "transactions": {
+      "empty": "no hay movimientos en este ciclo.",
+      "export": "exportar ciclo",
+      "refresh": "actualizar datos",
+      "empty_filtered": "no se encontraron movimientos para los filtros seleccionados.",
+      "delete": "eliminar movimiento"
+    },
+    "actions_label": "acciones del dashboard",
+    "charts": {
+      "empty_expenses": "no hay gastos en este ciclo.",
+      "expenses_by_category": "gastos por categoría",
+      "expenses_by_entity": "gastos por entidad"
+    },
+    "filters_label": "filtros de movimientos",
+    "navigation_label": "navegación entre ciclos",
+    "print": {
+      "actions_label": "acciones de impresión",
+      "print_or_save_pdf": "imprimir o guardar PDF"
+    }
+  },
+  "manage": {
+    "categories": {
+      "description": "organiza tus movimientos por categoría.",
+      "form_description": "elige nombre, color e ícono.",
+      "new": "nueva categoría",
+      "title": "categorías",
+      "empty": "todavía no creaste ninguna categoría :/",
+      "tooltip": "grupos para organizar movimientos financieros. ayudan a identificar origen, destino y finalidad.",
+      "edit": "editar categoría",
+      "choose_icon": "elige un ícono",
+      "selected_icon": "ícono seleccionado",
+      "delete_label": "eliminar categoría",
+      "icon_search": "buscar ícono",
+      "info_label": "sobre categorías"
+    },
+    "entities": {
+      "description": "administra personas y empresas vinculadas a los movimientos.",
+      "form_description": "informa el nombre y tipo de la entidad.",
+      "new": "nueva entidad",
+      "title": "entidades",
+      "empty": "todavía no registraste ninguna entidad :/",
+      "tooltip": "personas, grupos u organizaciones relacionadas con los movimientos. ayudan a identificar quién recibe, paga o participa en la operación.",
+      "edit": "editar entidad",
+      "delete_label": "eliminar entidad",
+      "info_label": "sobre entidades"
+    },
+    "templates": {
+      "form_description": "informa origen, destino, monto y día mensual.",
+      "new": "nuevo template",
+      "title": "templates",
+      "empty": "todavía no creaste ningún template :/",
+      "tooltip": "modelos base para movimientos mensuales recurrentes. aparecen como previstos en el dashboard según el día mensual elegido.",
+      "description": "define modelos personalizados para movimientos mensuales.",
+      "every_month_day": "todos los días :day",
+      "edit": "editar template",
+      "delete_label": "eliminar template",
+      "end": "fin",
+      "info_label": "sobre templates",
+      "month_day": "día del mes",
+      "start": "inicio",
+      "active": "activo"
+    },
+    "wallets": {
+      "description": "administra tus cuentas, wallets y saldos.",
+      "form_description": "informa nombre, tipo, saldo inicial y estado.",
+      "new": "nueva wallet",
+      "title": "wallets",
+      "empty": "todavía no registraste ninguna wallet :/",
+      "tooltip": "cuentas o fuentes de saldo usadas en los movimientos. cada movimiento pertenece a una wallet y afecta su saldo según el ciclo.",
+      "edit": "editar wallet",
+      "delete_label": "eliminar wallet",
+      "info_label": "sobre wallets",
+      "initial_balance": "saldo inicial"
+    },
+    "tooltip_intro": "atajos para registrar la información base de Ciclo.",
+    "tooltip_description": "categorías, wallets, entidades y templates alimentan los movimientos y ciclos financieros.",
+    "info_label": "sobre registros",
+    "title": "registros",
+    "description": "crea y administra toda la información esencial de Ciclo."
+  },
+  "settings": {
+    "account": {
+      "description": "administra tus datos personales.",
+      "title": "cuenta",
+      "change_password": "quiero cambiar mi contraseña",
+      "cancel_change_password": "no quiero cambiar mi contraseña"
+    },
+    "cycle": {
+      "description": "define cómo los ingresos delimitan tus ciclos.",
+      "starts_after_income": "el ingreso inicia un nuevo ciclo",
+      "starts_after_income_help": "cuando está activo, el ingreso cierra el ciclo actual.",
+      "title": "ciclo"
+    },
+    "style": {
+      "dark_theme": "tema oscuro",
+      "description": "define cómo ves tus datos en ciclo.",
+      "language": "idioma",
+      "language_placeholder": "elige un idioma",
+      "title": "apariencia",
+      "heading": "estilo y visualización"
+    },
+    "transactions": {
+      "default_entity": "entidad predeterminada",
+      "default_payment_method": "método de pago predeterminado",
+      "default_type": "tipo predeterminado",
+      "default_wallet": "wallet predeterminada",
+      "description": "define los campos predeterminados para nuevos movimientos.",
+      "title": "movimientos"
+    },
+    "cards": {
+      "account_description": "datos de acceso y perfil.",
+      "account_title": "cuenta",
+      "cycle_description": "reglas del ciclo financiero.",
+      "cycle_title": "ciclo",
+      "transactions_title": "movimientos",
+      "transactions_description": "valores predeterminados usados en nuevos movimientos.",
+      "style_title": "estilo y personalización",
+      "style_description": "cambia la apariencia de Ciclo."
+    },
+    "title": "configuración",
+    "description": "administra tus preferencias y opciones."
+  },
+  "transactions": {
+    "fields": {
+      "amount": "monto",
+      "category": "categoría",
+      "date": "fecha",
+      "entity": "entidad",
+      "payment_method": "método de pago",
+      "template": "template",
+      "title": "título",
+      "wallet": "wallet"
+    },
+    "modal_description": "registra un movimiento financiero.",
+    "new": "nuevo movimiento",
+    "paid": "pagado",
+    "defines_cycle": "define ciclo",
+    "edit": "editar registro",
+    "insert_forecast_message": "Se crearán transacciones para cada template activo con próxima ejecución dentro del ciclo actual.",
+    "insert_forecast_title": "¿insertar previsiones?",
+    "new_record": "nuevo registro",
+    "loading": "cargando...",
+    "confirm_forecast": "confirmar previsión"
+  },
+  "confirm": {
+    "delete_message": "¡cuidado! esta acción es permanente.",
+    "delete_title": "¿eliminar registro?"
+  },
+  "sidebar": {
+    "brand": "ciclo",
+    "home": "visión general",
+    "logout": "salir",
+    "main_menu": "menú principal",
+    "manage": "registros",
+    "new_record": "nuevo movimiento",
+    "settings": "configuración"
+  }
+}

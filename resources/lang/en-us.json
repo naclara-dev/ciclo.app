@@ -1,0 +1,258 @@
+{
+    "app":  {
+        "name":  "ciclo",
+        "title":  "Ciclo | Expense Management"
+    },
+    "common":  {
+        "actions":  {
+            "cancel":  "cancel",
+            "close":  "close",
+            "delete":  "delete",
+            "edit":  "edit",
+            "save":  "save",
+            "close_label":  "close",
+            "create":  "new",
+            "export":  "export",
+            "refresh":  "refresh"
+        },
+            "empty":  "no records found.",
+            "filters":  {
+            "clear":  "clear filters",
+            "entity":  "entity",
+            "status":  "status",
+            "type":  "type"
+        },
+            "status":  {
+            "active":  "active",
+            "inactive":  "inactive",
+            "paid":  "paid",
+            "pending":  "pending",
+            "planned":  "planned"
+        },
+            "types":  {
+            "expense":  "expense",
+            "income":  "income"
+        },
+            "loading":  "loading",
+            "fields":  {
+            "amount":  "amount",
+            "category":  "category",
+            "color":  "color",
+            "date":  "date",
+            "due_date":  "due date",
+            "email":  "email",
+            "entity":  "entity",
+            "icon":  "icon",
+            "name":  "name",
+            "paid_at":  "paid at",
+            "password":  "password",
+            "payment_method":  "payment method",
+            "template":  "template",
+            "title":  "title",
+            "type":  "type",
+            "wallet":  "wallet"
+        },
+            "placeholders":  {
+                "all":  "all",
+                "choose_category":  "choose a category",
+                "choose_entity":  "choose an entity",
+                "choose_payment_method":  "choose a payment method",
+                "choose_type":  "choose a type",
+                "choose_wallet":  "choose a wallet",
+                "icon_search_example":  "ex: home, market, card...",
+                "no_template":  "no template"
+        }
+    },
+    "auth":  {
+        "already_have_account":  "i already have an account",
+        "create_account":  "create an account",
+        "email":  "email",
+        "enter":  "sign in",
+        "enter_with_google":  "sign in with google",
+        "password":  "password",
+        "hero_hi":  "hi :)",
+        "hero_welcome":  "welcome to",
+        "hero_description":  "your smart expense management app.",
+        "register":  "register",
+        "toggle":  "switch authentication form"
+    },
+    "dashboard":  {
+        "greeting": "Hey",
+        "subtitle": "check your cash flow leading up to your next payment",
+        "balance":  {
+            "cycle_balance":  "cycle balance",
+            "committed":  "committed"
+        },
+        "cycle":  {
+            "current_until_next_income":  "current cycle until the next income",
+            "expenses":  "expenses",
+            "future_projected":  "projected future cycle",
+            "income":  "income",
+            "next":  "next cycle",
+            "previous":  "previous cycle",
+            "progress":  "cycle progress",
+            "remaining":  "remaining",
+            "confirm_close_title":  "close cycle?",
+            "confirm_close_message":  "All pending transactions in the current cycle will be marked as paid.",
+            "close":  "close",
+            "financial_entries":  "financial entries"
+        },
+        "transactions":  {
+            "empty":  "no entries in this cycle.",
+            "export":  "export cycle",
+            "refresh":  "refresh data",
+            "empty_filtered":  "no entries found for the selected filters.",
+            "delete":  "delete transaction"
+        },
+        "actions_label":  "dashboard actions",
+        "charts":  {
+            "empty_expenses":  "no expenses in this cycle.",
+            "expenses_by_category":  "expenses by category",
+            "expenses_by_entity":  "expenses by entity"
+        },
+        "filters_label":  "transaction filters",
+        "navigation_label":  "cycle navigation",
+        "print":  {
+            "actions_label":  "print actions",
+            "print_or_save_pdf":  "print or save PDF"
+        }
+    },
+    "manage":  {
+        "categories":  {
+            "description":  "organize your entries by category.",
+            "form_description":  "choose name, color and icon.",
+            "new":  "new category",
+            "title":  "categories",
+            "empty":  "you have not created any category yet :/",
+            "tooltip":  "groups for organizing financial movements. they help identify source, destination and purpose.",
+            "edit":  "edit category",
+            "choose_icon":  "choose an icon",
+            "selected_icon":  "selected icon",
+            "delete_label":  "delete category",
+            "icon_search":  "search icon",
+            "info_label":  "about categories"
+        },
+        "entities":  {
+            "description":  "manage people and companies linked to entries.",
+            "form_description":  "enter the entity name and type.",
+            "new":  "new entity",
+            "title":  "entities",
+            "empty":  "you have not created any entity yet :/",
+            "tooltip":  "people, groups or organizations related to entries. they help identify who receives, pays or participates in the movement.",
+            "edit":  "edit entity",
+            "delete_label":  "delete entity",
+            "info_label":  "about entities"
+        },
+        "templates":  {
+            "form_description":  "enter source, destination, amount and monthly day.",
+            "new":  "new template",
+            "title":  "templates",
+            "empty":  "you have not created any template yet :/",
+            "tooltip":  "base models for recurring monthly entries. they appear as planned on the dashboard according to the selected monthly day.",
+            "description":  "define custom models for monthly entries.",
+            "every_month_day":  "every day :day",
+            "edit":  "edit template",
+            "delete_label":  "delete template",
+            "end":  "end",
+            "info_label":  "about templates",
+            "month_day":  "month day",
+            "start":  "start",
+            "active": "active"
+        },
+        "wallets":  {
+            "description":  "manage your accounts, wallets and balances.",
+            "form_description":  "enter name, type, opening balance and status.",
+            "new":  "new wallet",
+            "title":  "wallets",
+            "empty":  "you have not created any wallet yet :/",
+            "tooltip":  "accounts or balance sources used in movements. each entry belongs to a wallet and affects its balance according to the cycle.",
+            "edit":  "edit wallet",
+            "delete_label":  "delete wallet",
+            "info_label":  "about wallets",
+            "initial_balance":  "initial balance"
+        },
+        "tooltip_intro":  "shortcuts to create Ciclo base records.",
+        "tooltip_description":  "categories, wallets, entities and templates feed entries and financial cycles.",
+        "info_label":  "about records",
+        "title":  "records",
+        "description": "create and manage all essential Ciclo's information."
+    },
+    "settings":  {
+        "account":  {
+            "description":  "manage your personal data.",
+            "title":  "account",
+            "change_password":  "i want to change my password",
+            "cancel_change_password":  "do not change my password"
+        },
+        "cycle":  {
+            "description":  "define how income entries delimit your cycles.",
+            "starts_after_income":  "income starts a new cycle",
+            "starts_after_income_help":  "when enabled, the income closes the current cycle.",
+            "title":  "cycle"
+        },
+        "style":  {
+            "dark_theme":  "dark theme",
+            "description":  "define how you view your data in ciclo.",
+            "language":  "language",
+            "language_placeholder":  "choose a language",
+            "title":  "appearance",
+            "heading":  "style and display"
+        },
+        "transactions":  {
+            "default_entity":  "default entity",
+            "default_payment_method":  "default payment method",
+            "default_type":  "default type",
+            "default_wallet":  "default wallet",
+            "description":  "define default fields for new entries.",
+            "title":  "entries"
+        },
+        "cards":  {
+            "account_description":  "access and profile data.",
+            "account_title":  "account",
+            "cycle_description":  "financial cycle rules.",
+            "cycle_title":  "cycle",
+            "transactions_title": "transactions",
+            "transactions_description":  "defaults used by new entries.",
+            "style_title": "style & customization",
+            "style_description": "change app's appearance"
+        },
+        "title":  "settings",
+        "description": "manage your preferences and options."
+        
+    },
+    "transactions":  {
+        "fields":  {
+            "amount":  "amount",
+            "category":  "category",
+            "date":  "date",
+            "entity":  "entity",
+            "payment_method":  "payment method",
+            "template":  "template",
+            "title":  "title",
+            "wallet":  "wallet"
+        },
+        "modal_description":  "register a financial entry.",
+        "new":  "new entry",
+        "paid":  "paid",
+        "defines_cycle":  "defines cycle",
+        "edit":  "edit record",
+        "insert_forecast_message":  "Transactions will be created for each active template with next execution inside the current cycle.",
+        "insert_forecast_title":  "insert forecasts?",
+        "new_record":  "new record",
+        "loading":  "loading...",
+        "confirm_forecast":  "confirm forecast"
+    },
+    "confirm":  {
+        "delete_message":  "careful! this action is permanent.",
+        "delete_title":  "delete record?"
+    },
+    "sidebar":  {
+        "brand":  "ciclo",
+        "home":  "overview",
+        "logout":  "logout",
+        "main_menu":  "main menu",
+        "manage":  "records",
+        "new_record":  "new entry",
+        "settings":  "settings"
+    }
+}

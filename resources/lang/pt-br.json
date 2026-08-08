@@ -1,0 +1,255 @@
+{
+    "app": {
+        "name": "ciclo",
+        "title": "Ciclo | Gestão de Gastos"
+    },
+    "common": {
+        "actions": {
+            "cancel": "cancelar",
+            "close": "fechar",
+            "delete": "excluir",
+            "edit": "editar",
+            "save": "salvar",
+            "close_label": "fechar",
+            "create": "criar",
+            "export": "exportar",
+            "refresh": "atualizar"
+        },
+        "empty": "nenhum registro encontrado.",
+        "filters": {
+            "clear": "limpar filtros",
+            "entity": "entidade",
+            "status": "status",
+            "type": "tipo"
+        },
+        "status": {
+            "active": "ativo",
+            "inactive": "inativo",
+            "paid": "pago",
+            "pending": "pendente",
+            "planned": "previsto"
+        },
+        "types": {
+            "expense": "despesa",
+            "income": "receita"
+        },
+        "loading": "carregando",
+        "fields": {
+            "amount": "valor",
+            "category": "categoria",
+            "color": "cor",
+            "date": "data",
+            "due_date": "vencimento",
+            "email": "e-mail",
+            "entity": "entidade",
+            "icon": "ícone",
+            "name": "nome",
+            "paid_at": "pagamento",
+            "password": "senha",
+            "payment_method": "forma de pagamento",
+            "template": "template",
+            "title": "título",
+            "type": "tipo",
+            "wallet": "wallet"
+        },
+        "placeholders": {
+            "all": "todas",
+            "choose_category": "escolha uma categoria",
+            "choose_entity": "escolha uma entidade",
+            "choose_payment_method": "escolha uma forma de pagamento",
+            "choose_type": "escolha um tipo",
+            "choose_wallet": "escolha uma wallet",
+            "icon_search_example": "ex: casa, mercado, cartão...",
+            "no_template": "sem template"
+        }
+    },
+    "auth": {
+        "already_have_account": "já tenho conta",
+        "create_account": "criar uma conta",
+        "email": "e-mail",
+        "enter": "entrar",
+        "enter_with_google": "entrar com google",
+        "password": "senha",
+        "hero_hi": "oi :)",
+        "hero_welcome": "bem-vindo ao",
+        "hero_description": "seu app de gestao de gastos inteligente.",
+        "register": "cadastrar",
+        "toggle": "alternar formulário de autenticação"
+    },
+    "dashboard": {
+        "greeting": "Oi",
+        "subtitle": "confira seu fluxo até o próximo pagamento:",        
+        "balance": {
+            "cycle_balance": "saldo do ciclo",
+            "committed": "comprometido"
+        },
+        "cycle": {
+            "current_until_next_income": "ciclo atual até o próximo recebimento",
+            "expenses": "gastos",
+            "future_projected": "ciclo futuro projetado",
+            "income": "recebe",
+            "next": "próximo ciclo",
+            "previous": "ciclo anterior",
+            "progress": "progresso do ciclo",
+            "remaining": "sobra",
+            "confirm_close_title": "encerrar ciclo?",
+            "confirm_close_message": "Todas as transacoes pendentes do ciclo atual serao marcadas como pagas.",
+            "close": "encerrar",
+            "financial_entries": "lançamentos financeiros"
+        },
+        "transactions": {
+            "empty": "nenhum lançamento neste ciclo.",
+            "export": "exportar ciclo",
+            "refresh": "atualizar dados",
+            "empty_filtered": "nenhum lancamento encontrado para os filtros selecionados.",
+            "delete": "excluir lançamento"
+        },
+        "actions_label": "ações da dashboard",
+        "charts": {
+            "empty_expenses": "nenhuma saída neste ciclo.",
+            "expenses_by_category": "gastos por categoria",
+            "expenses_by_entity": "gastos por entidade"
+        },
+        "filters_label": "filtros de lançamentos",
+        "navigation_label": "navegação entre ciclos",
+        "print": {
+            "actions_label": "ações de impressão",
+            "print_or_save_pdf": "imprimir ou salvar PDF"
+        }
+    },
+    "manage": {
+        "categories": {
+            "description": "organize seus lançamentos por categoria.",
+            "form_description": "escolha nome, cor e ícone.",
+            "new": "nova categoria",
+            "title": "categorias",
+            "empty": "voce ainda nao cadastrou nenhuma categoria :/",
+            "tooltip": "grupos para organizar as movimentacoes financeiras. ajudam a identificar origem, destino e finalidade.",
+            "edit": "editar categoria",
+            "choose_icon": "escolha um icone",
+            "selected_icon": "icone selecionado",
+            "delete_label": "excluir categoria",
+            "icon_search": "buscar ícone",
+            "info_label": "sobre categorias"
+        },
+        "entities": {
+            "description": "controle pessoas e empresas vinculadas aos lançamentos.",
+            "form_description": "informe nome e tipo da entidade.",
+            "new": "nova entidade",
+            "title": "entidades",
+            "empty": "voce ainda nao cadastrou nenhuma entidade :/",
+            "tooltip": "pessoas, grupos ou organizacoes relacionadas aos lancamentos. ajudam a identificar quem recebe, paga ou participa da movimentacao.",
+            "edit": "editar entidade",
+            "delete_label": "excluir entidade",
+            "info_label": "sobre entidades"
+        },
+        "templates": {
+            "form_description": "informe origem, destino, valor e dia mensal.",
+            "new": "novo template",
+            "title": "templates",
+            "empty": "voce ainda nao criou nenhum template :/",
+            "tooltip": "modelos base para lancamentos mensais recorrentes. aparecem como previstos na dashboard pelo dia mensal escolhido.",
+            "description": "defina modelos personalizados para lancamentos mensais.",
+            "every_month_day": "todo dia :day",
+            "edit": "editar template",
+            "delete_label": "excluir template",
+            "end": "fim",
+            "info_label": "sobre templates",
+            "month_day": "dia do mês",
+            "start": "início"
+        },
+        "wallets": {
+            "description": "gerencie suas contas, carteiras e saldos.",
+            "form_description": "informe nome, tipo, saldo inicial e status.",
+            "new": "nova wallet",
+            "title": "wallets",
+            "empty": "voce ainda nao cadastrou nenhuma wallet :/",
+            "tooltip": "contas ou fontes de saldo usadas nas movimentacoes. cada lancamento pertence a uma wallet e afeta seu saldo conforme o ciclo.",
+            "edit": "editar wallet",
+            "delete_label": "excluir wallet",
+            "info_label": "sobre wallets",
+            "initial_balance": "saldo inicial"
+        },
+        "tooltip_intro": "atalhos para cadastrar as bases do Ciclo.",
+        "tooltip_description": "categorias, wallets, entidades e templates alimentam os lancamentos e ciclos financeiros.",
+        "info_label": "sobre cadastros",
+        "title": "cadastros",
+        "description": "crie e gerencie todas as informações essenciais do Ciclo."
+    },
+    "settings": {
+        "account": {
+            "description": "gerencie seus dados pessoais.",
+            "title": "conta",
+            "change_password": "quero alterar minha senha",
+            "cancel_change_password": "nao quero alterar minha senha"
+        },
+        "cycle": {
+            "description": "defina como os recebimentos delimitam seus ciclos.",
+            "starts_after_income": "recebimento inicia novo ciclo",
+            "starts_after_income_help": "quando ativo, o recebimento fecha o ciclo atual.",
+            "title": "ciclo"
+        },
+        "style": {
+            "dark_theme": "tema escuro",
+            "description": "defina como você vê seus dados no ciclo.",
+            "language": "idioma",
+            "language_placeholder": "escolha um idioma",
+            "title": "aparência",
+            "heading": "estilo & personalização"
+        },
+        "transactions": {
+            "default_entity": "entidade padrão",
+            "default_payment_method": "forma de pagamento padrão",
+            "default_type": "tipo padrão",
+            "default_wallet": "wallet padrão",
+            "description": "defina os campos padrão para novos lançamentos.",
+            "title": "lançamentos"
+        },
+        "cards": {
+            "account_description": "dados de acesso e perfil.",
+            "account_title": "conta",
+            "cycle_description": "regras do ciclo financeiro.",
+            "cycle_title": "ciclo",
+            "transactions_description": "padrões usados em novos lançamentos.",
+            "style_title": "estilo & personalização",
+            "style_description": "personalize a aparência do Ciclo."            
+        },
+        "title": "configurações",
+        "description": "gerencie suas preferências e opções dentro do Flux."
+    },
+    "transactions": {
+        "fields": {
+            "amount": "valor",
+            "category": "categoria",
+            "date": "data",
+            "entity": "entidade",
+            "payment_method": "forma de pagamento",
+            "template": "template",
+            "title": "título",
+            "wallet": "wallet"
+        },
+        "modal_description": "registre uma movimentação financeira.",
+        "new": "novo lançamento",
+        "paid": "pago",
+        "defines_cycle": "define ciclo",
+        "edit": "editar registro",
+        "insert_forecast_message": "Serão criadas transações para cada template ativo com próxima execucao dentro do ciclo atual.",
+        "insert_forecast_title": "inserir previsões?",
+        "new_record": "novo registro",
+        "loading": "carregando...",
+        "confirm_forecast": "confirmar previsão"
+    },
+    "confirm": {
+        "delete_message": "cuidado! essa ação é permanente.",
+        "delete_title": "excluir registro?"
+    },
+    "sidebar": {
+        "brand": "ciclo",
+        "home": "visão geral",
+        "logout": "sair",
+        "main_menu": "menu principal",
+        "manage": "cadastros",
+        "new_record": "novo lançamento",
+        "settings": "configurações"
+    }
+}
